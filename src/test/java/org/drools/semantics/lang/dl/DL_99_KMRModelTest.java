@@ -18,6 +18,7 @@ package org.drools.semantics.lang.dl;
 
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
+import org.drools.guvnor.client.rpc.WorkingSetConfigData;
 import org.drools.io.Resource;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
@@ -138,6 +139,44 @@ public class DL_99_KMRModelTest {
         XSDModel xsdModel = (XSDModel) compiler.compile( results );
 
         xsdModel.stream( System.out );
+
+    }
+
+
+
+    @Test
+    public void testXSDExternalModelGeneration() {
+        String source = "org/drools/semantics/lang/dl/kmr2_miniExample.manchester";
+        Resource res = ResourceFactory.newClassPathResource(source);
+
+        OntoModel results = factory.buildModel( res );
+
+
+        ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.XSD );
+        XSDModel xsdModel = (XSDModel) compiler.compile( results );
+
+        xsdModel.stream( System.out );
+
+    }
+
+
+
+
+
+    @Test
+    public void testWorkingSetModelGeneration() {
+        String source = "org/drools/semantics/lang/dl/kmr2_miniExample.manchester";
+        Resource res = ResourceFactory.newClassPathResource( source );
+
+        OntoModel results = factory.buildModel( res );
+
+
+        ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.WORKSET );
+        WorkingSetModel wsModel = (WorkingSetModel) compiler.compile( results );
+
+        WorkingSetConfigData ws = wsModel.getWorkingSet();
+
+        System.out.println(ws);
 
     }
 

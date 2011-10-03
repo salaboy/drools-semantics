@@ -22,6 +22,7 @@ import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.io.Resource;
+import org.drools.io.ResourceFactory;
 import org.drools.io.impl.BaseResource;
 import org.drools.io.impl.ByteArrayResource;
 import org.drools.io.impl.ClassPathResource;
@@ -186,6 +187,20 @@ public class DLFactoryImpl implements DLFactory {
         results.setPackage( ontoDescr.getOntologyID().getOntologyIRI().toString()  );
 
         return results;
+    }
+
+
+
+
+
+
+    public OntoModel buildModel( Resource res ) {
+        KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
+        StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
+
+        setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
+
+        return buildModel( res, kSession );
     }
 
 

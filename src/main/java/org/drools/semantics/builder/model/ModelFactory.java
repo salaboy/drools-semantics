@@ -20,7 +20,7 @@ public class ModelFactory {
 
 
     public enum CompileTarget {
-        BASE, JAVA, DRL, JAR, GRAPH, XSD, XSDX;
+        BASE, JAVA, DRL, JAR, GRAPH, XSD, XSDX, WORKSET;
     }
 
 
@@ -48,6 +48,9 @@ public class ModelFactory {
             case XSDX   : CompiledOntoModel smodel = new SemanticXSDModelImpl();
                             smodel.initFromBaseModel( base );
                             return smodel;
+            case WORKSET: CompiledOntoModel wmodel = new WorkingSetModelImpl();
+                            wmodel.initFromBaseModel( base );
+                            return wmodel;
             case BASE:
             default  : return new GenericModelImpl();
         }

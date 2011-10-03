@@ -18,7 +18,10 @@ public interface DLFactory {
 
 
 
+
     public OWLOntology parseOntology( Resource resource );
+
+
 
 
 
@@ -26,9 +29,14 @@ public interface DLFactory {
 
 
 
+
+
+
     public OntoModel buildModel( OWLOntology ontoDescr, Map<ModelInferenceStrategy.InferenceTask, Resource> theory );
 
     public OntoModel buildModel( Resource res, StatefulKnowledgeSession kSession );
+
+    public OntoModel buildModel( Resource res );
 
 
 }

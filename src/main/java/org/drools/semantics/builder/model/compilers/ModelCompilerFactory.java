@@ -29,6 +29,7 @@ public class ModelCompilerFactory {
             case GRAPH  : return new GraphModelCompilerImpl();
             case XSD    : return new XSDModelCompilerImpl();
             case XSDX   : return new SemanticXSDModelCompilerImpl();
+            case WORKSET: return new WorkingSetModelCompilerImpl();
         }
         return null;
     }
