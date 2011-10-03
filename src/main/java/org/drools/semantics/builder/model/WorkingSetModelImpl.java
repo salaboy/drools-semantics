@@ -16,7 +16,7 @@
 
 package org.drools.semantics.builder.model;
 
-import org.drools.guvnor.client.rpc.WorkingSetConfigData;
+import org.drools.semantics.util.SemanticWorkingSetConfigData;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -26,13 +26,13 @@ import java.util.Set;
 public class WorkingSetModelImpl extends ModelImpl implements WorkingSetModel {
 
 
-    private WorkingSetConfigData root;
+    private SemanticWorkingSetConfigData root;
 
 //    private Set<String> factz;
 
 
     public WorkingSetModelImpl() {
-        root  = new WorkingSetConfigData();
+        root  = new SemanticWorkingSetConfigData();
         root.setName( "Thing" );
         root.setDescription( " Classes : " );
         root.setValidFacts( new String[] { "Thing" } );
@@ -40,7 +40,7 @@ public class WorkingSetModelImpl extends ModelImpl implements WorkingSetModel {
 //        factz = new HashSet<String>();
     }
 
-    public WorkingSetConfigData getWorkingSet() {
+    public SemanticWorkingSetConfigData getWorkingSet() {
         return root;
     }
 
@@ -65,8 +65,8 @@ public class WorkingSetModelImpl extends ModelImpl implements WorkingSetModel {
         return getTrait( name, root );
     }
 
-    private Object getTrait(String name, WorkingSetConfigData root) {
-        if ( root.getName().equals( name ) ) {
+    private Object getTrait(String name, SemanticWorkingSetConfigData root) {
+        if ( root.getName().equals(name) ) {
             return root;
         } else {
             if ( root.getWorkingSets().length > 0 ) {

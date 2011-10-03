@@ -16,15 +16,12 @@
 
 package org.drools.semantics.builder.model;
 
-
-import org.drools.guvnor.client.rpc.WorkingSetConfigData;
-
-import java.io.OutputStream;
+import org.drools.semantics.util.SemanticWorkingSetConfigData;
 
 
 public interface WorkingSetModel extends CompiledOntoModel {
 
 
-    public WorkingSetConfigData getWorkingSet();
+    public SemanticWorkingSetConfigData getWorkingSet();
 
 }

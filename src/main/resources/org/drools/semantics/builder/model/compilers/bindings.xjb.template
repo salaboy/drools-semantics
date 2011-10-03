@@ -28,7 +28,8 @@
 
 
     @foreach{ concept : concepts }
-    <bindings node="//xsd:@{targetElement}[@name='@{concept.name}']">
+    <bindings node="//xsd:@{targetElement}[@name='@{concept.name}Impl']">
+        <inheritance:implements>@{concept.name}</inheritance:implements>
         <annox:annotate>
           <annox:annotate annox:class="com.clarkparsia.empire.annotation.RdfsClass" value="tns:@{concept.name}" />
           <annox:annotate annox:class="com.clarkparsia.empire.annotation.Namespaces" value="tns @{package}" />

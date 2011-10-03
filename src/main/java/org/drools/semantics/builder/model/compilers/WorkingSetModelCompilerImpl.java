@@ -16,8 +16,8 @@
 
 package org.drools.semantics.builder.model.compilers;
 
-import org.drools.guvnor.client.rpc.WorkingSetConfigData;
 import org.drools.semantics.builder.model.*;
+import org.drools.semantics.util.SemanticWorkingSetConfigData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +26,9 @@ import java.util.Set;
 public class WorkingSetModelCompilerImpl extends ModelCompilerImpl implements WorkingSetModelCompiler {
 
 
-    private Map<String, WorkingSetConfigData> map = new HashMap<String,WorkingSetConfigData>();
+    private Map<String, SemanticWorkingSetConfigData> map = new HashMap<String,SemanticWorkingSetConfigData>();
 
-    WorkingSetConfigData root;
+    SemanticWorkingSetConfigData root;
 
 
     protected void setModel(OntoModel model) {
@@ -47,7 +47,7 @@ public class WorkingSetModelCompilerImpl extends ModelCompilerImpl implements Wo
             addToValidFacts(root, name);
         }
 
-        WorkingSetConfigData children = new WorkingSetConfigData();
+        SemanticWorkingSetConfigData children = new SemanticWorkingSetConfigData();
         children.setName( name );
         children.setDescription(params.get("package") + name);
         map.put( name, children );
@@ -55,7 +55,7 @@ public class WorkingSetModelCompilerImpl extends ModelCompilerImpl implements Wo
 
         Set<Concept> supers = (Set<Concept>) params.get("superConcepts");
         for ( Concept sup : supers  ) {
-            WorkingSetConfigData father = map.get( sup.getName() );
+            SemanticWorkingSetConfigData father = map.get( sup.getName() );
             addToWorkingSets(father, children);
 
             if ( ! "Thing".equals( father.name ) ) {
@@ -66,7 +66,7 @@ public class WorkingSetModelCompilerImpl extends ModelCompilerImpl implements Wo
 
     }
 
-    private void addToValidFacts( WorkingSetConfigData father, String name ) {
+    private void addToValidFacts( SemanticWorkingSetConfigData father, String name ) {
         String[] ws = father.getValidFacts();
         if ( ws == null ) {
             ws = new String[0];
@@ -78,12 +78,12 @@ public class WorkingSetModelCompilerImpl extends ModelCompilerImpl implements Wo
 
     }
 
-    private void addToWorkingSets(WorkingSetConfigData father, WorkingSetConfigData children) {
-        WorkingSetConfigData[] ws = father.getWorkingSets();
+    private void addToWorkingSets( SemanticWorkingSetConfigData father, SemanticWorkingSetConfigData children) {
+        SemanticWorkingSetConfigData[] ws = father.getWorkingSets();
         if ( ws == null ) {
-            ws = new WorkingSetConfigData[0];
+            ws = new SemanticWorkingSetConfigData[0];
         }
-        WorkingSetConfigData[] newWs = new WorkingSetConfigData[ws.length+1];
+        SemanticWorkingSetConfigData[] newWs = new SemanticWorkingSetConfigData[ws.length+1];
         System.arraycopy(ws, 0, newWs, 0, ws.length);
         newWs[ ws.length ] = children;
         father.setWorkingSets( newWs );

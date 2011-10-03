@@ -18,7 +18,6 @@ package org.drools.semantics.lang.dl;
 
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
-import org.drools.guvnor.client.rpc.WorkingSetConfigData;
 import org.drools.io.Resource;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
@@ -27,6 +26,7 @@ import org.drools.semantics.builder.DLFactoryBuilder;
 import org.drools.semantics.builder.model.*;
 import org.drools.semantics.builder.model.compilers.ModelCompiler;
 import org.drools.semantics.builder.model.compilers.ModelCompilerFactory;
+import org.drools.semantics.util.SemanticWorkingSetConfigData;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -174,7 +174,7 @@ public class DL_99_KMRModelTest {
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.WORKSET );
         WorkingSetModel wsModel = (WorkingSetModel) compiler.compile( results );
 
-        WorkingSetConfigData ws = wsModel.getWorkingSet();
+        SemanticWorkingSetConfigData ws = wsModel.getWorkingSet();
 
         System.out.println(ws);
 
