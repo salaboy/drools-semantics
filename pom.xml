@@ -114,5 +114,17 @@
 
 
 
+<repositories>
+	<repository>
+        <id>PlugTree</id>
+        <name>PlugTree-releases</name>
+        <url>http://www.plugtree.com/artifactory/plugtree-labs</url>
+	<snapshots>
+        	<enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+        </snapshots>
 
+    </repository>
+
+</repositories>
 </project>
