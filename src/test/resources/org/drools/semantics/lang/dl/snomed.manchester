@@ -1,0 +1,3783 @@
+Prefix: camera: <http://www.xfront.com/owl/ontologies/camera/#>
+Prefix: vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#>
+Prefix: ns0: <http://cohse.semanticweb.org/ontologies/people#>
+Prefix: foaf: <http://xmlns.com/foaf/0.1/>
+Prefix: owl11xml: <http://www.w3.org/2006/12/owl11-xml#>
+Prefix: owl11: <http://www.w3.org/2006/12/owl11#>
+Prefix: owl2xml: <http://www.w3.org/2006/12/owl2-xml#>
+Prefix: owl: <http://www.w3.org/2002/07/owl#>
+Prefix: cc-schema: <http://creativecommons.org/schema.rdf#>
+Prefix: ric: <http://owl.nc3a.nato.int/2011/02/RIC#>
+Prefix: xsi: <http://www.w3.org/2001/XMLSchema-instance>
+Prefix: viso-data: <http://purl.org/viso/data/>
+Prefix: pizza: <http://www.co-ode.org/ontologies/pizza/pizza.owl#>
+Prefix: dcterms: <http://purl.org/dc/terms/>
+Prefix: dct: <http://purl.org/dc/terms/>
+Prefix: bixt: <http://purl.org/viso/bibo-extension/>
+Prefix: daml: <http://www.daml.org/2000/12/daml+oil#>
+Prefix: first: <http://www.w3.org/2002/03owlt/oneOf/premises004#>
+Prefix: oiled: <http://oiled.man.example.net/test#>
+Prefix: xml: <http://www.w3.org/XML/1998/namespace>
+Prefix: cgdo: <http://datasets.caregraf.org/ontology#>
+Prefix: rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: bibo: <http://purl.org/ontology/bibo/>
+Prefix: wot: <http://xmlns.com/wot/0.1/>
+Prefix: xsd: <http://www.w3.org/2001/XMLSchema#>
+Prefix: sioc: <http://rdfs.org/sioc/ns#>
+Prefix: swstatus: <http://www.w3.org/2003/06/sw-vocab-status/ns#>
+Prefix: : <http://www.co-ode.org/ontologies/pizza/pizza.owl#>
+Prefix: dc: <http://purl.org/dc/elements/1.1/>
+Prefix: rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Prefix: skos: <http://www.w3.org/2004/02/skos/core#>
+
+
+
+Ontology:
+
+AnnotationProperty: skos:broaderTransitive
+
+
+AnnotationProperty: skos:broader
+
+
+Class: skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275110002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266898002>,
+        skos:broader <http://datasets.caregraf.org/snomed/430677003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275115007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266890009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266889000>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433279009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429954004>,
+        skos:broader <http://datasets.caregraf.org/snomed/430086009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/412749001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160423004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160341008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430711004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/416519002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/289916006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160416000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/416855002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/248542005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/428047000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430954001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266886007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429251000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broader <http://datasets.caregraf.org/snomed/430090006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/297245008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160374008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160336000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430809001>,
+        skos:broader <http://datasets.caregraf.org/snomed/275940001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160433007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297248005>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/300933005>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429977004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160348002>,
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429252007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/413350009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/243796009>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160337009>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266891008>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/315619001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266897007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430330002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160292002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266885006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/391098008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160953001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430710003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/310247005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429950008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/412749001>,
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/271389008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275104002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433306000>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/429951007>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288263007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/288258008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430778004>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160323000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160316001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160338004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266891008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430723005>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429970002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429962007>,
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/431882002>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160355000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160352002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430090006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/395089003>,
+        skos:broader <http://datasets.caregraf.org/snomed/275940001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160378006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430564002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160342001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/429963002>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275127005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/281024001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160328009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266969002>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430703009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broader <http://datasets.caregraf.org/snomed/289916006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160348002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160346003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160422009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160474007>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/160469004>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160302006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160301004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275109007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430813008>,
+        skos:broader <http://datasets.caregraf.org/snomed/429006005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/394877006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429961000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/268861007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/417648007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160364005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266888008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160316001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/441120009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/438998000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/431170009>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/248542005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160303001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/297248005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/416471007>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430679000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160303001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275938006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275939003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266887003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160469004>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275941002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266897007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275111003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160297008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160301004>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266895004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297242006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430560006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/289916006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160377001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266898002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160390008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/401122004>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/275121006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430565001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429405004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broader <http://datasets.caregraf.org/snomed/160288009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160339007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297239000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/308748009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266887003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/315627005>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/275121006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266892001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266891008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266883004>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160281003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160279000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/271388000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broader <http://datasets.caregraf.org/snomed/412749001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160347007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430814002>,
+        skos:broader <http://datasets.caregraf.org/snomed/160346003>,
+        skos:broader <http://datasets.caregraf.org/snomed/266891008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288264001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430564002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266898002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429637009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160299006>,
+        skos:broader <http://datasets.caregraf.org/snomed/430954001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/390794009>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433276002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429958001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/428994006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430813008>,
+        skos:broader <http://datasets.caregraf.org/snomed/266903003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/416072008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/391096007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433278001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429961000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/438825005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266887003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160305008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/297241004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430564002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160417009>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430716009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275131004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266903003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160415001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/300933005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430801003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266898002>,
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/281666001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/416471007>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429971003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160301004>,
+        skos:broader <http://datasets.caregraf.org/snomed/160305008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/289916006>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/297244007>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288253004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266898002>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288251002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433496008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430814002>,
+        skos:broader <http://datasets.caregraf.org/snomed/431882002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430693007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275130003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266902008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/243796009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/138875005>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160325007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429961000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160280002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160279000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430754009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160315002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160305008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160279000>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160293007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160283000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160279000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160413008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275134007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160305008>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433495007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429965009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160304007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160301004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430089002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160302006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160393005>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430329007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160418004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broader <http://datasets.caregraf.org/snomed/275940001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160379003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266898002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430543001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broader <http://datasets.caregraf.org/snomed/160408009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429740004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broader <http://datasets.caregraf.org/snomed/313102001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160357008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160351009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160346003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/315626001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/275121006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266893006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430723005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430552005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160380000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266898002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/431882002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297239000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/315623009>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/275121006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160362009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160354001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160352002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288252009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broader <http://datasets.caregraf.org/snomed/160279000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429954004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430696004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275134007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160296004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266896003>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/297242006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430088005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430727006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160344000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160291009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/268862000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/281667005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281574006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/428276009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430954001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266886007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430753003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/395125009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275940001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266891008>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275133001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266906006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275136009>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/439750006>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429236009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430813008>,
+        skos:broader <http://datasets.caregraf.org/snomed/266902008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160297008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266886007>,
+        skos:broader <http://datasets.caregraf.org/snomed/297246009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275129008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266901001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160437008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160433007>,
+        skos:broader <http://datasets.caregraf.org/snomed/439750006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430298005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430813008>,
+        skos:broader <http://datasets.caregraf.org/snomed/266898002>,
+        skos:broader <http://datasets.caregraf.org/snomed/439220002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288249001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266905005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429951007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160312004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429962007>,
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broader <http://datasets.caregraf.org/snomed/297239000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288254005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/391097003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430693007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429953005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297241004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/413308009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broader <http://datasets.caregraf.org/snomed/160424005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160407004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160406008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288256007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broader <http://datasets.caregraf.org/snomed/281574006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429958001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160314003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160305008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160419007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297239000>,
+        skos:broader <http://datasets.caregraf.org/snomed/160424005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/417001009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160406008>,
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broader <http://datasets.caregraf.org/snomed/429962007>,
+        skos:broader <http://datasets.caregraf.org/snomed/297239000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275132006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288257003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160299006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266886007>,
+        skos:broader <http://datasets.caregraf.org/snomed/297246009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160346003>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429006005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160352002>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160318000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429962007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266888008>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288262002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/288258008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430711004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275940001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160319008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429962007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266888008>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160310007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160305008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160426007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160344000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297239000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/427858005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429405004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430568004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/395125009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430542006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broader <http://datasets.caregraf.org/snomed/297244007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429978009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429965009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160389004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160423004>,
+        skos:broader <http://datasets.caregraf.org/snomed/289916006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430091005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broader <http://datasets.caregraf.org/snomed/160362009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160391007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/413302005>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/275121006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/310247005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160288009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160406008>,
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275123009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266897007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/401052005>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275125002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266898002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160410006>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/395125009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430102007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/439220002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266891008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297239000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275932007>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/275121006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/312824007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275109007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/431912005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broader <http://datasets.caregraf.org/snomed/429962007>,
+        skos:broader <http://datasets.caregraf.org/snomed/160305008>,
+        skos:broader <http://datasets.caregraf.org/snomed/430564002>,
+        skos:broader <http://datasets.caregraf.org/snomed/266902008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429961000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broader <http://datasets.caregraf.org/snomed/275940001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429011007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297247000>,
+        skos:broader <http://datasets.caregraf.org/snomed/430677003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266894000>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275121006>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/297242006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160328009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429399002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275108004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430813008>,
+        skos:broader <http://datasets.caregraf.org/snomed/429006005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/414205003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430954001>,
+        skos:broader <http://datasets.caregraf.org/snomed/160290005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430041006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160352002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430086009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/439724007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160329001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160331005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/412783008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160301004>,
+        skos:broader <http://datasets.caregraf.org/snomed/297246009>,
+        skos:broader <http://datasets.caregraf.org/snomed/160305008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/297240003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275117004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429399002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266899005>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/297241004>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433449000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429958001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160308005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broader <http://datasets.caregraf.org/snomed/429962007>,
+        skos:broader <http://datasets.caregraf.org/snomed/160305008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275118009>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266893006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160340009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275940001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160327004>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430674005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275940001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160386006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160311006>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430677003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/394990003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160324006>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/297243001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266888008>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430777009>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160425006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/300934004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160302006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/313102001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broader <http://datasets.caregraf.org/snomed/160392000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160397006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160301004>,
+        skos:broader <http://datasets.caregraf.org/snomed/297246009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160364005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266908007>,
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/412784002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297244007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160334002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160298003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160299006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160387002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/428037003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275109007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429962007>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275122004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266897007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430805007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160346003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430527008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430954001>,
+        skos:broader <http://datasets.caregraf.org/snomed/160290005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160421002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broader <http://datasets.caregraf.org/snomed/266898002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/390915000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/297244007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275102003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/412749001>,
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/401066000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266897007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/134439009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/439154009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266904009>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429952000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266897007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160290005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266969002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429399002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430807004>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433164007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/300933005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/297247000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430564002>,
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/401067009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266897007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/401119001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160305008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266908007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430809001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297239000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/428269004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266898002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430534005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160302006>,
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430292006>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/429740004>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430709008>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430815001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430544007>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266970001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288258008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429000004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430685007>,
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430685007>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160320002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429962007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266888008>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160350005>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160403000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160329001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429959009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429969003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/281574006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160427003>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/288206002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/288258008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160424005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160417009>,
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430705002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430954001>,
+        skos:broader <http://datasets.caregraf.org/snomed/160297008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430729009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160363004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broader <http://datasets.caregraf.org/snomed/275940001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430331003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430813008>,
+        skos:broader <http://datasets.caregraf.org/snomed/429006005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275124003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broader <http://datasets.caregraf.org/snomed/310247005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/308746008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160316001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160300003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160309002>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160353007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/439750006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160414002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160282005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160279000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433381008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430703009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430337004>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430808009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/289916006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/417072001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160314003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429963002>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/440697006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275940001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275113000>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266889000>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433380009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429950008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/429964008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266900000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160408009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160406008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433305001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429959009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/416471007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/57177007>,
+        skos:broader <http://datasets.caregraf.org/snomed/413350009>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430730004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/438998000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160279000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433163001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266901001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275911004>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/275121006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275114006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266890009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/297242006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275120007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430682005>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/289916006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275117004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430809001>,
+        skos:broader <http://datasets.caregraf.org/snomed/275940001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275104002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broader <http://datasets.caregraf.org/snomed/275940001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160381001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160321003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429962007>,
+        skos:broader <http://datasets.caregraf.org/snomed/160316001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/428748002>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/429740004>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266906006>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430814002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297239000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160303001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430685007>,
+        skos:broader <http://datasets.caregraf.org/snomed/160301004>,
+        skos:broader <http://datasets.caregraf.org/snomed/160305008>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/315625002>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/275121006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275128000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275901006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266897007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160392000>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160406008>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/268858006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/281667005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/281022002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160425006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430102007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/281023007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/248542005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/395089003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266891008>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/315621006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266897007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/428935009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broader <http://datasets.caregraf.org/snomed/160346003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/315620007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266897007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266886007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/315622004>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266897007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/428932007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/412749001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/391096007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/430693007>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266902008>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/57177007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/243796009>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/297246009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275120007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266894000>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/412750001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broader <http://datasets.caregraf.org/snomed/412749001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160313009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430954001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broader <http://datasets.caregraf.org/snomed/266904009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/434462008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160316001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160292002>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266903003>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160427003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/297248005>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/431812006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160346003>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/401065001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/275121006>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430336008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160346003>,
+        skos:broader <http://datasets.caregraf.org/snomed/430723005>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266890009>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160324006>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266907002>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/431479003>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430813008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/275937001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/266901001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160381001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/430678008>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/160303001>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433277006>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/429951007>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/297239000>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/433450000>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/429965009>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160343006>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275937001>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266883004>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/275134007>
+
+    Annotations:
+        skos:broader <http://datasets.caregraf.org/snomed/266907002>,
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+
+Individual: <http://datasets.caregraf.org/snomed/160409001>
+
+    Annotations:
+        skos:broaderTransitive <http://datasets.caregraf.org/snomed/281666001>,
+        skos:broader <http://datasets.caregraf.org/snomed/281666001>
+
+    Types:
+        skos:Concept
+
+

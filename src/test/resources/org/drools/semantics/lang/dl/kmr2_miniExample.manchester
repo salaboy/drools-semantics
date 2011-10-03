@@ -1,0 +1,265 @@
+Prefix: xsd:  <http://www.w3.org/2001/XMLSchema#>
+Prefix: xml:  <http://www.w3.org/XML/1998/namespace>
+Prefix: rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Prefix: kmr:  <http://www.kmr.org/ontology/>
+Prefix: skos: <http://www.w3.org/2004/02/skos/core#>
+
+
+Ontology: <http://www.kmr.org/ontology/>
+
+
+AnnotationProperty: <http://www.kmr.org/ontology/AboutFactType>
+
+    Annotations:
+        rdfs:label "Fact about Facts"
+
+    Annotations:
+        rdfs:label "Fact about Facts"
+
+    Range:
+        <http://www.kmr.org/ontology/PhysicianFactType>
+
+
+AnnotationProperty: rdfs:label
+
+
+AnnotationProperty: rdfs:comment
+
+
+Datatype: rdf:PlainLiteral
+
+
+Datatype: xsd:string
+
+
+Datatype: xsd:dateTime
+
+
+ObjectProperty: <http://www.kmr.org/ontology/reaction>
+
+    Annotations:
+        rdfs:label "reaction"
+
+    Domain:
+        <http://www.kmr.org/ontology/ReactionFactType>
+
+    Range:
+        skos:Concept
+
+
+ObjectProperty: <http://www.kmr.org/ontology/assertedBy>
+
+    Annotations:
+        rdfs:label "who asserted a Fact."
+
+    Domain:
+        <http://www.kmr.org/ontology/AboutFactType>
+
+    Range:
+        <http://www.kmr.org/ontology/PersonFactType>
+
+
+ObjectProperty: <http://www.kmr.org/ontology/assertedWhere>
+
+    Annotations:
+        rdfs:label "where a Fact was asserted. (need location fact)"
+
+    Domain:
+        <http://www.kmr.org/ontology/AboutFactType>
+
+
+ObjectProperty: <http://www.kmr.org/ontology/product>
+
+    Annotations:
+        rdfs:label "product"
+
+    Domain:
+        <http://www.kmr.org/ontology/AllergyFactType>
+
+    Range:
+        skos:Concept
+
+
+ObjectProperty: <http://www.kmr.org/ontology/allergyFactType>
+
+    Annotations:
+        rdfs:label "allergy fact"
+
+    Domain:
+        <http://www.kmr.org/ontology/ReactionFactType>
+
+    Range:
+        <http://www.kmr.org/ontology/AllergyFactType>
+
+
+ObjectProperty: <http://www.kmr.org/ontology/patientFactType>
+
+    Annotations:
+        rdfs:label "patient (from patient id)"
+
+    Domain:
+        <http://www.kmr.org/ontology/FactType>
+
+    Range:
+        <http://www.kmr.org/ontology/PatientFactType>
+
+
+ObjectProperty: <http://www.kmr.org/ontology/adverseEventType>
+
+    Annotations:
+        rdfs:label "adverse event type"
+
+    Domain:
+        <http://www.kmr.org/ontology/AllergyFactType>
+
+    Range:
+        skos:Concept
+
+
+DataProperty: <http://www.kmr.org/ontology/enteredWhen>
+
+    Annotations:
+        rdfs:label "when a Fact was entered into an EHR."
+
+    Domain:
+        <http://www.kmr.org/ontology/AboutFactType>
+
+    Range:
+        xsd:dateTime
+
+
+DataProperty: <http://www.kmr.org/ontology/code>
+
+    Annotations:
+        rdfs:label "code (from code)"
+
+    Domain:
+        skos:Concept
+
+    Range:
+        xsd:string
+
+
+DataProperty: <http://www.kmr.org/ontology/assertedWhen>
+
+    Annotations:
+        rdfs:label "when a Fact was asserted."
+
+    Domain:
+        <http://www.kmr.org/ontology/AboutFactType>
+
+    Range:
+        xsd:dateTime
+
+
+DataProperty: <http://www.kmr.org/ontology/sourceSystem>
+
+    Annotations:
+        rdfs:label "what system a fact was taken from (need fact type)"
+
+    Domain:
+        <http://www.kmr.org/ontology/AboutFactType>
+
+
+DataProperty: <http://www.kmr.org/ontology/patientName>
+
+    Annotations:
+        rdfs:comment "combination of blank node with family, middle etc. components",
+        rdfs:label "patient name"
+
+    Domain:
+        <http://www.kmr.org/ontology/PatientFactType>
+
+    Range:
+        xsd:string
+
+
+DataProperty: <http://www.kmr.org/ontology/codeSystem>
+
+    Annotations:
+        rdfs:label "code system (from code system)"
+
+    Domain:
+        skos:Concept
+
+    Range:
+        xsd:string
+
+
+DataProperty: <http://www.kmr.org/ontology/adverseEventDate>
+
+    Annotations:
+        rdfs:label "adverse event date"
+
+    Domain:
+        <http://www.kmr.org/ontology/AllergyFactType>
+
+
+DataProperty: <http://www.kmr.org/ontology/dateEntered>
+
+    Annotations:
+        rdfs:comment "synthesized to gather all similar properties and make VSN map easier",
+        rdfs:label "date entered"
+
+    Domain:
+        <http://www.kmr.org/ontology/FactType>
+
+    Range:
+        xsd:dateTime
+
+
+Class: <http://www.kmr.org/ontology/FactType>
+
+
+Class: <http://www.kmr.org/ontology/PhysicianFactType>
+
+    Annotations:
+        rdfs:label "Physician Fact Type"
+
+    SubClassOf:
+        <http://www.kmr.org/ontology/FactType>
+
+
+Class: <http://www.kmr.org/ontology/AboutFactType>
+
+    Annotations:
+        rdfs:label "Fact about Facts"
+
+    SubClassOf:
+        <http://www.kmr.org/ontology/FactType>
+
+
+Class: <http://www.kmr.org/ontology/AllergyFactType>
+
+    Annotations:
+        rdfs:label "Allergy Fact"
+
+    SubClassOf:
+        <http://www.kmr.org/ontology/PhysicianFactType>
+
+
+Class: <http://www.kmr.org/ontology/PersonFactType>
+
+
+Class: skos:Concept
+
+
+Class: <http://www.kmr.org/ontology/ReactionFactType>
+
+    Annotations:
+        rdfs:label "Reaction Fact"
+
+    SubClassOf:
+        <http://www.kmr.org/ontology/PhysicianFactType>
+
+
+Class: <http://www.kmr.org/ontology/PatientFactType>
+
+    Annotations:
+        rdfs:label "Patient Fact"
+
+    SubClassOf:
+        <http://www.kmr.org/ontology/FactType>
+
+

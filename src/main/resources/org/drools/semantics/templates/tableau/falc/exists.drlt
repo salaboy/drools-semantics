@@ -1,0 +1,43 @@
+
+@declare{'existsTemplate'}
+
+/*********************************************************************************/
+
+ 
+rule "Exists_@{id}"
+salience -90
+when
+	$test : DLTest( $prob : problem )
+	$t : HypoType( goal == $test , $xlab : label ,
+			       $x : subject, object == "@{id}")
+    $p : Property( $pred : predicate == "@{prop}", subject == $x, $y : object )
+	$d : Degree( subject == $t , $l : value )	
+then				
+//	System.out.println("Rule Exists -------> @{prop}.@{target}" );
+
+	HypoType type = new HypoType($y,"@{target}", false ,$test);
+	HypoProperty hyprop = new HypoProperty($pred, $x, $y, $test);
+
+	Object xc = ConstraintFactory.newUnitIntervalVariable("x_"+type.getLabel(),$prob);
+	Object xp = ConstraintFactory.newUnitIntervalVariable("x_"+$p.getLabel(),$prob);
+
+	System.out.println("\t\tRule Exists -------> Created " + type );
+	System.out.println("\t\tRule Exists -------> Created " + hyprop );
+
+
+	Degree deg = new Degree(type,xc);
+
+	ConstraintFactory.addExistConstraint(xc,xp, $l,$prob);
+
+	insertLogical(type);
+	insertLogical(deg);
+	insertLogical(hyprop);
+end 
+
+
+
+/*********************************************************************************/
+
+@end{}
+
+@includeNamed{'existsTemplate'}

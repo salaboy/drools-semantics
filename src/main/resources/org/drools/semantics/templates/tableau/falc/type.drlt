@@ -1,0 +1,36 @@
+
+@declare{'typeTemplate'}
+
+/*********************************************************************************/
+
+rule "Type_@{id} -> @{target}"
+//agenda-group "Tableau"
+salience -10
+when
+	$test : DLTest( $prob : problem )
+	$t : HypoType( goal == $test , $xlab : label , 	
+			       $x : subject, object == "@{id}")
+	$d : Degree( subject == $t , $deg : value )
+then			
+//	System.out.println(" Rule Type ** @{id} -> @{target} ************ ");
+	HypoType t = $t.clone(); 
+		t.setObject("@{target}");	
+		String ylab = t.getLabel();
+ 	 		
+ 	Object x = ConstraintFactory.newUnitIntervalVariable("x_"+$xlab,$prob);
+ 	Object y = ConstraintFactory.newUnitIntervalVariable("x_"+ylab,$prob);
+ 	Degree d = new Degree(t,y);
+ 	
+	ConstraintFactory.addEqualityConstraint(x,y,$prob);								
+ 			
+	insertLogical(t);	
+	insertLogical(d);			
+end 
+
+
+
+
+/*********************************************************************************/
+@end{}
+
+@includeNamed{'typeTemplate'}

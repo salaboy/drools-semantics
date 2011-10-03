@@ -1,0 +1,119 @@
+package org.drools.semantics.lang.dl;
+
+@Deprecated
+public class Degree implements Cloneable {
+
+	private Object subject = null;
+	private Double tau = null;
+	private Double phi = null;
+	private Object value = null;
+	
+	
+	
+	public Degree(Object subject, Double tau, Double phi, Object value) {
+		super();
+		this.subject = subject;
+		this.tau = tau;
+		this.phi = phi;
+		this.value = value;
+	}
+	
+	public Degree(Object subject, Double tau, Double phi) {
+		this(subject,tau,phi,null);
+	}
+	
+	public Degree(Object subject, Double tau) {
+		this(subject,tau,1.0,null);
+	}
+	
+	public Degree(Object subject, Object value) {
+		this(subject,null,null,value);
+	}
+	
+	
+	public Object getSubject() {
+		return subject;
+	}
+	public void setSubject(Object subject) {
+		this.subject = subject;
+	}
+	public Double getTau() {
+		return tau;
+	}
+	public void setTau(Double tau) {
+		this.tau = tau;
+	}
+	public Double getPhi() {
+		return phi;
+	}
+	public void setPhi(Double phi) {
+		this.phi = phi;
+	}
+	public Object getValue() {
+		return value;
+	}
+	public void setValue(Object value) {
+		this.value = value;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((phi == null) ? 0 : phi.hashCode());
+		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
+		result = prime * result + ((tau == null) ? 0 : tau.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Degree other = (Degree) obj;
+		if (phi == null) {
+			if (other.phi != null)
+				return false;
+		} else if (!phi.equals(other.phi))
+			return false;
+		if (subject == null) {
+			if (other.subject != null)
+				return false;
+		} else if (!subject.equals(other.subject))
+			return false;
+		if (tau == null) {
+			if (other.tau != null)
+				return false;
+		} else if (!tau.equals(other.tau))
+			return false;
+		if (value == null) {
+			if (other.value != null)
+				return false;
+		} else if (!value.equals(other.value))
+			return false;
+		return true;
+	}
+
+
+	@Override
+	public String toString() {
+		if (value != null) {
+			return value+"_"+subject;
+		} else {
+			return tau + " <= " + subject + " <= " + phi;
+		}
+	}
+	
+
+
+	public Degree clone() {
+		return new Degree(this.getSubject(), this.getTau(), this.getPhi(), this.getValue());
+	}
+}

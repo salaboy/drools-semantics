@@ -1,0 +1,29 @@
+ @comment{
+    Statically inserts a logically insert value
+}
+
+
+
+@declare{'conceptDeclare'}
+package @{package};
+
+// @{iri}
+public interface @{name} @if{ superConcepts.size > 0 } extends @foreach{ sup : superConcepts } @{ compactUpperCase( sup.name ) } @end{','} @end{}
+{
+  @if{ properties.size > 0 }    @foreach{ prop : properties.keySet }
+    // @{prop.property}
+    public @{ properties[ prop ].name } get@{ compactUpperCase(prop.name) }();
+
+    // @{prop.property}
+    public void set@{ compactUpperCase(prop.name) }( @{ properties[ prop ].name } value );
+  @end{}                        @end{}
+}
+
+@end{}
+
+@includeNamed{'conceptDeclare'}
+
+
+
+
+

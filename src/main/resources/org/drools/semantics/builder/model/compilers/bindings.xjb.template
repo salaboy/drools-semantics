@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb"
+          xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
+          xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+          xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+          xmlns:annox="http://annox.dev.java.net"
+          xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+          xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+          version="2.1"
+          extensionBindingPrefixes="xjc annox" >
+  <bindings schemaLocation="kmr2.xsd" node="/xsd:schema">
+
+    <globalBindings localScoping="toplevel" >
+      <serializable/>
+      <xjc:simple/>
+      <xjc:treatRestrictionLikeNewType/>
+
+      <javaType name= "java.util.Date" xmlType="xsd:date" />
+      <javaType name= "java.util.Date" xmlType="xsd:dateTime" />
+      <javaType name= "java.util.Date" xmlType="xsd:time" />
+    </globalBindings>
+
+    @code{ targetElement = ''; if (flat) targetElement='element'; else targetElement='complexType'; }
+
+    <bindings node="//xsd:@{targetElement}[@name='Thing']">
+      <inheritance:extends>RdfIdAble</inheritance:extends>
+    </bindings>
+
+
+    @foreach{ concept : concepts }
+    <bindings node="//xsd:@{targetElement}[@name='@{concept.name}']">
+        <annox:annotate>
+          <annox:annotate annox:class="com.clarkparsia.empire.annotation.RdfsClass" value="tns:@{concept.name}" />
+          <annox:annotate annox:class="com.clarkparsia.empire.annotation.Namespaces" value="tns @{package}" />
+        </annox:annotate>
+
+        @foreach{ propKey : properties[ concept.name ].keySet }
+        <bindings node=".//xsd:element[@name='@{propKey}']">
+            <annox:annotate>
+                <annox:annotate annox:class="com.clarkparsia.empire.annotation.RdfProperty" value="tns:@{propKey}" />
+            </annox:annotate>
+        </bindings>
+        @end{}
+    </bindings>
+    @end{}
+
+
+  </bindings>
+</bindings>

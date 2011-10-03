@@ -1,0 +1,24 @@
+ @comment{
+    Statically inserts a logically insert value
+}
+
+
+
+@declare{'conceptDeclare'}
+
+// @{iri}
+trait @{name} @if{ superConcepts.size > 0 } extends @foreach{ sup : superConcepts } @{ compactUpperCase( sup.name ) } @end{','} @end{}
+  @if{ properties.size > 0 }    @foreach{ prop : properties.keySet }
+    // @{prop.property}
+    @{prop.name} : @{ properties[ prop ].name }
+  @end{}                        @end{}
+end
+
+@end{}
+
+@includeNamed{'conceptDeclare'}
+
+
+
+
+

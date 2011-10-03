@@ -1,0 +1,48 @@
+
+@declare{'forallTemplate'}
+
+/*********************************************************************************/
+
+ 
+rule "Forall_@{id}"
+salience -90
+when
+	$test : DLTest( $prob : problem )
+	$t : HypoType( goal == $test , $xlab : label,
+			       $x : subject, object == "@{id}")
+    $p : Property( $pred : predicate == "@{prop}", subject == $x, $y : object )
+	$d : Degree( subject == $t , $l : value )	
+then				
+//	System.out.println("Rule Forall -------> @{prop}.@{target}" );
+
+	Object[] vars = new Object[2];							
+
+	HypoProperty hyprop = new HypoProperty($pred, $x, $y, $test);
+	HypoType type = new HypoType( $y, "@{target}", false , $test);
+	
+	vars[0] = ConstraintFactory.newUnitIntervalVariable("x_"+$p.getLabel(),$prob);
+	vars[1] = ConstraintFactory.newUnitIntervalVariable("x_"+type.getLabel(),$prob);
+	
+	Degree propDeg = new Degree(hyprop,vars[0]);
+ 	Degree degree = new Degree(type,vars[1]);
+
+    System.out.println("\t\tRule Forall -------> Created " + type );
+	System.out.println("\t\tRule Forall -------> Created " + hyprop );
+						
+	Object y = ConstraintFactory.newBooleanVariable("y_@{id}",$prob);						
+	ConstraintFactory.addForallConstraint( vars[0], vars[1], y, $l, $prob);
+
+	insertLogical(hyprop);
+	insertLogical(propDeg);
+	
+	insertLogical(type);		
+	insertLogical(degree);	
+end 
+
+
+
+/*********************************************************************************/
+
+@end{}
+
+@includeNamed{'forallTemplate'}

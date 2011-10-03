@@ -1,0 +1,46 @@
+package org.drools.semantics.lang.dl ;
+
+import org.semanticweb.owlapi.model.*;
+import org.drools.semantics.builder.model.*;
+import org.drools.semantics.builder.DLUtils;
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+    Visit rule : master
+*/
+rule "Insert Descriptors"
+salience 1000
+when
+	$ontology   : OWLOntology( )
+	$axiom      : OWLDeclarationAxiom( $ent : entity ) from $ontology.getAxioms( AxiomType.DECLARATION )
+then
+    System.err.println( "Insert ...  " + $axiom );
+	insertLogical( $ent );
+end
+
+// don't know why, dataproperties aren't returned as declarations...
+rule "Insert Data properties"
+salience 1000
+when
+	$ontology   : OWLOntology( )
+	$axiom      : OWLProperty( ) from $ontology.getDataPropertiesInSignature()
+then
+    System.err.println( "Insert ...  " + $axiom );
+    insertLogical( $axiom );
+end
+
+
+
+
+
