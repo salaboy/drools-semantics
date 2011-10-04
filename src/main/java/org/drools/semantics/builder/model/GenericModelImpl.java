@@ -17,6 +17,8 @@
 package org.drools.semantics.builder.model;
 
 
+import org.drools.semantics.builder.DLUtils;
+
 import java.util.*;
 
 public class GenericModelImpl implements OntoModel {
@@ -36,7 +38,7 @@ public class GenericModelImpl implements OntoModel {
     }
 
     public void setPackage(String pack) {
-        this.pack = pack;
+        this.pack = DLUtils.getInstance().iriToPackage( pack );
     }
 
     public List<Concept> getConcepts() {
