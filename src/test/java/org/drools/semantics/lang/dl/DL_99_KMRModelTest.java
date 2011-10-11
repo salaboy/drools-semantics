@@ -193,10 +193,26 @@ public class DL_99_KMRModelTest {
         OntoModel results = factory.buildModel( res, kSession );
 
 
+        ModelCompiler jcompiler =  ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.JAR );
+        JarModel jarModel = (JarModel) jcompiler.compile( results );
+
+        try {
+            FileOutputStream fos = new FileOutputStream("/home/davide/Projects/KMR2/workspace/Factz/lib/kmr2.jar");
+            byte[] content = jarModel.buildJar().toByteArray();
+
+            fos.write( content, 0, content.length );
+            fos.flush();
+            fos.close();
+        } catch ( IOException e ) {
+            fail( e.getMessage() );
+        }
+
+
+        /**************************************************************************************************************/
+
+
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.XSDX );
         SemanticXSDModel xsdModel = (SemanticXSDModel) compiler.compile( results );
-
-
 
         xsdModel.stream( System.out );
         xsdModel.streamBindings( System.out );
