@@ -2,6 +2,7 @@
 <bindings xmlns="http://java.sun.com/xml/ns/jaxb"
           xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
           xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+          xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
           xmlns:annox="http://annox.dev.java.net"
           xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
@@ -33,11 +34,20 @@
         <inheritance:implements>@{package}.@{concept.name}</inheritance:implements>
         <annox:annotate>
           <annox:annotate annox:class="com.clarkparsia.empire.annotation.RdfsClass" value="tns:@{concept.name}" />
-          <annox:annotate annox:class="com.clarkparsia.empire.annotation.Namespaces" value="tns @{package}" />
+          <annox:annotate annox:class="com.clarkparsia.empire.annotation.Namespaces" value="tns http://@{package}" />
         </annox:annotate>
 
         @foreach{ propKey : properties[ concept.name ].keySet }
-        <bindings node=".//xsd:element[@name='@{propKey}']">
+
+            @code{ nodeType = ''; if (properties[ concept.name ][ propKey ].primitive && propKey.maxCard <= 1) nodeType='attribute'; else nodeType='element'; }
+
+        <bindings node=".//xsd:@{nodeType}[@name='@{propKey}']">
+           <jxb:property generateIsSetMethod="true" name="@{propKey}" >
+            @if{ "element".equals(nodeType) && ! properties[ concept.name ][ propKey ].primitive }
+                <jxb:baseType name="@{package}.@{properties[ concept.name ][ propKey ]}" />
+            @end{}
+           </jxb:property>
+
             <annox:annotate>
                 <annox:annotate annox:class="com.clarkparsia.empire.annotation.RdfProperty" value="tns:@{propKey}" />
             </annox:annotate>

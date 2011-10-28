@@ -16,10 +16,14 @@
 
 package org.drools.semantics.builder.model.compilers;
 
+
+import org.drools.factmodel.BuildUtils;
+import org.drools.semantics.builder.DLUtils;
 import org.drools.semantics.builder.model.*;
 import org.mvel2.asm.*;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,11 +48,12 @@ public class JarInterfaceModelCompilerImpl extends JavaInterfaceModelCompilerImp
         MethodVisitor mv;
         AnnotationVisitor av0;
 
-        String pack = getModel().getPackage().replace(".","/") + "/";
+        String pack = ((String)params.get("package")).replace(".","/") + "/";
 
         Set<Concept> sup = ((Set<Concept>) params.get("superConcepts"));
-        String[] superTypes = new String[ sup.size() ];
-        int j = 0;
+        String[] superTypes = new String[ sup.size() + 1];
+        superTypes[0] = "com/clarkparsia/empire/SupportsRdfId";
+        int j = 1;
         for ( Iterator<Concept> iter = sup.iterator(); iter.hasNext(); ) {
             superTypes[j++] = pack + iter.next().getName();
         }
@@ -64,19 +69,43 @@ public class JarInterfaceModelCompilerImpl extends JavaInterfaceModelCompilerImp
             for ( PropertyRelation rel : props.keySet() ) {
                 String propName = rel.getName();
                     propName = propName.substring(0,1).toUpperCase() + propName.substring(1);
-                String target = pack + props.get( rel ).getName();
+                //String target =  pack + props.get( rel ).getName();
+                String target = props.get( rel ).getName();
+                boolean isBoolean = target.equalsIgnoreCase("xsd:boolean");
+                    if ( target.startsWith("xsd:") ) {
+                        target = DLUtils.map( target, rel.getMaxCard() == null || rel.getMaxCard() != 1 ).replace(".","/");
+                    } else {
+                        target = pack + target;
+                    }
 
-                mv = cw.visitMethod(ACC_PUBLIC + ACC_ABSTRACT, "get" + propName, "()L" + target + ";", null, null);
+                String propType = BuildUtils.getTypeDescriptor( target );
+                String genericGetType = null;
+                String genericSetType = null;
+                if ( rel.getMaxCard() == null || rel.getMaxCard() != 1  ) {
+                    genericGetType = "()Ljava/util/List<" + propType + ">;";
+                    genericSetType = "(Ljava/util/List<" + propType + ">;)V";
+                    propType = "Ljava/util/List;";
+                    isBoolean = false;
+                }
+
+
+                String getPrefix = isBoolean ? "is" : "get";
+                mv = cw.visitMethod(ACC_PUBLIC + ACC_ABSTRACT, getPrefix + propName, "()" + propType , genericGetType, null);
                 mv.visitEnd();
 
-                mv = cw.visitMethod(ACC_PUBLIC + ACC_ABSTRACT, "set" + propName, "(L" + target + ";)V", null, null);
+                mv = cw.visitMethod(ACC_PUBLIC + ACC_ABSTRACT, "set" + propName, "(" + propType + ")V", genericSetType, null);
                 mv.visitEnd();
+
+                System.out.println("*** Just compiled a klass " + getPrefix + "\t\n" + propName + " \t\n " + propType + "\t\n" + genericGetType + "\t\n" + genericSetType + "\t\n" +(pack +  params.get("name"))+"\t\n");
             }
 
         cw.visitEnd();
 
         return new JarModelImpl.Holder( cw.toByteArray() );
     }
+
+
+
 
 
 

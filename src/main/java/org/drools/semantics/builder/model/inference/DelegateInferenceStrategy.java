@@ -48,7 +48,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
     private MultiKeyMap minCards = new MultiKeyMap();
     private MultiKeyMap maxCards = new MultiKeyMap();
-    
+
     private static void register( String prim, String klass ) {
         IRI i1 = IRI.create( prim );
         Concept con = new Concept( i1.toQuotedString(), klass );
@@ -159,6 +159,10 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
 
 
+
+
+
+
         // infer domain / range from quantified restrictions...
         for ( OWLClass klass : ontoDescr.getClassesInSignature() ) {
             for ( OWLClassExpression clax : klass.getSuperClasses( ontoDescr ) ) {
@@ -184,7 +188,11 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                             if ( fil instanceof OWLObjectComplementOf ) {
                                 fil = ((OWLObjectComplementOf) fil ).getOperand();
                             }
-                            addRange( ranges, prop, rest.getFiller().asOWLClass(), fac );
+                            try {
+                                addRange( ranges, prop, rest.getFiller().asOWLClass(), fac );
+                            } catch (OWLRuntimeException ore) {
+                                System.err.println( "ORE --- " + rest.getFiller() );
+                            }
                             process( fil );
                         } else if ( expr instanceof  OWLQuantifiedDataRestriction ) {
                             OWLQuantifiedDataRestriction rest = (OWLQuantifiedDataRestriction) expr;
@@ -320,50 +328,50 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
 
 
+        for ( OWLProperty prop : domains.keySet() ) {
+            if ( domains.get( prop ).size() > 1 ) {
+                dirty = true;
+                OWLClass dom = factory.getOWLClass(
+                        IRI.create(DLUtils.getInstance().buildNameFromIri(prop.getIRI().toQuotedString() + "Domain")))  ;
+                ontoDescr.getOWLOntologyManager().applyChange(
+                        new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( dom ) )
+                );
+                ontoDescr.getOWLOntologyManager().applyChange(
+                        new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( dom, factory.getOWLObjectUnionOf( domains.get( prop ) ) ) )
+                );
+            }
+        }
+        for ( OWLProperty prop : ranges.keySet() ) {
+            if ( ranges.get( prop ).size() > 1 ) {
+                dirty = true;
+                OWLClass dom = factory.getOWLClass(
+                        IRI.create(DLUtils.getInstance().buildNameFromIri(prop.getIRI().toQuotedString() + "Range")))  ;
+                ontoDescr.getOWLOntologyManager().applyChange(
+                        new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( dom ) )
+                );
+                ontoDescr.getOWLOntologyManager().applyChange(
+                        new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( dom, factory.getOWLObjectUnionOf( ranges.get( prop ) ) ) )
+                );
+            }
+        }
+        for ( OWLProperty prop : dataRanges.keySet() ) {
+            if ( dataRanges.get( prop ).size() > 1 ) {
+                dirty = true;
+                OWLDatatype dom = factory.getOWLDatatype(
+                        IRI.create(DLUtils.getInstance().buildNameFromIri(prop.getIRI().toQuotedString() + "Range")))  ;
+                ontoDescr.getOWLOntologyManager().applyChange(
+                        new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( dom ) )
+                );
+                ontoDescr.getOWLOntologyManager().applyChange(
+                        new AddAxiom( ontoDescr, factory.getOWLDataPropertyRangeAxiom( prop.asOWLDataProperty(), factory.getOWLDataUnionOf( dataRanges.get( prop ) )
+                        ) )
+                );
+            }
+        }
 
 
 
-
-//        for ( OWLProperty prop : domains.keySet() ) {
-//            if ( domains.get( prop ).size() > 1 ) {
-//                dirty = true;
-//                OWLClass dom = factory.getOWLClass(
-//                        IRI.create(DLUtils.getInstance().buildNameFromIri(prop.getIRI().toQuotedString() + "Domain")))  ;
-//                ontoDescr.getOWLOntologyManager().applyChange(
-//                        new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( dom ) )
-//                );
-//                ontoDescr.getOWLOntologyManager().applyChange(
-//                        new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( dom, factory.getOWLObjectUnionOf( domains.get( prop ) ) ) )
-//                );
-//            }
-//        }
-//        for ( OWLProperty prop : ranges.keySet() ) {
-//            if ( ranges.get( prop ).size() > 1 ) {
-//                dirty = true;
-//                OWLClass dom = factory.getOWLClass(
-//                        IRI.create(DLUtils.getInstance().buildNameFromIri(prop.getIRI().toQuotedString() + "Range")))  ;
-//                ontoDescr.getOWLOntologyManager().applyChange(
-//                        new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( dom ) )
-//                );
-//                ontoDescr.getOWLOntologyManager().applyChange(
-//                        new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( dom, factory.getOWLObjectUnionOf( ranges.get( prop ) ) ) )
-//                );
-//            }
-//        }
-//        for ( OWLProperty prop : dataRanges.keySet() ) {
-//            if ( dataRanges.get( prop ).size() > 1 ) {
-//                dirty = true;
-//                OWLDatatype dom = factory.getOWLDatatype(
-//                        IRI.create(DLUtils.getInstance().buildNameFromIri(prop.getIRI().toQuotedString() + "Range")))  ;
-//                ontoDescr.getOWLOntologyManager().applyChange(
-//                        new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( dom ) )
-//                );
-//                ontoDescr.getOWLOntologyManager().applyChange(
-//                        new AddAxiom( ontoDescr, factory.getOWLDataPropertyRangeAxiom( prop.asOWLDataProperty(), factory.getOWLDataUnionOf( dataRanges.get( prop ) )
-//                        ) )
-//                );
-//            }
-//        }
+//
 
 
 
@@ -653,8 +661,8 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
 
 //        if ( dirty ) {
-            initReasoner( kSession, ontoDescr );
-            reasoner.fillOntology( ontoDescr.getOWLOntologyManager(), ontoDescr );
+//            initReasoner( kSession, ontoDescr );
+//            reasoner.fillOntology( ontoDescr.getOWLOntologyManager(), ontoDescr );
 //        }
 
 
@@ -680,13 +688,15 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                         Concept con = cache.get( rel.getSubject() );
 
                         Integer min = (Integer) minCards.get( rel.getSubject(), propIri );
-                            if ( min != null ) {
-                                rel.setMinCard( min );
-                            }
-                        Integer max = (Integer) minCards.get( rel.getSubject(), propIri );
-                            if ( max != null ) {
-                                rel.setMaxCard( max );
-                            }
+                        if ( min != null ) {
+                            rel.setMinCard( min );
+                        } else {
+                            rel.setMinCard( 1 );
+                        }
+                        Integer max = (Integer) maxCards.get( rel.getSubject(), propIri );
+                        if ( max != null ) {
+                            rel.setMaxCard( max );
+                        }
                         con.getProperties().put( rel, cache.get( rel.getObject() ) );
                         hierachicalModel.addProperty( rel );
                     }
@@ -706,20 +716,22 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                     for ( OWLDataRange ran : dataRanges.get( dp ) ) {
 
                         PropertyRelation rel = new PropertyRelation( dom.asOWLClass().getIRI().toQuotedString(),
-                               propIri,
-                               ran.asOWLDatatype().getIRI().toQuotedString(),
-                               propName );
+                                propIri,
+                                ran.asOWLDatatype().getIRI().toQuotedString(),
+                                propName );
 
                         Concept con = cache.get( rel.getSubject() );
 
                         Integer min = (Integer) minCards.get( rel.getSubject(), propIri );
-                            if ( min != null ) {
-                                rel.setMinCard( min );
-                            }
-                        Integer max = (Integer) minCards.get( rel.getSubject(), propIri );
-                            if ( max != null ) {
-                                rel.setMaxCard(max);
-                            }
+                        if ( min != null ) {
+                            rel.setMinCard( min );
+                        }  else {
+                            rel.setMinCard( 1 );
+                        }
+                        Integer max = (Integer) maxCards.get( rel.getSubject(), propIri );
+                        if ( max != null ) {
+                            rel.setMaxCard(max);
+                        }
 
 //                        later mapping
 //                        con.getProperties().put( rel, primitives.get( rel.getObject() ) );
@@ -736,28 +748,28 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
     }
 
     private OWLProperty lookupDataProperty(String propId, Set<OWLDataProperty> set ) {
-           for (OWLDataProperty prop : set ) {
-               if ( prop.getIRI().toQuotedString().equals( propId ) ) {
-                   return prop;
-               }
-           }
+        for (OWLDataProperty prop : set ) {
+            if ( prop.getIRI().toQuotedString().equals( propId ) ) {
+                return prop;
+            }
+        }
         return null;
     }
 
     private OWLProperty lookupObjectProperty(String propId, Set<OWLObjectProperty> set ) {
-           for (OWLObjectProperty prop : set ) {
-               if ( prop.getIRI().toQuotedString().equals( propId ) ) {
-                   return prop;
-               }
-           }
+        for (OWLObjectProperty prop : set ) {
+            if ( prop.getIRI().toQuotedString().equals( propId ) ) {
+                return prop;
+            }
+        }
         return null;
     }
 
 
     @Override
     protected OntoModel buildClassLattice(OWLOntology ontoDescr, StatefulKnowledgeSession kSession, Map<InferenceTask, Resource> theory, OntoModel baseModel) {
-        initReasoner( kSession, ontoDescr );
-        reasoner.fillOntology( ontoDescr.getOWLOntologyManager(), ontoDescr );
+//        initReasoner( kSession, ontoDescr );
+//        reasoner.fillOntology( ontoDescr.getOWLOntologyManager(), ontoDescr );
 
 
         addConceptsToModel( kSession, ontoDescr, baseModel );
@@ -779,9 +791,10 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
         for ( OWLClass con : ontoDescr.getClassesInSignature() ) {
             Concept concept = cache.get( con.getIRI().toQuotedString() );
 
-
+            int namedSupers = 0;
             for ( OWLSubClassOfAxiom sc : ontoDescr.getSubClassAxiomsForSubClass( con ) ) {
                 if ( ! sc.getSuperClass().isAnonymous() ) {
+                    namedSupers++;
                     SubConceptOf subcon = new SubConceptOf( sc.getSubClass().asOWLClass().getIRI().toQuotedString(), sc.getSuperClass().asOWLClass().getIRI().toQuotedString() );
                     if ( model.getSubConceptOf( subcon.getSubject(), subcon.getObject() ) == null ) {
                         concept.getSuperConcepts().add( cache.get( subcon.getObject() ) );
@@ -789,6 +802,14 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                         kSession.insert( subcon );
                     }
                 }
+            }
+            if ( namedSupers == 0 && ! concept.getName().equals("Thing")) {
+                SubConceptOf subcon = new SubConceptOf( con.getIRI().toQuotedString(), ontoDescr.getOWLOntologyManager().getOWLDataFactory().getOWLThing().getIRI().toQuotedString() );
+                    if ( model.getSubConceptOf( subcon.getSubject(), subcon.getObject() ) == null ) {
+                        concept.getSuperConcepts().add( cache.get( subcon.getObject() ) );
+                        model.addSubConceptOf( subcon );
+                        kSession.insert( subcon );
+                    }
             }
         }
     }

@@ -53,7 +53,7 @@ public class DL_99_KMRModelTest {
 
     @Test
     public void testDRLModelGeneration() {
-        String source = "org/drools/semantics/lang/dl/kmr2_miniExample.manchester";
+        String source = "kmr2/kmr2_miniExample.manchester";
         Resource res = ResourceFactory.newClassPathResource( source );
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
@@ -93,7 +93,7 @@ public class DL_99_KMRModelTest {
     @Test
     public void testGraphModelGeneration() {
 //        String source = "org/drools/semantics/lang/dl/kmr2_miniExample.manchester";
-         String source = "kmr2.ttl";
+         String source = "kmr2/Kmr2.ttl";
         Resource res = ResourceFactory.newClassPathResource( source );
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
@@ -125,7 +125,7 @@ public class DL_99_KMRModelTest {
 
     @Test
     public void testXSDModelGeneration() {
-        String source = "org/drools/semantics/lang/dl/kmr2_miniExample.manchester";
+        String source = "kmr2/kmr2_miniExample.manchester";
         Resource res = ResourceFactory.newClassPathResource( source );
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
@@ -146,7 +146,7 @@ public class DL_99_KMRModelTest {
 
     @Test
     public void testXSDExternalModelGeneration() {
-        String source = "org/drools/semantics/lang/dl/kmr2_miniExample.manchester";
+        String source = "kmr2/kmr2_miniExample.manchester";
         Resource res = ResourceFactory.newClassPathResource(source);
 
         OntoModel results = factory.buildModel( res );
@@ -165,7 +165,7 @@ public class DL_99_KMRModelTest {
 
     @Test
     public void testWorkingSetModelGeneration() {
-        String source = "org/drools/semantics/lang/dl/kmr2_miniExample.manchester";
+        String source = "kmr2/kmr2_miniExample.manchester";
         Resource res = ResourceFactory.newClassPathResource( source );
 
         OntoModel results = factory.buildModel( res );
@@ -183,7 +183,7 @@ public class DL_99_KMRModelTest {
 
     @Test
     public void testFullXSDModelGeneration() {
-        String source = "kmr2.ttl";
+         String source = "kmr2/Kmr2.ttl";
         Resource res = ResourceFactory.newClassPathResource( source );
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
@@ -214,8 +214,8 @@ public class DL_99_KMRModelTest {
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.XSDX );
         SemanticXSDModel xsdModel = (SemanticXSDModel) compiler.compile( results );
 
-        xsdModel.stream( System.out );
-        xsdModel.streamBindings( System.out );
+//        xsdModel.stream( System.out );
+//        xsdModel.streamBindings( System.out );
 
 
 

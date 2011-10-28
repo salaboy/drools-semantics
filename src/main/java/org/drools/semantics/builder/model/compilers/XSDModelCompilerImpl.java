@@ -82,32 +82,82 @@ public class XSDModelCompilerImpl extends ModelCompilerImpl implements DRLModelC
             Element ext = new Element("extension", xmodel.getNamespace( "xsd" ) );
                 ext.setAttribute("base", "tns:"+sup.getName() );
 
-                ext.addContent( buildProperties( name, (Map<PropertyRelation, Concept>) params.get( "properties" ) ) );
+                buildProperties( name, (Map<PropertyRelation, Concept>) params.get( "properties" ), ext );
 
             complex.setContent( ext );
             type.setContent( complex );
         } else {
-            type.addContent( buildProperties( name, (Map<PropertyRelation, Concept>) params.get( "properties" ) ) );
+            buildProperties( name, (Map<PropertyRelation, Concept>) params.get( "properties" ), type );
         }
 
         return type;
     }
 
-    private Element buildProperties( String name, Map<PropertyRelation, Concept> props) {
+    private Element buildProperties( String name, Map<PropertyRelation, Concept> props, Element root ) {
         XSDModel xmodel = (XSDModel) getModel();
         propCache.put( name, props );
 
         Element seq = new Element( "sequence", xmodel.getNamespace( "xsd" ) );
+        root.addContent( seq );
             for ( PropertyRelation rel : props.keySet() ) {
                 Concept tgt = props.get( rel );
-                Element prop = new Element( "element", xmodel.getNamespace( "xsd" ) );
+                if ( tgt.isPrimitive() ) {
+                    Element prop = new Element( "attribute", xmodel.getNamespace( "xsd" ) );
                     prop.setAttribute( "name", rel.getName() );
                     prop.setAttribute( "type", map( tgt ) );
+
+                    Integer minCard = rel.getMinCard();
+                        if (minCard == null) {
+                            minCard = 1;
+                            rel.setMinCard( 1 );
+                        }
+                    Integer maxCard = rel.getMaxCard();
+                        if (maxCard != null && maxCard == 0) {
+                            maxCard = null;
+                            rel.setMaxCard( null );
+                        }
+                    if ( minCard != null && maxCard != null && minCard == 1 && maxCard == 1 ) {
+                        prop.setAttribute( "use", "required" );
+                        root.addContent( prop );
+                    } else if ( minCard != null && minCard <= 1 && maxCard != null && maxCard == 1 ) {
+                        prop.setAttribute( "use", "optional" );
+                        root.addContent( prop );
+                    } else {
+//                        prop.setAttribute( "minOccurs", rel.getMinCard().toString() );
+//                        prop.setAttribute( "maxOccurs", rel.getMaxCard() == null ? "unbounded" : rel.getMaxCard().toString() );
+                        prop = new Element( "element", xmodel.getNamespace( "xsd" ) );
+                        prop.setAttribute( "name", rel.getName() );
+                        prop.setAttribute( "type", map( tgt ) );
+                        prop.setAttribute( "minOccurs", rel.getMinCard().toString() );
+                        prop.setAttribute( "maxOccurs", "unbounded" );
+                        seq.addContent( prop );
+                    }
+
+
+                } else {
+                    Element prop = new Element( "element", xmodel.getNamespace( "xsd" ) );
+                    prop.setAttribute( "name", rel.getName() );
+                    prop.setAttribute( "type", map( tgt ) );
+
+                    Integer minCard = rel.getMinCard();
+                        if (minCard == null) {
+                            minCard = 0;
+                            rel.setMinCard( 0 );
+                        }
+                    Integer maxCard = rel.getMaxCard();
+                        if (maxCard != null && maxCard == 0) {
+                            maxCard = null;
+                            rel.setMaxCard( null );
+                        }
+
                     prop.setAttribute( "minOccurs", rel.getMinCard().toString() );
                     prop.setAttribute( "maxOccurs", rel.getMaxCard() == null ? "unbounded" : rel.getMaxCard().toString() );
 
-                seq.addContent( prop );
+                    seq.addContent( prop );
+                }
+
             }
+
         return seq;
     }
 
@@ -137,7 +187,7 @@ public class XSDModelCompilerImpl extends ModelCompilerImpl implements DRLModelC
             }
         }
 
-        type.addContent( buildProperties( name, props ) );
+        buildProperties( name, props, type );
 
         return type;
     }

@@ -17,8 +17,6 @@
 package org.drools.semantics.lang.dl;
 
 import org.junit.Test;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
 
 
@@ -30,7 +28,7 @@ public class DL_3_KMR_Test extends AbstractReasonerTestBase {
 
 
 
-    private String kmrPath = "org/drools/semantics/lang/dl/kmr2_miniExample.manchester";
+    private String kmrPath = "kmr2/kmr2_miniExample.manchester";
 
 
 

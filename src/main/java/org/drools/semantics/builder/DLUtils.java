@@ -102,4 +102,77 @@ public class DLUtils {
         return compactUpperCase( name );
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+    public static String map( String dataType, boolean box ) {
+        if ( "xsd:integer".equals( dataType ) ) {
+            return "java.math.BigInteger";
+        } else if ( "xsd:int".equals( dataType ) ) {
+
+            return box ? "java.lang.Integer" : "int";
+
+        } else if ( "xsd:string".equals( dataType ) ) {
+            return "java.lang.String";
+        } else if ( "xsd:dateTime".equals( dataType ) ) {
+            return "java.util.Date";
+        } else if ( "xsd:date".equals( dataType ) ) {
+            return "java.util.Date";
+        } else if ( "xsd:time".equals( dataType ) ) {
+            return "java.util.Date";
+        } else if ( "xsd:long".equals( dataType ) ) {
+
+            return box ? "java.lang.Long" : "long";
+
+        } else if ( "xsd:float".equals( dataType ) ) {
+
+            return box ? "java.lang.Float" : "float";
+
+        } else if ( "xsd:double".equals( dataType ) ) {
+
+            return box ? "java.lang.Double" : "double";
+
+        } else if ( "xsd:short".equals( dataType ) ) {
+
+            return box ? "java.lang.Short" : "short";
+
+        } else if ( "xsd:anySimpleType".equals( dataType ) ) {
+            return "java.lang.Object";
+        } else if ( "xsd:boolean".equals( dataType ) ) {
+
+            return box ? "java.lang.Boolean" : "boolean" ;
+
+        } else if ( "xsd:byte".equals( dataType ) ) {
+
+            return box ? "java.lang.Byte" : "byte";
+
+        } else if ( "xsd:decimal".equals( dataType ) ) {
+            return "java.math.BigDecimal";
+        } else if ( "xsd:unsignedByte".equals( dataType ) ) {
+
+            return box ? "java.lang.Short" : "short";
+
+        } else if ( "xsd:unsignedShort".equals( dataType ) ) {
+
+            return box ? "java.lang.Integer" : "int";
+
+        } else if ( "xsd:unsignedInt".equals( dataType ) ) {
+
+            return box ? "java.lang.Long" : "long";
+
+        } else {
+            return dataType;
+        }
+
+    }
+
 }

@@ -82,7 +82,7 @@ public class SemanticXSDModelCompilerImpl extends XSDModelCompilerImpl implement
             String bindings = TemplateRuntime.eval( template, vars ).toString();
 
 
-            System.out.println( bindings );
+//            System.out.println( bindings );
             return bindings;
         } catch ( IOException ioe ) {
             return defaultBindings;

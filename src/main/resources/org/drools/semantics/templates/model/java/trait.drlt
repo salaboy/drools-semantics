@@ -8,15 +8,33 @@
 package @{package};
 
 // @{iri}
-public interface @{name} @if{ superConcepts.size > 0 } extends @foreach{ sup : superConcepts } @{ compactUpperCase( sup.name ) } @end{','} @end{}
+public interface @{name} extends com.clarkparsia.empire.SupportsRdfId
+                                 @if{ superConcepts.size > 0 } , @foreach{ sup : superConcepts } @{ compactUpperCase( sup.name ) } @end{','} @end{}
 {
   @if{ properties.size > 0 }    @foreach{ prop : properties.keySet }
-    // @{prop.property}
-    public @{ properties[ prop ].name } get@{ compactUpperCase(prop.name) }();
+    // @{prop.property}   --    @{prop.maxCard}   --- @{properties[ prop ].name}
+    public
+        @if{ prop.maxCard == 1 }
+            @{ map( properties[ prop ].name, false ) }
+        @else{}
+            java.util.List<@{ map( properties[ prop ].name, true ) }>
+        @end{}
+        @if{ properties[ prop ].name.equals("xsd:boolean") && prop.maxCard == 1 }
+            is@{ compactUpperCase(prop.name) }();
+        @else{}
+            get@{ compactUpperCase(prop.name) }();
+        @end{}
 
     // @{prop.property}
-    public void set@{ compactUpperCase(prop.name) }( @{ properties[ prop ].name } value );
-  @end{}                        @end{}
+    public void set@{ compactUpperCase(prop.name) }(
+        @if{ prop.maxCard == 1 }
+            @{ map( properties[ prop ].name, false ) }
+        @else{}
+            java.util.List<@{ map( properties[ prop ].name, true ) }>
+        @end{}
+        value );
+
+  @end{}  @end{}
 }
 
 @end{}

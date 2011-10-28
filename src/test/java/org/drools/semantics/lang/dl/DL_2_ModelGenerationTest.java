@@ -46,7 +46,7 @@ public class DL_2_ModelGenerationTest {
     
     @Test
     public void testLoad() {
-        String source = "org/drools/semantics/lang/dl/kmr2_miniExample.manchester";
+        String source = "kmr2/kmr2_miniExample.manchester";
 
         org.drools.io.Resource res = ResourceFactory.newClassPathResource(source);
 

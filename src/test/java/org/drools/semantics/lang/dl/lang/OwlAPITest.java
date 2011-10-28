@@ -21,7 +21,6 @@ import org.junit.*;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 
-import javax.crypto.KeyGenerator;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -67,7 +66,7 @@ private static Logger log;
 
     @Test
 	public void kmr2_ontology() {
-		test_ontology("org/drools/semantics/lang/dl/kmr2_miniExample.manchester");
+		test_ontology("kmr2/kmr2_miniExample.manchester");
 	}
 
     @Test
