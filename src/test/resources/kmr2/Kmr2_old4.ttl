@@ -1,4 +1,4 @@
-# Saved by TopBraid on Mon Nov 14 12:24:59 PST 2011
+# Saved by TopBraid on Thu Oct 20 08:12:48 PDT 2011
 # baseURI: urn:gov:hhs:fha:nhinc:adapter:fact
 
 @prefix :        <urn:gov:hhs:fha:nhinc:adapter:fact#> .
@@ -51,13 +51,118 @@
       rdfs:subClassOf :LivingSubject ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasGender
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty :hasGender
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :birthDate
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasName
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasRace
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasRole
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasOrgUnit
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasAddress
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :Email ;
+                owl:onProperty :hasEmail
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasAge
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasMaritalStatus
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasEthnicity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasTelecom
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasHandle
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :personID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty :birthDate
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :Telecom ;
+                owl:onProperty :hasTelecom
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasLanguage
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :personID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :Handle ;
+                owl:onProperty :hasHandle
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasReligiousAffiliation
+                owl:onProperty :hasEthnicity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :OrgUnit ;
+                owl:onProperty :hasOrgUnit
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasEmail
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -71,83 +176,23 @@
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:int ;
-                owl:onProperty :birthDate
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:int ;
-                owl:onProperty :hasGender
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasRace
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :personID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Email ;
-                owl:onProperty :hasEmail
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasMaritalStatus
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasRole
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasLanguage
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasAge
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Telecom ;
-                owl:onProperty :hasTelecom
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasAge
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasAddress
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :OrgUnit ;
-                owl:onProperty :hasOrgUnit
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasName
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasEthnicity
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasRace
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasReligiousAffiliation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -156,58 +201,13 @@
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasEmail
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasAge
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :Role ;
                 owl:onProperty :hasRole
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasGender
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasHandle
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasMaritalStatus
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasEthnicity
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :birthDate
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasTelecom
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Handle ;
-                owl:onProperty :hasHandle
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasLanguage
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasOrgUnit
               ] ;
       skos:prefLabel "Person"^^xsd:string .
 
@@ -218,12 +218,7 @@
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :agentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :agentID
+                owl:onProperty :encounterNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -232,8 +227,13 @@
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :agentID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :encounterNumber
+                owl:onProperty :agentID
               ] .
 
 :InventoryItem
@@ -249,91 +249,14 @@ and any impurity deriving from the process used, but excluding any solvent that 
       rdfs:subClassOf :Intervention ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty :lotNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:minCardinality "0"^^xsd:nonNegativeInteger ;
                 owl:onProperty :lotNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty :lotNumber
               ] .
-
-:AllergyList
-      rdf:type owl:Class ;
-      rdfs:comment "The ALLERGY LIST class stores a catalog of unique allergies, their date of onset, status, etc derived by analyzing the PROBLEM class which captures all incidences of an allergy, usually observed and recorded in the context of an encounter."^^xsd:string ;
-      rdfs:label "AllergyList"^^xsd:string ;
-      rdfs:subClassOf :List ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:boolean ;
-                owl:onProperty :causeOfDeath
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasAgeAtResolution
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasAgeAtOnset
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasAllergy
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasSeverity
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasAgeAtResolution
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasSeverity
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :hasAgeAtOnset
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :causeOfDeath
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Allergy ;
-                owl:onProperty :hasAllergy
-              ] ;
-      skos:prefLabel "AllergyList"^^xsd:string .
 
 :NearMiss
       rdf:type owl:Class ;
@@ -357,8 +280,6 @@ and any impurity deriving from the process used, but excluding any solvent that 
 
 :Experience
       rdf:type owl:Class ;
-      rdfs:comment """Experience is defined as information collected from a consumer, patient, or family member about their perception of the care they received or from a care giver about the care provided. Information
-collected includes the elements of care coordination, communication, whole-person approach to care, access to care, timeliness of care, and information sharing."""^^xsd:string ;
       rdfs:label "Experience"^^xsd:string ;
       rdfs:subClassOf :Document .
 
@@ -391,7 +312,7 @@ collected includes the elements of care coordination, communication, whole-perso
 
 :prescriptionNumber
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Medication , :MedicationOrder , :MedDispense ;
+      rdfs:domain :MedDispense , :MedicationOrder , :Medication ;
       rdfs:label "prescriptionNumber"^^xsd:string ;
       rdfs:range xsd:integer .
 
@@ -402,26 +323,23 @@ collected includes the elements of care coordination, communication, whole-perso
       rdfs:range xsd:integer ;
       skos:prefLabel "personID"^^xsd:string .
 
-:hasFinding
-      rdf:type owl:ObjectProperty ;
-      rdfs:domain :Physical , :Cognitive ;
-      rdfs:range :ConceptPointer .
-
 :hasSeverity
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :Problem , :AllergyList , :ProblemList ;
+      rdfs:domain :Problem ;
       rdfs:label "hasSeverity"^^xsd:string ;
       rdfs:range :ConceptPointer ;
       skos:prefLabel "hasSeverity"^^xsd:string .
 
 :List
       rdf:type owl:Class ;
-      rdfs:comment "A LIST is a section of a clinical record that contains a catalog of unique clincial items about a patient.  A few examples of health record components include allergy lists, problem lists, clinical summaries, medication lists, and others."^^xsd:string ;
+      rdfs:comment """A Summary List is a section of a clinical record that contains information about a patient and upon which actions can be performed (e.g., transmit, acknowledge, document, etc.). A few
+examples of health record components include allergy lists, problem lists, clinical summaries, medication lists, and others."""^^xsd:string ;
       rdfs:label "List"^^xsd:string ;
       rdfs:subClassOf :ClinicalFact .
 
 :History
       rdf:type owl:Class ;
+      rdfs:comment " "^^xsd:string ;
       rdfs:label "History"^^xsd:string ;
       rdfs:subClassOf :ClinicalFact .
 
@@ -437,18 +355,8 @@ collected includes the elements of care coordination, communication, whole-perso
       rdfs:subClassOf :PersonalIdentifier ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:int ;
-                owl:onProperty :firstName
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :hasSuffix
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasSuffix
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty :familyName
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -457,17 +365,12 @@ collected includes the elements of care coordination, communication, whole-perso
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :middleName
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:int ;
                 owl:onProperty :familyName
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
+                owl:cardinality "1"^^xsd:int ;
                 owl:onProperty :firstName
               ] ;
       rdfs:subClassOf
@@ -477,13 +380,28 @@ collected includes the elements of care coordination, communication, whole-perso
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty :firstName
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :hasSuffix
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:int ;
                 owl:onProperty :hasPrefix
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty :familyName
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :middleName
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasSuffix
               ] ;
       skos:prefLabel "Name"^^xsd:string .
 
@@ -516,7 +434,7 @@ collected includes the elements of care coordination, communication, whole-perso
 
 :hasAnatomicLocation
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :Accession , :VitalSign , :Medication , :MedicationOrder , :Reaction , :Problem , :Physical , :Injury , :LaboratoryOrder ;
+      rdfs:domain :Accession , :Medication , :MedicationOrder , :Reaction , :Problem , :Injury , :LaboratoryOrder ;
       rdfs:label "hasAnatomicLocation"^^xsd:string ;
       rdfs:range :ConceptPointer .
 
@@ -535,27 +453,7 @@ patient. Distinct from functional status, risk categorization uses findings, obs
 :Physical
       rdf:type owl:Class ;
       rdfs:label "Physical"^^xsd:string ;
-      rdfs:subClassOf :PhysicalExam ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasFinding
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasFinding
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasAnatomicLocation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasAnatomicLocation
-              ] .
+      rdfs:subClassOf :PhysicalExam .
 
 :groupNumber
       rdf:type owl:DatatypeProperty ;
@@ -596,6 +494,12 @@ patient. Distinct from functional status, risk categorization uses findings, obs
       rdfs:label "hasTimingRequest"^^xsd:string ;
       rdfs:range :ValueUnitPair .
 
+:supportedPersonID
+      rdf:type owl:DatatypeProperty ;
+      rdfs:domain :Person ;
+      rdfs:label "supportedPersonID"^^xsd:string ;
+      rdfs:range xsd:integer .
+
 :conceptCode
       rdf:type owl:DatatypeProperty ;
       rdfs:domain :ConceptPointer ;
@@ -617,8 +521,8 @@ other similar or related article, including a component part, or accessory, inte
 
 :effectiveEndDateTime
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :ProblemList , :Support , :Order , :AllergyList , :AdvancedDirective , :Insurance , :AdverseEvent ;
-      rdfs:label "administration end date time"^^xsd:string , "effective end date"^^xsd:string , "event resolution"^^xsd:string , "support end date"^^xsd:string , "encounter stop date"^^xsd:string , "order expiration date time"^^xsd:string , "problem resolution"^^xsd:string , "effectiveEndDateTime"^^xsd:string , "coverage end date"^^xsd:string ;
+      rdfs:domain :Problem , :Support , :Order , :AdvancedDirective , :Insurance , :AdverseEvent ;
+      rdfs:label "administration end date time"^^xsd:string , "effective end date"^^xsd:string , "event resolution"^^xsd:string , "encounter stop date"^^xsd:string , "order expiration date time"^^xsd:string , "support end date"^^xsd:string , "problem resolution"^^xsd:string , "effectiveEndDateTime"^^xsd:string , "coverage end date"^^xsd:string ;
       rdfs:range xsd:dateTime ;
       skos:prefLabel "effectiveEndDateTime"^^xsd:string , "order expiration date time"^^xsd:string .
 
@@ -641,21 +545,20 @@ other similar or related article, including a component part, or accessory, inte
 
 :justifies
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :AdverseEvent ;
-      rdfs:range :Allergy .
+      rdfs:domain :AllergicEvent ;
+      rdfs:label "justifies"^^xsd:string ;
+      rdfs:range :Problem .
 
 :accessionNumber
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Accession , :Laboratory ;
+      rdfs:domain :Laboratory , :Accession ;
       rdfs:label "accessionNumber"^^xsd:string ;
       rdfs:range xsd:integer .
 
 :Procedure
       rdf:type owl:Class ;
-      rdfs:comment """A PROCEDURE is a course of action intended to achieve a result in the care of persons with health problems. It is generally invasive and involves physical contact. A procedure may be a surgery or
-other type of physical manipulation of a person‟s body in whole or in part for purposes of making observations and diagnoses or providing treatment. Some of these procedures are not reimbursed. Note that procedure is distinct from intervention."""^^xsd:string ;
       rdfs:label "Procedure"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
@@ -663,7 +566,42 @@ other type of physical manipulation of a person‟s body in whole or in part for
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :agentID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :Interpretation ;
+                owl:onProperty :hasInterpretation
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveEndDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
+                owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasInterpretation
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :orderNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :encounterNumber
               ] ;
       rdfs:subClassOf
@@ -673,18 +611,8 @@ other type of physical manipulation of a person‟s body in whole or in part for
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasInterpretation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Interpretation ;
-                owl:onProperty :hasInterpretation
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :agentID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -699,32 +627,7 @@ other type of physical manipulation of a person‟s body in whole or in part for
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :agentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
                 owl:onProperty :orderNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :orderNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :agentID
               ] .
 
 :hasPostalCode
@@ -740,15 +643,10 @@ skos:prefLabel
 
 :value
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Email , :Handle , :Telecom ;
+      rdfs:domain :Telecom , :Handle , :Email ;
       rdfs:label "value"^^xsd:string ;
       rdfs:range xsd:string ;
       skos:prefLabel "value"^^xsd:string .
-
-:hasPosition
-      rdf:type owl:ObjectProperty ;
-      rdfs:domain :VitalSign ;
-      rdfs:range :ConceptPointer .
 
 :NutritionOrder
       rdf:type owl:Class ;
@@ -763,7 +661,7 @@ skos:prefLabel
 
 :hasDuration
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :Medication , :MedicationOrder ;
+      rdfs:domain :MedicationOrder , :Medication ;
       rdfs:label "has duration"^^xsd:string ;
       rdfs:range :ValueUnitPair .
 
@@ -785,34 +683,19 @@ skos:prefLabel
 
 :causeOfDeath
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Problem , :AllergyList , :ProblemList ;
+      rdfs:domain :Problem ;
       rdfs:label "causeOfDeath"^^xsd:string ;
       rdfs:range xsd:boolean ;
       skos:prefLabel "causeOfDeath"^^xsd:string .
 
 :ProblemList
       rdf:type owl:Class ;
-      rdfs:comment "The PROBLEM LIST class stores a catalog of unique problems, their date of onset, status, etc derived by analyzing the PROBLEM class which captures all incidences of a problem, usually observed and recorded in the context of an encounter."^^xsd:string ;
+      rdfs:comment "A patient episode record of an important diagnostic impression or summary statement of clinical state applicable to a patient over time"^^xsd:string ;
       rdfs:label "ProblemList"^^xsd:string ;
       rdfs:subClassOf :List ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:boolean ;
-                owl:onProperty :causeOfDeath
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasAgeAtResolution
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasSeverity
               ] ;
       rdfs:subClassOf
@@ -822,13 +705,53 @@ skos:prefLabel
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:boolean ;
+                owl:onProperty :causeOfDeath
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :causeOfDeath
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasAgeAtOnset
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasAgeAtResolution
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasProblem
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasSeverity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :hasAgeAtOnset
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasAgeAtResolution
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveEndDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -838,31 +761,6 @@ skos:prefLabel
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :Problem ;
-                owl:onProperty :hasProblem
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasAgeAtOnset
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :causeOfDeath
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :hasAgeAtOnset
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasProblem
               ] ;
       skos:prefLabel "ProblemList"^^xsd:string .
@@ -878,13 +776,8 @@ skos:prefLabel
       rdfs:subClassOf :SystemFact ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:int ;
-                owl:onProperty :value
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:string ;
-                owl:onProperty :value
+                owl:onProperty :unit
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -894,7 +787,12 @@ skos:prefLabel
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:string ;
-                owl:onProperty :unit
+                owl:onProperty :value
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty :value
               ] ;
       skos:prefLabel "ValueUnitPair"^^xsd:string .
 
@@ -915,81 +813,10 @@ skos:prefLabel
       rdf:type owl:Class ;
       rdfs:comment " "^^xsd:string ;
       rdfs:label "ClinicalFact"^^xsd:string ;
-      rdfs:subClassOf owl:Thing ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasComment
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :patientID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasClinicalStatus
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasCommunityID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Comment ;
-                owl:onProperty :hasComment
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasFactType
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:int ;
-                owl:onProperty :historical
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :systemID
-              ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasClinicalStatus
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :orginalSourceID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasCommunityID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasFactSubType
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :creationDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :oid
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasFactSubType
+                owl:onProperty :hasAdminStatus
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -999,22 +826,67 @@ skos:prefLabel
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :oid
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :creationDateTime
+                owl:onProperty :hasCommunityID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :systemID
+                owl:onProperty :patientID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasComment
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :patientID
+                owl:onProperty :hasFactType
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasFactType
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :systemEntryDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasFactSubType
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :orginalSourceID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasClinicalStatus
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :oid
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :Comment ;
+                owl:onProperty :hasComment
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :orginalSourceID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasFactSubType
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1024,17 +896,32 @@ skos:prefLabel
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :orginalSourceID
+                owl:onProperty :oid
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasAdminStatus
+                owl:onProperty :hasCommunityID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasFactType
+                owl:onProperty :hasClinicalStatus
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :patientID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty :historical
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :systemEntryDateTime
               ] ;
       skos:prefLabel "ClinicalFact"^^xsd:string .
 
@@ -1078,7 +965,7 @@ skos:prefLabel
 
 :hasAdministrationDuration
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :Medication , :MedicationOrder ;
+      rdfs:domain :MedicationOrder , :Medication ;
       rdfs:label "hasAdministrationDuration"^^xsd:string ;
       rdfs:range :ValueUnitPair .
 
@@ -1107,24 +994,9 @@ skos:prefLabel
 
 :AdverseEvent
       rdf:type owl:Class ;
-      rdfs:comment "An ADVERSE EVENT is an unexpected or dangerous reaction to a device, diagnostic study, intervention, laboratory test, procedure, or substance. Serious adverse events are those that are fatal, life-threatening, permanently or significantly disabling, require or prolong hospitalization, lead to congenital anomaly (in the case of diagnostic studies and substances), require intervention to prevent permanent impairment or damage, or require specific treatment, care plan, or encounter. Medication adverse effects refer to conditions that are due to drugs and medical and biological substances when the correct substance was administered as prescribed. These are generally clinician-identified effects."^^xsd:string ;
+      rdfs:comment "An adverse event is an unexpected or dangerous reaction to a device, diagnostic study, intervention, laboratory test, procedure, or substance. Serious adverse events are those that are fatal, life-threatening, permanently or significantly disabling, require or prolong hospitalization, lead to congenital anomaly (in the case of diagnostic studies and substances), require intervention to prevent permanent impairment or damage, or require specific treatment, care plan, or encounter. Medication adverse effects refer to conditions that are due to drugs and medical and biological substances when the correct substance was administered as prescribed. These are generally clinician-identified effects."^^xsd:string ;
       rdfs:label "AdverseEvent"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Location ;
-                owl:onProperty :hasLocation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasSeverity
-              ] ;
+      rdfs:subClassOf :ClinicalEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
@@ -1132,8 +1004,28 @@ skos:prefLabel
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :incidentLocation
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasSeverity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :informantID
+                owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :encounterNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1142,8 +1034,18 @@ skos:prefLabel
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :agentID
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty :incidentLocation
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :informantID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1153,12 +1055,7 @@ skos:prefLabel
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :encounterNumber
+                owl:onProperty :agentID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1169,11 +1066,6 @@ skos:prefLabel
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
                 owl:onProperty :agentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :encounterNumber
               ] ;
       skos:prefLabel "AdverseEvent"^^xsd:string .
 
@@ -1196,33 +1088,14 @@ skos:prefLabel
 
 :Problem
       rdf:type owl:Class ;
-      rdfs:comment "A PROBLEM (diagnosis, condition, or complaint) is a scientific interpretation of result, assessment, and treatment response data that persists over time and tends to require investigation, intervention or management. The PROBLEM class captures all incidences of a problem, usually observed and recorded in the context of an encounter. Lists of unique problems, their date of onset, status, etc are derived from this class and stored in the PROBLEM LIST class."^^xsd:string ;
+      rdfs:comment """A problem, diagnosis, or condition is a scientific interpretation of result, assessment, and treatment
+response data that persists over time and tends to require intervention or management, or a clinical feature that includes but is not limited to those treated, monitored, evaluated, or impacts other treatment or venues of care (e.g., encounters or lengths of stay). It is used to guide planning, implementation, treatment, and evaluation. A problem or condition includes, but is not limited to, acute, intermittent, or chronic conditions; diagnoses; symptoms; functional limitations; or visit- or stay-specific conditions."""^^xsd:string ;
       rdfs:label "Problem"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasSeverity
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasConceptPointer
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasAnatomicLocation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasAnatomicLocation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :agentID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1231,28 +1104,8 @@ skos:prefLabel
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasConceptPointer
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :encounterNumber
+                owl:onProperty :problemPriority
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1261,8 +1114,43 @@ skos:prefLabel
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasConceptPointer
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasAnatomicLocation
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :causeOfDeath
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :agentID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :problemPriority
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :encounterNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1271,13 +1159,18 @@ skos:prefLabel
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :problemPriority
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :causeOfDeath
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :problemPriority
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasSeverity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasAnatomicLocation
               ] ;
       skos:prefLabel "Problem"^^xsd:string .
 
@@ -1299,13 +1192,13 @@ skos:prefLabel
       rdfs:subClassOf owl:Thing ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :creationDateTime
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :systemEntryDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :creationDateTime
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :systemEntryDateTime
               ] .
 
 :ClinicalEvent
@@ -1324,31 +1217,6 @@ skos:prefLabel
       rdfs:subClassOf :SystemFact ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :conceptCode
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :conceptCode
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :terminologySystemCode
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :terminologySystemLabel
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :terminologySystemCode
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:string ;
                 owl:onProperty :conceptLabel
               ] ;
@@ -1361,6 +1229,31 @@ skos:prefLabel
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :conceptLabel
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :conceptCode
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :terminologySystemLabel
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :terminologySystemCode
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :terminologySystemCode
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :conceptCode
               ] .
 
 :ObstetricHx
@@ -1374,11 +1267,6 @@ skos:prefLabel
       rdfs:label "containerNumber"^^xsd:string ;
       rdfs:range xsd:integer .
 
-:systemID
-      rdf:type owl:DatatypeProperty ;
-      rdfs:domain :ClinicalFact ;
-      rdfs:range xsd:integer .
-
 :SocialHx
       rdf:type owl:Class ;
       rdfs:label "SocialHx"^^xsd:string ;
@@ -1390,12 +1278,12 @@ skos:prefLabel
       rdfs:subClassOf :Person ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :agentID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom xsd:integer ;
                 owl:onProperty :agentID
               ] ;
       skos:prefLabel "Agent"^^xsd:string .
@@ -1417,29 +1305,19 @@ xsd:string
       rdfs:label "string"^^xsd:string ;
       skos:prefLabel "string"^^xsd:string .
 
-:hasAllergy
-      rdf:type owl:ObjectProperty ;
-      rdfs:domain :AllergyList ;
-      rdfs:range :Allergy .
-
 :AdvancedDirective
       rdf:type owl:Class ;
       rdfs:label "AdvancedDirective"^^xsd:string ;
       rdfs:subClassOf :Document ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :custodianID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
+                owl:onProperty :effectiveEndDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1449,17 +1327,22 @@ xsd:string
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveEndDateTime
+                owl:onProperty :effectiveDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :custodianID
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveEndDateTime
               ] .
 
 :freeTextSig
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :MedicationOrder , :Medication ;
+      rdfs:domain :Medication , :MedicationOrder ;
       rdfs:label "freeTextSig"^^xsd:string ;
       rdfs:range xsd:string ;
       skos:prefLabel "freeTextSig"^^xsd:string .
@@ -1476,7 +1359,7 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
 
 :admissionNumber
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Admission , :Inpatient ;
+      rdfs:domain :Inpatient , :Admission ;
       rdfs:label "admission number"^^xsd:string ;
       rdfs:range xsd:integer .
 
@@ -1492,7 +1375,12 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :admittingAgentID
+                owl:onProperty :attendingAgentID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :dischargeAgentID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1506,28 +1394,8 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :admissionNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :followupAgentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :admissionNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:dateTime ;
                 owl:onProperty :followupDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :attendingAgentID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1541,13 +1409,28 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom xsd:integer ;
                 owl:onProperty :dischargeAgentID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :dischargeAgentID
+                owl:onProperty :admissionNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :admittingAgentID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :admissionNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :followupAgentID
               ] .
 
 :Primary
@@ -1556,7 +1439,7 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
       rdfs:subClassOf :LevelOfCare .
 
 :prn  rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Medication , :MedicationOrder ;
+      rdfs:domain :MedicationOrder , :Medication ;
       rdfs:label "prn"^^xsd:string ;
       rdfs:range xsd:boolean .
 
@@ -1566,43 +1449,23 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
       rdfs:subClassOf :Order ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :doseIndicator
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasDose
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:boolean ;
                 owl:onProperty :prn
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasDose
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasDuration
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :prescriptionNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :hasIndication
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :freeTextSig
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasAdministrationTiming
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasFrequency
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :unitDoseNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1611,28 +1474,13 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasAdministrationDuration
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasMedication
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasIndication
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasVehicle
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty :doseIndicator
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasFrequency
+                owl:onProperty :hasAdministrationDuration
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1642,12 +1490,7 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasVehicle
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty :deliveryMethod
+                owl:onProperty :hasRoute
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1656,38 +1499,8 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasRoute
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :doseIndicator
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :fills
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :unitDoseNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty :freeTextSig
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :prescriptionNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasIndication
+                owl:allValuesFrom :Drug ;
+                owl:onProperty :hasMedication
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1696,8 +1509,23 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Drug ;
-                owl:onProperty :hasMedication
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasFrequency
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasDose
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :fills
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :prn
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1707,12 +1535,62 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasDuration
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty :freeTextSig
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :fills
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasFrequency
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasVehicle
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty :doseIndicator
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasAnatomicLocation
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty :deliveryMethod
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :freeTextSig
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasAdministrationDuration
+                owl:onProperty :hasVehicle
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :prescriptionNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :hasIndication
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1722,17 +1600,22 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasDose
+                owl:onProperty :hasAdministrationDuration
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasAdministrationTiming
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :prn
+                owl:onProperty :hasMedication
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasAnatomicLocation
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :prescriptionNumber
               ] ;
       skos:prefLabel "MedicationOrder"^^xsd:string .
 
@@ -1744,7 +1627,7 @@ Examples include: Eastern Cooperative Oncology Group (ECOG) Performance Status, 
 
 :deliveryMethod
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Medication , :MedicationOrder ;
+      rdfs:domain :MedicationOrder , :Medication ;
       rdfs:label "deliveryMethod"^^xsd:string ;
       rdfs:range xsd:string .
 
@@ -1807,18 +1690,12 @@ xsd:int
 
 :LabPanel
       rdf:type owl:Class ;
-      rdfs:comment "A LABORATORY PANEL is a medical procedure that involves testing a sample of blood, urine, or other substance from the body. A panel contains multiple related LABORTORY TESTS that can be ordered as a single entity for convenience."^^xsd:string ;
       rdfs:label "LabPanel"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasLabTest
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :LabTest ;
-                owl:onProperty :hasLabTest
+                owl:onProperty :hasConceptPointer
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1827,8 +1704,13 @@ xsd:int
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :LabTest ;
+                owl:onProperty :hasLabTest
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasConceptPointer
+                owl:onProperty :hasLabTest
               ] .
 
 :Preference
@@ -1838,10 +1720,15 @@ xsd:int
 
 :DiagnosticStudy
       rdf:type owl:Class ;
-      rdfs:comment """A DIAGNOSTIC STUDY is any kind of medical test performed as a specific test or series of steps to aid
-in diagnosing or detecting disease (e.g., to establish a diagnosis, measure the progress or recovery from disease, to confirm that a person is free from disease). The QDM defines diagnostic studies as those that are not performed in organizations that perform testing on samples of human blood, tissue, or other substance from the body. Diagnostic studies may make use of digital images and textual reports. Such studies include but are not limited to imaging studies, cardiology studies (electrocardiogram, treadmill stress testing), pulmonary function testing, vascular laboratory testing, and others."""^^xsd:string ;
+      rdfs:comment """A diagnostic study is any kind of medical test performed as a specific test or series of steps to aid
+in diagnosing or detecting disease (e.g., to establish a diagnosis, measure the progress or recovery from disease, to confirm that a person is free from disease).8 The QDM defines diagnostic studies as those that are not performed in organizations that perform testing on samples of human blood, tissue, or other substance from the body. Diagnostic studies may make use of digital images and textual reports. Such studies include but are not limited to imaging studies, cardiology studies (electrocardiogram, treadmill stress testing), pulmonary function testing, vascular laboratory testing, and others."""^^xsd:string ;
       rdfs:label "DiagnosticStudy"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasInterpretation
+              ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
@@ -1849,13 +1736,23 @@ in diagnosing or detecting disease (e.g., to establish a diagnosis, measure the 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveEndDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasConceptPointer
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :orderNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveEndDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1865,17 +1762,12 @@ in diagnosing or detecting disease (e.g., to establish a diagnosis, measure the 
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
                 owl:onProperty :effectiveDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasInterpretation
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :encounterNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -1884,33 +1776,23 @@ in diagnosing or detecting disease (e.g., to establish a diagnosis, measure the 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Interpretation ;
-                owl:onProperty :hasInterpretation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasConceptPointer
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasConceptPointer
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :Interpretation ;
+                owl:onProperty :hasInterpretation
               ] .
 
 :Area
@@ -1950,24 +1832,13 @@ in diagnosing or detecting disease (e.g., to establish a diagnosis, measure the 
       rdfs:range xsd:string ;
       skos:prefLabel "birthPlace"^^xsd:string .
 
-:patientIEN
-      rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Patient ;
-      rdfs:range xsd:integer .
-
 :Allergy
-      rdf:type owl:Class ;
-      rdfs:subClassOf :Problem ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :isJustifiedBy
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :AllergicEvent ;
-                owl:onProperty :isJustifiedBy
-              ] .
+      rdf:type rdfs:Class ;
+      rdfs:comment """An allergy is an immunologically mediated reaction that is specific to exposure to a given agent and recurs on re-exposure to that agent. That agent may be a medication, a substance, or, in the case
+of a device, the materials used within that device. Non-allergic reactions are covered under
+intolerance."""^^xsd:string ;
+      rdfs:label "Allergy"^^xsd:string ;
+      rdfs:subClassOf :Problem .
 
 :resultDateTime
       rdf:type owl:DatatypeProperty ;
@@ -1996,6 +1867,12 @@ owl:Thing
       rdfs:label "hasLimitation"^^xsd:string ;
       rdfs:range :ValueUnitPair .
 
+:incidentLocation
+      rdf:type owl:DatatypeProperty ;
+      rdfs:domain :AdverseEvent ;
+      rdfs:label "incidentLocation"^^xsd:string ;
+      rdfs:range xsd:string .
+
 :specimenSourceNumber
       rdf:type owl:DatatypeProperty ;
       rdfs:domain :Accession ;
@@ -2018,12 +1895,12 @@ owl:Thing
       rdfs:subClassOf :Document ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :agentID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom xsd:integer ;
                 owl:onProperty :agentID
               ] .
 
@@ -2067,7 +1944,7 @@ xsd:dateTime
 
 :doseIndicator
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Medication , :MedicationOrder ;
+      rdfs:domain :MedicationOrder , :Medication ;
       rdfs:label "doseIndicator"^^xsd:string ;
       rdfs:range xsd:string .
 
@@ -2084,18 +1961,13 @@ xsd:dateTime
       rdfs:subClassOf :Document ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasProcedure
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom xsd:dateTime ;
                 owl:onProperty :effectiveEndDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2104,13 +1976,18 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveEndDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :effectiveDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveEndDateTime
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasProcedure
               ] .
 
 :hasTelecom
@@ -2127,7 +2004,7 @@ xsd:dateTime
 
 :hasAgeAtOnset
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :AllergyList , :ProblemList ;
+      rdfs:domain :Problem ;
       rdfs:label "hasAgeAtOnset"^^xsd:string ;
       rdfs:range :ValueUnitPair ;
       skos:prefLabel "hasAgeAtOnset"^^xsd:string .
@@ -2157,14 +2034,9 @@ xsd:dateTime
       rdfs:range xsd:string ;
       skos:prefLabel "patientInstructions"^^xsd:string .
 
-:isJustifiedBy
-      rdf:type owl:ObjectProperty ;
-      rdfs:domain :Allergy ;
-      rdfs:range :AllergicEvent .
-
 :hasRoute
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :MedicationOrder , :Medication ;
+      rdfs:domain :Medication , :MedicationOrder ;
       rdfs:label "hasRoute"^^xsd:string ;
       rdfs:range :ConceptPointer ;
       skos:prefLabel "hasRoute"^^xsd:string .
@@ -2175,13 +2047,8 @@ xsd:dateTime
       rdfs:subClassOf :PhysicalExam ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasAnatomicLocation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasPosition
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :hasResultInterpretation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2191,37 +2058,17 @@ xsd:dateTime
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasResultValue
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasResultInterpretation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :hasResultInterpretation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasAnatomicLocation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:int ;
-                owl:onProperty :hasResultValue
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
                 owl:onProperty :hasHiReferenceRange
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasPosition
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasLowReferenceRange
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasLowReferenceRange
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2235,13 +2082,28 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasLowReferenceRange
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasResultInterpretation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasLowReferenceRange
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty :hasResultValue
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasAnatomicLocation
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasResultValue
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasAnatomicLocation
               ] ;
       skos:prefLabel "VitalSign"^^xsd:string .
 
@@ -2280,10 +2142,6 @@ xsd:dateTime
       rdfs:label "terminologySystemCode"^^xsd:string ;
       rdfs:range xsd:integer .
 
-:NwHIN
-      rdf:type owl:Class ;
-      rdfs:subClassOf :Document .
-
 :Directorate
       rdf:type owl:Class ;
       rdfs:label "Directorate"^^xsd:string ;
@@ -2311,13 +2169,8 @@ xsd:dateTime
       rdfs:subClassOf :PersonalIdentifier ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :city
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasCountry
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasPostalCode
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2326,13 +2179,18 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :streetAddress
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasPostalCode
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :streetAddress
+                owl:onProperty :hasCountry
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2342,7 +2200,7 @@ xsd:dateTime
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasPostalCode
+                owl:onProperty :city
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2371,8 +2229,23 @@ xsd:dateTime
       rdfs:subClassOf :Encounter ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :admissionNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :agentID
+                owl:onProperty :admissionNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :encounterNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2381,23 +2254,8 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :admissionNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :admissionNumber
+                owl:onProperty :agentID
               ] .
 
 :Patient
@@ -2406,53 +2264,18 @@ xsd:dateTime
       rdfs:subClassOf :Person ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :birthOrder
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:boolean ;
                 owl:onProperty :isPregnant
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :multipleBirthInd
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :deathDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :deathDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :birthPlace
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :patientIEN
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :primaryCareManagerID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :patientID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
                 owl:onProperty :birthOrder
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :patientID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2466,13 +2289,28 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasAgeAtDeath
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :primaryCareManagerID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :birthPlace
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :primaryCareManagerID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :deathDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :primaryCareManagerID
+                owl:onProperty :patientID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2481,18 +2319,28 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :birthOrder
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :patientIEN
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasAgeAtDeath
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:boolean ;
                 owl:onProperty :multipleBirthInd
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :multipleBirthInd
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :deathDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :patientID
               ] ;
       skos:prefLabel "Patient"^^xsd:string .
 
@@ -2500,6 +2348,16 @@ xsd:dateTime
       rdf:type owl:Class ;
       rdfs:comment " "^^xsd:string ;
       rdfs:label "OrganizationFact"^^xsd:string ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :systemEntryDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :systemEntryDateTime
+              ] ;
       skos:prefLabel "OrganizationFact"^^xsd:string .
 
 :Reaction
@@ -2509,55 +2367,25 @@ xsd:dateTime
       rdfs:subClassOf :AdverseEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasAnatomicLocation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasAnatomicLocation
               ] ;
       skos:prefLabel "Reaction"^^xsd:string .
 
 :Dispensation
       rdf:type owl:Class ;
-      rdfs:comment "A DISPENSATION is a distribution of medications or supplies to a patient or patient proxy based on a prescription. Typically, in the ambulatory setting, medications are primarily taken directly by patients and not directly observed. Hence, medications dispensed are the closest health provider documentation of medication compliance."^^xsd:string ;
+      rdfs:comment " "^^xsd:string ;
       rdfs:label "Dispensation"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasFillQuantity
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:int ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
-                owl:onProperty :dispenseLocation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :fillDate
+                owl:onProperty :dispenseOrganization
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2566,13 +2394,8 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:int ;
-                owl:onProperty :hasFillStatus
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :agentID
+                owl:onProperty :fillDate
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2581,23 +2404,8 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :dispenseOrganization
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
                 owl:onProperty :agentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:int ;
-                owl:onProperty :hasFillQuantity
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :dispenseOrganization
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2606,8 +2414,61 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Drug ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :agentID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :dispenseOrganization
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty :hasFillStatus
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasFillQuantity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty :hasFillQuantity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom
+                        [ rdf:type owl:Class ;
+                          owl:unionOf (:Supply :Drug)
+                        ] ;
                 owl:onProperty :hasProduct
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :dispenseLocation
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :encounterNumber
               ] ;
       skos:prefLabel "Dispensation"^^xsd:string .
 
@@ -2643,23 +2504,18 @@ xsd:dateTime
       rdfs:subClassOf :Resource ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :groupNumber
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty :healthPlanName
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :memberID
+                owl:onProperty :subscriberID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :healthPlanName
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :insuranceInfoSourceID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2668,38 +2524,33 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveEndDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :healthPlanName
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :insuranceInfoSourceID
+                owl:onProperty :groupNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :insuranceInfoSourceID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :Email ;
+                owl:onProperty :hasEmail
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasTelecom
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :memberID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :subscriberID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty :healthPlanName
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2709,22 +2560,17 @@ xsd:dateTime
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
+                owl:onProperty :subscriberID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :groupNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Email ;
-                owl:onProperty :hasEmail
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :memberID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasRelationshipToSubscriber
+                owl:onProperty :hasAddress
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2733,8 +2579,23 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :subscriberID
+                owl:onProperty :memberID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :groupNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2749,26 +2610,15 @@ xsd:dateTime
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasAddress
+                owl:onProperty :hasRelationshipToSubscriber
               ] .
-
-:hasLocation
-      rdf:type owl:ObjectProperty ;
-      rdfs:domain :AdverseEvent ;
-      rdfs:range :Location .
 
 :fills
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :MedicationOrder , :Medication ;
+      rdfs:domain :Medication , :MedicationOrder ;
       rdfs:label "fills"^^xsd:string ;
       rdfs:range xsd:integer ;
       skos:prefLabel "fills"^^xsd:string .
-
-:creationDateTime
-      rdf:type owl:DatatypeProperty ;
-      rdfs:domain :ClinicalFact ;
-      rdfs:label "creation date time"^^xsd:string ;
-      rdfs:range xsd:dateTime .
 
 :hasAddress
       rdf:type owl:ObjectProperty ;
@@ -2800,13 +2650,18 @@ xsd:dateTime
       rdfs:subClassOf :AdverseEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasManifestation
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasProduct
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Drug ;
-                owl:onProperty :hasProduct
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasCertainty
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasManifestation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2815,18 +2670,18 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :justifies
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasCertainty
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom :Drug ;
                 owl:onProperty :hasProduct
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasCertainty
               ] .
 
 :subscriberID
@@ -2837,7 +2692,7 @@ xsd:dateTime
 
 :hasVehicle
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :MedicationOrder , :Medication ;
+      rdfs:domain :Medication , :MedicationOrder ;
       rdfs:label "hasVehicle"^^xsd:string ;
       rdfs:range :ConceptPointer ;
       skos:prefLabel "hasVehicle"^^xsd:string .
@@ -2861,7 +2716,7 @@ xsd:dateTime
 
 :effectiveDateTime
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Encounter , :Communication , :AdverseEvent , :AllergyList , :ProblemList , :Insurance , :Procedure , :DiagnosticStudy , :PhysicalExam , :Accession , :Intervention , :Symptom , :AdvancedDirective , :Order , :Dispensation , :LabTest , :Problem , :Support , :Consent ;
+      rdfs:domain :Encounter , :Communication , :AdverseEvent , :ProblemList , :Laboratory , :Insurance , :Procedure , :DiagnosticStudy , :PhysicalExam , :Accession , :Intervention , :Symptom , :AdvancedDirective , :Order , :Dispensation , :Problem , :Support , :Consent ;
       rdfs:label "effectiveDateTime"^^xsd:string ;
       rdfs:range xsd:dateTime ;
       skos:prefLabel "effectiveDateTime"^^xsd:string .
@@ -2891,7 +2746,7 @@ xsd:dateTime
 
 :orderNumber
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Procedure , :Accession , :Order , :SupplyDispense , :DiagnosticStudy ;
+      rdfs:domain :DiagnosticStudy , :SupplyDispense , :Order , :Accession , :Procedure ;
       rdfs:label "orderNumber"^^xsd:string ;
       rdfs:range xsd:integer ;
       skos:prefLabel "orderNumber"^^xsd:string .
@@ -2909,28 +2764,27 @@ xsd:dateTime
 
 :LabTest
       rdf:type owl:Class ;
-      rdfs:comment "A LABORATORY TEST is a medical procedure that involves testing a sample of blood, urine, or other substance from the body. Tests can help determine a diagnosis, plan treatment, check to see if treatment is working, or monitor the disease over time. "^^xsd:string ;
       rdfs:label "LabTest"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :resultDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
                 owl:onProperty :hasLowReferenceRange
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasHiReferenceRange
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasInterpretation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasResultInterpretation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :resultDateTime
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasLowReferenceRange
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2944,13 +2798,18 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:int ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasConceptPointer
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasResultInterpretation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
+                owl:maxCardinality "1"^^xsd:int ;
+                owl:onProperty :hasResultInterpretation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2959,18 +2818,13 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasHiReferenceRange
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ValueUnitPair ;
                 owl:onProperty :hasResultValue
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasInterpretation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -2979,18 +2833,8 @@ xsd:dateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :resultDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasLowReferenceRange
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasConceptPointer
               ] ;
       skos:prefLabel "LabTest"^^xsd:string .
 
@@ -3014,17 +2858,7 @@ xsd:dateTime
 :Cognitive
       rdf:type owl:Class ;
       rdfs:label "Cognitive"^^xsd:string ;
-      rdfs:subClassOf :PhysicalExam ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasFinding
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasFinding
-              ] .
+      rdfs:subClassOf :PhysicalExam .
 
 :familyName
       rdf:type owl:DatatypeProperty ;
@@ -3035,7 +2869,7 @@ xsd:dateTime
 
 :lotNumber
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Substance , :MedDispense ;
+      rdfs:domain :MedDispense , :Substance ;
       rdfs:label "lotNumber"^^xsd:string ;
       rdfs:range xsd:string .
 
@@ -3052,7 +2886,7 @@ xsd:dateTime
 
 :hasInterpretation
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :LabTest , :DiagnosticStudy ;
+      rdfs:domain :DiagnosticStudy , :LabTest ;
       rdfs:label "hasInterpretation"^^xsd:string ;
       rdfs:range :Interpretation .
 
@@ -3096,15 +2930,27 @@ xsd:dateTime
 
 :Encounter
       rdf:type owl:Class ;
-      rdfs:comment """An ENCOUNTER is an identifiable grouping of healthcare-related activities characterized by the entity
-relationship between the subject of care and a healthcare provider; such grouping is determined by the healthcare provider. A patient encounter represents interaction between a healthcare provider and a patient with a face‐to-face patient visit to a clinician‟s office, or any electronically remote interaction with a clinician for any form of diagnostic treatment or therapeutic event. Encounters
-can be billable events but are not limited to billable interactions. Each encounter has an associated location or modality within which it occurred (such as an office, home, electronic methods, phone encounter, or telemedicine methods). The encounter location is the patient‟s location at the time of measurement."""^^xsd:string ;
       rdfs:label "Encounter"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasConceptPointer
+              ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasConceptPointer
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveEndDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3115,21 +2961,6 @@ can be billable events but are not limited to billable interactions. Each encoun
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasConceptPointer
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveEndDateTime
               ] .
 
 :gravida
@@ -3140,18 +2971,12 @@ can be billable events but are not limited to billable interactions. Each encoun
 
 :Symptom
       rdf:type owl:Class ;
-      rdfs:comment "A SYMPTOM is an observation reported by a patient or observer by a provider that indicates a possible condition or disease. Some examples are headache, fever, fatigue, nausea, vomiting, and pain. Also, subjective of disease perceived by the patient. As an example to differentiate symptom from finding, the patient‟s subjective symptom of fever is distinguished from the temperature (a finding). For a finding, there is a source of either a temperature-measuring device, and there is a recorder of the device (electronically) or an individual (healthcare provider, patient, etc.)."^^xsd:string ;
       rdfs:label "Symptom"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasSeverity
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasConceptPointer
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3160,8 +2985,8 @@ can be billable events but are not limited to billable interactions. Each encoun
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveEndDateTime
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasConceptPointer
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3170,8 +2995,8 @@ can be billable events but are not limited to billable interactions. Each encoun
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveEndDateTime
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :encounterNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3180,13 +3005,18 @@ can be billable events but are not limited to billable interactions. Each encoun
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :encounterNumber
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveEndDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
                 owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveEndDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3206,7 +3036,7 @@ can be billable events but are not limited to billable interactions. Each encoun
 
 :hasIndication
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :MedicationOrder , :Medication ;
+      rdfs:domain :Medication , :MedicationOrder ;
       rdfs:label "hasIndication"^^xsd:string ;
       rdfs:range :ConceptPointer ;
       skos:prefLabel "hasIndication"^^xsd:string .
@@ -3218,7 +3048,7 @@ can be billable events but are not limited to billable interactions. Each encoun
 
 :encounterNumber
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Outpatient , :Intervention , :Dispensation , :PhysicalExam , :Inpatient , :DiagnosticStudy , :Order , :AdverseEvent , :Problem ;
+      rdfs:domain :Outpatient , :Intervention , :Dispensation , :PhysicalExam , :Inpatient , :DiagnosticStudy , :Problem , :AdverseEvent , :Order ;
       rdfs:label "encounterNumber"^^xsd:string ;
       rdfs:range xsd:integer .
 
@@ -3236,7 +3066,37 @@ can be billable events but are not limited to billable interactions. Each encoun
       rdfs:subClassOf :Resource ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:int ;
+                owl:onProperty :hasRelationship
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :supportedPersonID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveEndDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :supportedPersonID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveEndDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :effectiveDateTime
               ] ;
       rdfs:subClassOf
@@ -3244,43 +3104,13 @@ can be billable events but are not limited to billable interactions. Each encoun
                 owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasRelationship
               ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:int ;
-                owl:onProperty :hasRelationship
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :supportPersonID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :supportPersonID
-              ] ;
       skos:prefLabel "Support"^^xsd:string .
 
 :Laboratory
       rdf:type owl:Class ;
-      rdfs:comment "The LABORATORY class is a convenience class of containing one or more laboratory tests or laboratory panel which contain multiple indivudal tests. "^^xsd:string ;
+      rdfs:comment "A laboratory test is a medical procedure that involves testing a sample of blood, urine, or other substance from the body. Tests can help determine a diagnosis, plan treatment, check to see if treatment is working, or monitor the disease over time. Laboratory tests may be performed on specimens not derived from patients (electrolytes or contents of water or consumed fluids, cultures of environment, pets, other animals)."^^xsd:string ;
       rdfs:label "Laboratory"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
       owl:equivalentClass :Accession ;
       skos:prefLabel "Laboratory"^^xsd:string .
 
@@ -3291,12 +3121,12 @@ can be billable events but are not limited to billable interactions. Each encoun
       rdfs:subClassOf :Medication ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom xsd:integer ;
                 owl:onProperty :seriesNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :seriesNumber
               ] .
 
@@ -3317,7 +3147,7 @@ can be billable events but are not limited to billable interactions. Each encoun
 
 :hasFrequency
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :Medication , :MedicationOrder ;
+      rdfs:domain :MedicationOrder , :Medication ;
       rdfs:label "hasFrequency"^^xsd:string ;
       rdfs:range :ValueUnitPair .
 
@@ -3333,13 +3163,13 @@ can be billable events but are not limited to billable interactions. Each encoun
 
 :hasAdministrationTiming
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :Medication , :MedicationOrder ;
+      rdfs:domain :MedicationOrder , :Medication ;
       rdfs:label "hasAdministrationTiming"^^xsd:string ;
       rdfs:range :ValueUnitPair .
 
 :hasProduct
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :Intervention , :AllergicEvent , :Dispensation ;
+      rdfs:domain :Dispensation , :AllergicEvent , :Intervention ;
       rdfs:label "hasProduct"^^xsd:string ;
       rdfs:range :Drug ;
       skos:prefLabel "hasProduct"^^xsd:string .
@@ -3350,6 +3180,12 @@ can be billable events but are not limited to billable interactions. Each encoun
       rdfs:label "hasFillQuantity"^^xsd:string ;
       rdfs:range :ValueUnitPair ;
       skos:prefLabel "hasFillQuantity"^^xsd:string .
+
+:systemEntryDateTime
+      rdf:type owl:DatatypeProperty ;
+      rdfs:domain :SystemFact , :OrganizationFact , :ClinicalFact ;
+      rdfs:label "system entry date time"^^xsd:string ;
+      rdfs:range xsd:dateTime .
 
 :Skype
       rdf:type owl:Class ;
@@ -3394,14 +3230,14 @@ can be billable events but are not limited to billable interactions. Each encoun
 
 :hasDose
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :MedicationOrder , :Medication ;
+      rdfs:domain :Medication , :MedicationOrder ;
       rdfs:label "hasDose"^^xsd:string ;
       rdfs:range :ValueUnitPair ;
       skos:prefLabel "hasDose"^^xsd:string .
 
 :hasMedication
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :Medication , :MedicationOrder ;
+      rdfs:domain :MedicationOrder , :Medication ;
       rdfs:label "hasMedication"^^xsd:string ;
       rdfs:range :Drug .
 
@@ -3410,12 +3246,6 @@ can be billable events but are not limited to billable interactions. Each encoun
       rdfs:domain :Admission ;
       rdfs:label "followupDateTime"^^xsd:string ;
       rdfs:range xsd:dateTime .
-
-:supportPersonID
-      rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Person ;
-      rdfs:label "supportPersonID"^^xsd:string ;
-      rdfs:range xsd:integer .
 
 :manufacturer
       rdf:type owl:DatatypeProperty ;
@@ -3426,7 +3256,7 @@ can be billable events but are not limited to billable interactions. Each encoun
 
 :hasAgeAtResolution
       rdf:type owl:ObjectProperty ;
-      rdfs:domain :AllergyList , :ProblemList ;
+      rdfs:domain :Problem ;
       rdfs:label "hasAgeAtResolution"^^xsd:string ;
       rdfs:range :ValueUnitPair .
 
@@ -3456,26 +3286,41 @@ can be billable events but are not limited to billable interactions. Each encoun
 
 :Intervention
       rdf:type owl:Class ;
-      rdfs:comment """An INTERVENTION is an action, treatment, procedure, or activity designed to achieve an outcome. Interventions represent those care activities that can be performed by a clinician, a patient, or a
+      rdfs:comment """An intervention is an action, treatment, procedure, or activity designed to achieve an outcome. Interventions represent those care activities that can be performed by a clinician, a patient, or a
 caregiver and that require supervision, monitoring, or communication. Interventions represent a broad concept of activities distinct from diagnostic tests, procedures, laboratory tests, or encounters, each of which is a step in any individual patient's care process. Included are
 education, communication, patient referrals (e.g., between providers, to counselors, to church support groups), behavioral interventions (counseling), physical actions (dressing change,
 ambulation with or without assistance), use of inhalation devices, provision of nutrition, exercise, use of psychosocial interaction, or relaxation techniques, to name a few."""^^xsd:string ;
       rdfs:label "Intervention"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :agentID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasRoute
+                owl:allValuesFrom xsd:boolean ;
+                owl:onProperty :refused
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ValueUnitPair ;
                 owl:onProperty :hasQuantity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasReasonRefused
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasProduct
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :refused
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3490,27 +3335,27 @@ ambulation with or without assistance), use of inhalation devices, provision of 
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasProduct
+                owl:onProperty :hasQuantity
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Drug ;
-                owl:onProperty :hasProduct
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :encounterNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasAnatomicLocation
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasReasonRefused
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:boolean ;
-                owl:onProperty :refused
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3519,8 +3364,13 @@ ambulation with or without assistance), use of inhalation devices, provision of 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasQuantity
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasRoute
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :Drug ;
+                owl:onProperty :hasProduct
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3529,18 +3379,8 @@ ambulation with or without assistance), use of inhalation devices, provision of 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :agentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :refused
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3549,18 +3389,8 @@ ambulation with or without assistance), use of inhalation devices, provision of 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :agentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasReasonRefused
+                owl:onProperty :hasAnatomicLocation
               ] .
 
 :Cohort
@@ -3576,7 +3406,7 @@ ambulation with or without assistance), use of inhalation devices, provision of 
 
 :unitDoseNumber
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :MedicationOrder , :Medication ;
+      rdfs:domain :Medication , :MedicationOrder ;
       rdfs:label "unitDoseNumber"^^xsd:string ;
       rdfs:range xsd:integer ;
       skos:prefLabel "unitDoseNumber"^^xsd:string .
@@ -3618,13 +3448,23 @@ ambulation with or without assistance), use of inhalation devices, provision of 
 
 :Specimen
       rdf:type owl:Class ;
-      rdfs:comment "A SPECIMEN is sample of tissue, blood, or urine used for analysis and diagnosis."^^xsd:string ;
+      rdfs:comment " "^^xsd:string ;
       rdfs:label "Specimen"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:string ;
+                owl:onProperty :specimenRisk
+              ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasPreservative
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasCollectionMethod
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3634,62 +3474,12 @@ ambulation with or without assistance), use of inhalation devices, provision of 
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasCollectionMethod
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
-                owl:onProperty :specimenRisk
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :specimenSourceNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasAnatomicLocation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :specimenNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasPreservative
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasSpecialHandling
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasAnatomicLocation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :specimenRisk
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :specimenSourceNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasConceptPointer
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasSpecimenSize
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3698,13 +3488,18 @@ ambulation with or without assistance), use of inhalation devices, provision of 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :specimenNumber
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :specimenRisk
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasCollectionMethod
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasPreservative
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :containerNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3713,13 +3508,48 @@ ambulation with or without assistance), use of inhalation devices, provision of 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasCollectionMethod
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasSpecimenSize
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :specimenSourceNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasConceptPointer
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasAnatomicLocation
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasSpecialHandling
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :containerNumber
+                owl:onProperty :specimenNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :specimenSourceNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasAnatomicLocation
               ] .
 
 :hasLowReferenceRange
@@ -3731,125 +3561,124 @@ ambulation with or without assistance), use of inhalation devices, provision of 
 
 :Medication
       rdf:type owl:Class ;
-      rdfs:comment "A MEDICATION refers to clinical drugs or chemical substances intended for use in the medical diagnosis, cure, treatment, or prevention of disease. It is an equivalent, convenience class to MEDICATION ORDER which contains all attributes typically needed when working with the concept of medications."^^xsd:string ;
       rdfs:label "Medication"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
       owl:equivalentClass :MedicationOrder .
 
 :Order
       rdf:type owl:Class ;
-      rdfs:comment "An ORDER initiates and authorizes a given plan for obtaining a test, administering a treatment, or initiating a procedure. It establishes the responsible agent and its status is a proxy for the workflow an order triggers."^^xsd:string ;
+      rdfs:comment "a patient order record recording the plan for obtaining a test, administering a treatment, or initiating a procedure"^^xsd:string ;
       rdfs:label "Order"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :agentID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :orderNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :orderNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasConceptPointer
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :cancellationDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasQuantity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasTimingRequest
+              ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasTimingRequest
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasUpperQuantity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveEndDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveEndDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
+                owl:onProperty :hasQuantity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :cancellationDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasLimitation
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasUpperQuantity
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :agentID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :ValueUnitPair ;
                 owl:onProperty :hasLimitation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasConceptPointer
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasQuantity
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :agentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :agentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasLimitation
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasTimingRequest
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :cancellationDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasConceptPointer
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :orderNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :cancellationDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasTimingRequest
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasQuantity
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :orderNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasUpperQuantity
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ValueUnitPair ;
-                owl:onProperty :hasUpperQuantity
               ] .
 
 :primaryCareManagerID
@@ -3860,29 +3689,19 @@ ambulation with or without assistance), use of inhalation devices, provision of 
 
 :patientID
       rdf:type owl:DatatypeProperty ;
-      rdfs:domain :ClinicalFact , :Patient ;
+      rdfs:domain :Patient ;
       rdfs:label "patientID"^^xsd:string ;
       rdfs:range xsd:integer .
 
 :Accession
       rdf:type owl:Class ;
-      rdfs:comment "An ACCESSION is the recipt of any specimen by a laboratory or other health care service in order to preform ordered test or group of tests. Each specimen receives an accession number that facilitates  processing of the sample, inputting the demographics into an information system, and tracking of the subsequent workflow."^^xsd:string ;
+      rdfs:comment " "^^xsd:string ;
       rdfs:label "Accession"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :agentID
-              ] ;
+      rdfs:subClassOf :ClinicalEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasLabPanel
+                owl:onProperty :accessionNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3891,18 +3710,13 @@ ambulation with or without assistance), use of inhalation devices, provision of 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :orderNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :accessionNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :orderNumber
+                owl:onProperty :agentID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3912,12 +3726,22 @@ ambulation with or without assistance), use of inhalation devices, provision of 
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:integer ;
-                owl:onProperty :accessionNumber
+                owl:onProperty :agentID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :agentID
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom :LabPanel ;
+                owl:onProperty :hasLabPanel
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :accessionNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3926,7 +3750,12 @@ ambulation with or without assistance), use of inhalation devices, provision of 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :LabPanel ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :orderNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasLabPanel
               ] .
 
@@ -3947,12 +3776,12 @@ ambulation with or without assistance), use of inhalation devices, provision of 
       rdfs:subClassOf :AdverseEvent ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :hasAnatomicLocation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom :ConceptPointer ;
                 owl:onProperty :hasAnatomicLocation
               ] .
 
@@ -3973,13 +3802,8 @@ ambulation with or without assistance), use of inhalation devices, provision of 
       rdfs:subClassOf :Order ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasTest
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :Test ;
-                owl:onProperty :hasTest
+                owl:allValuesFrom :ConceptPointer ;
+                owl:onProperty :hasAnatomicLocation
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -3988,8 +3812,13 @@ ambulation with or without assistance), use of inhalation devices, provision of 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom :ConceptPointer ;
-                owl:onProperty :hasAnatomicLocation
+                owl:allValuesFrom :Test ;
+                owl:onProperty :hasTest
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasTest
               ] .
 
 :Alert
@@ -4016,12 +3845,12 @@ ambulation with or without assistance), use of inhalation devices, provision of 
       rdfs:subClassOf :Dispensation ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom xsd:integer ;
                 owl:onProperty :orderNumber
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :orderNumber
               ] ;
       skos:prefLabel "SupplyDispense"^^xsd:string .
@@ -4038,12 +3867,12 @@ ambulation with or without assistance), use of inhalation devices, provision of 
       rdfs:subClassOf :OrganizationFact ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom xsd:integer ;
                 owl:onProperty :personID
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :personID
               ] .
 
@@ -4092,22 +3921,7 @@ with clinical and genomic data."""^^xsd:string ;
       rdfs:subClassOf :Dispensation ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :prescriptionNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :reviewingAgentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :reviewingAgentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:allValuesFrom xsd:string ;
                 owl:onProperty :lotNumber
               ] ;
       rdfs:subClassOf
@@ -4117,8 +3931,23 @@ with clinical and genomic data."""^^xsd:string ;
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:string ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :reviewingAgentID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :lotNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :reviewingAgentID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :prescriptionNumber
               ] ;
       skos:prefLabel "MedDispense"^^xsd:string .
 
@@ -4126,6 +3955,12 @@ with clinical and genomic data."""^^xsd:string ;
       rdf:type owl:Class ;
       rdfs:label "Home"^^xsd:string ;
       rdfs:subClassOf :Location .
+
+:Event
+      rdf:type owl:Class ;
+      rdfs:comment " "^^xsd:string ;
+      rdfs:label "Event"^^xsd:string ;
+      rdfs:subClassOf owl:Thing .
 
 :hasCertainty
       rdf:type owl:ObjectProperty ;
@@ -4135,10 +3970,40 @@ with clinical and genomic data."""^^xsd:string ;
 
 :PhysicalExam
       rdf:type owl:Class ;
-      rdfs:comment """A PHYSICAL EXAM is the evaluation of the patient's body to determine its state of health. The
+      rdfs:comment """A physical examination is the evaluation of the patient's body to determine its state of health. The
 techniques of inspection include palpation (feeling with the hands or fingers), percussion (tapping with the fingers), auscultation (listening), visual inspection, and smell. Measurements may include vital signs (blood pressure, pulse, respirations) as well as other clinical measures (such as expiratory flow rate, size of lesion, etc.). Physical exam includes psychiatric examinations."""^^xsd:string ;
       rdfs:label "PhysicalExam"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :agentID
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :effectiveDateTime
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:integer ;
+                owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :encounterNumber
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty :hasConceptPointer
+              ] ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onProperty :agentID
+              ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom :ConceptPointer ;
@@ -4151,26 +4016,6 @@ techniques of inspection include palpation (feeling with the hands or fingers), 
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
-                owl:minCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasConceptPointer
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :encounterNumber
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :agentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:dateTime ;
                 owl:onProperty :effectiveDateTime
               ] ;
@@ -4178,16 +4023,6 @@ techniques of inspection include palpation (feeling with the hands or fingers), 
               [ rdf:type owl:Restriction ;
                 owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onProperty :effectiveEndDateTime
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:minCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onProperty :agentID
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:integer ;
-                owl:onProperty :encounterNumber
               ] .
 
 :parity
@@ -4198,11 +4033,13 @@ techniques of inspection include palpation (feeling with the hands or fingers), 
 
 :Communication
       rdf:type owl:Class ;
-      rdfs:comment """A COMMUNICATION is the transmission, receipt, or acknowledgement of information sent from a source to a recipient. This may include the provision of any communication from one clinician to another
-regarding findings, assessments, plans of care, consultative advice, instructions, educational resources, etc. It also may include the receipt of response from a patient with respect to any aspect of the care provided. Furthermore, it may include the provision of any communication from provider
-to patient. (e.g., results, findings, plans for care, medical advice, instructions, educational resources, appointments, result) that does not involve a synchronous interaction (encounter) between the patient and provider."""^^xsd:string ;
       rdfs:label "Communication"^^xsd:string ;
-      rdfs:subClassOf :ClinicalFact ;
+      rdfs:subClassOf :ClinicalEvent ;
+      rdfs:subClassOf
+              [ rdf:type owl:Restriction ;
+                owl:allValuesFrom xsd:dateTime ;
+                owl:onProperty :effectiveEndDateTime
+              ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:allValuesFrom xsd:dateTime ;
@@ -4211,12 +4048,7 @@ to patient. (e.g., results, findings, plans for care, medical advice, instructio
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :hasConceptPointer
-              ] ;
-      rdfs:subClassOf
-              [ rdf:type owl:Restriction ;
-                owl:allValuesFrom xsd:dateTime ;
-                owl:onProperty :effectiveEndDateTime
+                owl:onProperty :effectiveDateTime
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
@@ -4226,7 +4058,7 @@ to patient. (e.g., results, findings, plans for care, medical advice, instructio
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;
                 owl:cardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onProperty :effectiveDateTime
+                owl:onProperty :hasConceptPointer
               ] ;
       rdfs:subClassOf
               [ rdf:type owl:Restriction ;

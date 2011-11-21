@@ -108,8 +108,8 @@ public class XSDModelCompilerImpl extends ModelCompilerImpl implements DRLModelC
 
                     Integer minCard = rel.getMinCard();
                         if (minCard == null) {
-                            minCard = 1;
-                            rel.setMinCard( 1 );
+                            minCard = 0;
+                            rel.setMinCard( 0 );
                         }
                     Integer maxCard = rel.getMaxCard();
                         if (maxCard != null && maxCard == 0) {

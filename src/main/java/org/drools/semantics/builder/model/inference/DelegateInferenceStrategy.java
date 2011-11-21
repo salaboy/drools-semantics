@@ -691,7 +691,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                         if ( min != null ) {
                             rel.setMinCard( min );
                         } else {
-                            rel.setMinCard( 1 );
+                            rel.setMinCard( 0 );
                         }
                         Integer max = (Integer) maxCards.get( rel.getSubject(), propIri );
                         if ( max != null ) {
@@ -726,7 +726,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                         if ( min != null ) {
                             rel.setMinCard( min );
                         }  else {
-                            rel.setMinCard( 1 );
+                            rel.setMinCard( 0 );
                         }
                         Integer max = (Integer) maxCards.get( rel.getSubject(), propIri );
                         if ( max != null ) {
