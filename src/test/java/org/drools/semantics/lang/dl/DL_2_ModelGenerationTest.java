@@ -43,7 +43,7 @@ public class DL_2_ModelGenerationTest {
 
 
     protected DLFactory factory = DLFactoryBuilder.newDLFactoryInstance();
-    
+
     @Test
     public void testLoad() {
         String source = "kmr2/kmr2_miniExample.manchester";
@@ -116,12 +116,12 @@ public class DL_2_ModelGenerationTest {
 
 
     private void checkDiamond(OntoModel results) {
-            assertNotNull(results.getSubConceptOf("<_Right>", "<_Top>"));
+        assertNotNull(results.getSubConceptOf("<_Right>", "<_Top>"));
 
-            assertNotNull(results.getSubConceptOf("<_Left>", "<_Top>"));
-            assertNotNull(results.getSubConceptOf("<_Low>", "<_Left>"));
-            assertNotNull(results.getSubConceptOf("<_Low>", "<_Right>"));
-            assertNotNull(results.getSubConceptOf("<_Bottom>", "<_Low>"));
+        assertNotNull(results.getSubConceptOf("<_Left>", "<_Top>"));
+        assertNotNull(results.getSubConceptOf("<_Low>", "<_Left>"));
+        assertNotNull(results.getSubConceptOf("<_Low>", "<_Right>"));
+        assertNotNull(results.getSubConceptOf("<_Bottom>", "<_Low>"));
 
     }
 
@@ -244,6 +244,18 @@ public class DL_2_ModelGenerationTest {
 
 
 
+
+
+    @Test
+    public void testLoadFamilyOntology() {
+        String source = "org/drools/semantics/lang/dl/family.manchester";
+
+        org.drools.io.Resource res = ResourceFactory.newClassPathResource(source);
+
+        OWLOntology ontoDescr = factory.parseOntology( res );
+
+        assertNotNull( ontoDescr );
+    }
 
 
 

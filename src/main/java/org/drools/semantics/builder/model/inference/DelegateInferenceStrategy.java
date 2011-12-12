@@ -715,10 +715,17 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                 for ( OWLClassExpression dom : domains.get( dp ) ) {
                     for ( OWLDataRange ran : dataRanges.get( dp ) ) {
 
-                        PropertyRelation rel = new PropertyRelation( dom.asOWLClass().getIRI().toQuotedString(),
+                        PropertyRelation rel = null;
+                        try {
+                            rel  = new PropertyRelation( dom.asOWLClass().getIRI().toQuotedString(),
                                 propIri,
                                 ran.asOWLDatatype().getIRI().toQuotedString(),
                                 propName );
+
+
+                        } catch ( RuntimeException re ) {
+                            re.printStackTrace();
+                        }
 
                         Concept con = cache.get( rel.getSubject() );
 
