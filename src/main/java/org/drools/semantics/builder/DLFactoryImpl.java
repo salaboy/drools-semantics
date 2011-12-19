@@ -168,8 +168,10 @@ public class DLFactoryImpl implements DLFactory {
 //        ClassPathResource classBuilder = new ClassPathResource( "FALC_ModelGeneratorVisitor.drl" );
 //            classBuilder.setResourceType( ResourceType.DRL );
 
-        ClassPathResource classBuilder = new ClassPathResource( "FALC_ModelLatticeVisitor.drl" );
+        ClassPathResource classBuilder = new ClassPathResource( "FALC_ModelLatticeFullVisitor.drl" );
             classBuilder.setResourceType( ResourceType.DRL );
+        ClassPathResource classPruner = new ClassPathResource( "FALC_ModelLatticeSimplePrune.drl" );
+            classPruner.setResourceType( ResourceType.DRL );
         ClassPathResource propertyBuilder = new ClassPathResource( "FALC_ModelPropertyVisitor.drl" );
             propertyBuilder.setResourceType( ResourceType.DRL );
 
@@ -177,7 +179,8 @@ public class DLFactoryImpl implements DLFactory {
         Map<ModelInferenceStrategy.InferenceTask, Resource> theory = new LinkedHashMap<ModelInferenceStrategy.InferenceTask, Resource>();
         theory.put( ModelInferenceStrategy.InferenceTask.COMMON, common );
         theory.put( ModelInferenceStrategy.InferenceTask.TABLEAU, tableauRules );
-        theory.put( ModelInferenceStrategy.InferenceTask.CLASS_LATTICE, classBuilder );
+        theory.put( ModelInferenceStrategy.InferenceTask.CLASS_LATTICE_BUILD_AND_PRUNE, classBuilder );
+        theory.put( ModelInferenceStrategy.InferenceTask.CLASS_LATTICE_PRUNE, classPruner );
         theory.put( ModelInferenceStrategy.InferenceTask.PROPERTY_MATCH, propertyBuilder );
 
         OntoModel results = DLFactoryImpl.getInstance().buildModel( ontoDescr,

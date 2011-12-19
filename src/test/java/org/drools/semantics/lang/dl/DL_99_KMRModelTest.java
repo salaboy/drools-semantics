@@ -183,7 +183,7 @@ public class DL_99_KMRModelTest {
 
     @Test
     public void testFullXSDModelGeneration() {
-        String source = "kmr2/KMR_Ontology.ttl";
+        String source = "kmr2/KMR_OntologyLatest.manchester.owl";
         Resource res = ResourceFactory.newClassPathResource( source );
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();

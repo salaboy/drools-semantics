@@ -7,10 +7,11 @@
 @declare{'conceptDeclare'}
 
 // @{iri}
-trait @{name} @if{ superConcepts.size > 0 } extends @foreach{ sup : superConcepts } @{ compactUpperCase( sup.name ) } @end{','} @end{}
+declare @{name} @if{ superConcepts.size > 0 } extends @foreach{ sup : superConcepts } @{ compactUpperCase( sup.name ) } @end{','} @end{}
+@@format(trait)
+
   @if{ properties.size > 0 }    @foreach{ prop : properties.keySet }
-    // @{prop.property}
-    @{prop.name} : @{ properties[ prop ].name }
+    @{ properties[ prop ].name } : @{ properties[ prop ].target.name }
   @end{}                        @end{}
 end
 

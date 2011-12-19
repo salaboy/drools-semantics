@@ -25,13 +25,13 @@ import java.util.Set;
 
 public class Concept {
 
-    @Position(0)    private     String              iri;
-    @Position(1)    private     String              name;
-    @Position(2)    private     Set<Concept>        superConcepts;
-    @Position(3)    private     Map                 properties;
-    @Position(4)    private     Set<Concept>        equivalentConcepts;
+    @Position(0)    private     String                          iri;
+    @Position(1)    private     String                          name;
+    @Position(2)    private     Set<Concept>                    superConcepts;
+    @Position(3)    private     Map                             properties;
+    @Position(4)    private     Set<Concept>                    equivalentConcepts;
 
-                    private     boolean             primitive               = false;
+    private     boolean                         primitive               = false;
 
 
 
@@ -112,13 +112,24 @@ public class Concept {
         return superConcepts;
     }
 
+
+
     public void setSuperConcepts(Set<Concept> superConcepts) {
         this.superConcepts = superConcepts;
     }
 
-    public Map getProperties() {
+    public Map<String, PropertyRelation> getProperties() {
         return properties;
     }
+
+    public void addProperty( String propIri, String propName, PropertyRelation prop ) {
+        properties.put( propIri, prop );
+    }
+
+    public Concept getPropertyRange( String propIri ) {
+        return ((PropertyRelation) properties.get( propIri )).getTarget();
+    }
+
 
     public void setProperties(Map properties) {
         this.properties = properties;
@@ -138,6 +149,55 @@ public class Concept {
 
     public void setPrimitive(boolean primitive) {
         this.primitive = primitive;
+    }
+
+    public static class Range {
+        private Concept     concept;
+        private Integer     minCard = 1;
+        private Integer     maxCard = null;
+
+        public Range(Concept concept, Integer minCard, Integer maxCard) {
+            this.concept = concept;
+            this.minCard = minCard;
+            this.maxCard = maxCard;
+        }
+
+        public Range(Concept concept) {
+            this.concept = concept;
+        }
+
+        public Concept getConcept() {
+            return concept;
+        }
+
+        public void setConcept(Concept concept) {
+            this.concept = concept;
+        }
+
+        public Integer getMinCard() {
+            return minCard;
+        }
+
+        public void setMinCard(Integer minCard) {
+            this.minCard = minCard;
+        }
+
+        public Integer getMaxCard() {
+            return maxCard;
+        }
+
+        public void setMaxCard(Integer maxCard) {
+            this.maxCard = maxCard;
+        }
+
+        @Override
+        public String toString() {
+            return "Range{" +
+                    "concept=" + concept +
+                    ", minCard=" + minCard +
+                    ", maxCard=" + maxCard +
+                    '}';
+        }
     }
 }
 

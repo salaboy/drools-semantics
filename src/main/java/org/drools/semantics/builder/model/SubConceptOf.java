@@ -45,7 +45,7 @@ public class SubConceptOf extends Relation {
 
     @Override
     public String toString() {
-            return "subConceptOf";
+            return subject + "subConceptOf" + object;
         }
 
 

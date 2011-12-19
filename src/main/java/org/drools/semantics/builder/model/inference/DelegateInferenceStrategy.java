@@ -16,8 +16,11 @@
 
 package org.drools.semantics.builder.model.inference;
 
+import org.apache.commons.collections15.BidiMap;
+import org.apache.commons.collections15.bidimap.TreeBidiMap;
 import org.apache.commons.collections15.map.MultiKeyMap;
 import org.drools.io.Resource;
+import org.drools.runtime.ClassObjectFilter;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.semantics.builder.DLUtils;
 import org.drools.semantics.builder.model.Concept;
@@ -27,6 +30,9 @@ import org.drools.semantics.builder.model.SubConceptOf;
 import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.*;
+import uk.ac.manchester.cs.owl.owlapi.OWLIndividualImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectSomeValuesFromImpl;
+
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -34,17 +40,22 @@ import java.util.*;
 
 public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
-    public static int inferredDomains = 0;
+    private static int counter = 0;
+
     public static int minCounter = 0;
     public static int maxCounter = 0;
 
     private InferredOntologyGenerator reasoner;
 
+    private Map<OWLClassExpression,OWLClassExpression> aliases;
+
     private Map<String, Concept> cache = new HashMap<String, Concept>();
     private Map<String, String> props = new HashMap<String, String>();
-    private Map<OWLProperty, Set<OWLClassExpression> > domains = new HashMap<OWLProperty, Set<OWLClassExpression>>();
-    private Map<OWLProperty, Set<OWLClassExpression> > ranges = new HashMap<OWLProperty, Set<OWLClassExpression>>();
-    private Map<OWLProperty, Set<OWLDataRange> > dataRanges = new HashMap<OWLProperty, Set<OWLDataRange>>();
+
+
+//    private Map<OWLProperty, Set<OWLClassExpression> > domains = new HashMap<OWLProperty, Set<OWLClassExpression>>();
+//    private Map<OWLProperty, Set<OWLClassExpression> > ranges = new HashMap<OWLProperty, Set<OWLClassExpression>>();
+//    private Map<OWLProperty, Set<OWLDataRange> > dataRanges = new HashMap<OWLProperty, Set<OWLDataRange>>();
 
     private MultiKeyMap minCards = new MultiKeyMap();
     private MultiKeyMap maxCards = new MultiKeyMap();
@@ -132,627 +143,789 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
     @Override
     protected OntoModel buildProperties( OWLOntology ontoDescr, StatefulKnowledgeSession kSession, Map<InferenceTask, Resource> theory, OntoModel hierachicalModel ) {
 
-        boolean dirty = false;
         OWLDataFactory factory = ontoDescr.getOWLOntologyManager().getOWLDataFactory();
 
-
-        for ( OWLDataProperty dp : ontoDescr.getDataPropertiesInSignature() ) {
-            String propIri = dp.getIRI().toQuotedString();
-            String propName = DLUtils.getInstance().buildLowCaseNameFromIri( dp.getIRI() );
-            props.put( propIri, propName );
-        }
-
-        for ( OWLObjectProperty op : ontoDescr.getObjectPropertiesInSignature() ) {
-            String propIri = op.getIRI().toQuotedString();
-            String propName = DLUtils.getInstance().buildLowCaseNameFromIri( op.getIRI() );
-            props.put( propIri, propName );
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // infer domain / range from quantified restrictions...
-        for ( OWLClass klass : ontoDescr.getClassesInSignature() ) {
-            for ( OWLClassExpression clax : klass.getSuperClasses( ontoDescr ) ) {
-                clax = clax.getNNF();
-
-                final OWLClass inKlass = klass;
-                final OWLDataFactory fac = factory;
-                clax.accept( new OWLClassExpressionVisitor() {
-
-
-
-                    private void process( OWLClassExpression expr ) {
-                        if ( expr instanceof OWLNaryBooleanClassExpression ) {
-                            for (OWLClassExpression clax : ((OWLNaryBooleanClassExpression) expr).getOperandsAsList() ) {
-                                process( clax );
-                            }
-                        } else if ( expr instanceof OWLQuantifiedObjectRestriction ) {
-                            OWLQuantifiedObjectRestriction rest = (OWLQuantifiedObjectRestriction) expr;
-                            OWLObjectProperty prop = rest.getProperty().asOWLObjectProperty();
-                            addDomain( domains, prop, inKlass, fac );
-                            inferredDomains++;
-                            OWLClassExpression fil = rest.getFiller();
-                            if ( fil instanceof OWLObjectComplementOf ) {
-                                fil = ((OWLObjectComplementOf) fil ).getOperand();
-                            }
-                            try {
-                                addRange( ranges, prop, rest.getFiller().asOWLClass(), fac );
-                            } catch (OWLRuntimeException ore) {
-                                System.err.println( "ORE --- " + rest.getFiller() );
-                            }
-                            process( fil );
-                        } else if ( expr instanceof  OWLQuantifiedDataRestriction ) {
-                            OWLQuantifiedDataRestriction rest = (OWLQuantifiedDataRestriction) expr;
-                            addDomain(domains, ((OWLQuantifiedDataRestriction) expr).getProperty().asOWLDataProperty(), inKlass, fac);
-                            inferredDomains++;
-                            OWLDataRange fil = rest.getFiller();
-                            if ( fil instanceof OWLDataComplementOf ) {
-                                fil = ((OWLDataComplementOf) rest.getFiller()).getDataRange();
-                            }
-                            if ( fil instanceof OWLDataOneOf ) {
-                                return;
-                            }
-                            addDataRange(dataRanges, ((OWLQuantifiedDataRestriction) expr).getProperty().asOWLDataProperty(), fil.asOWLDatatype(), fac);
-                        } else if ( expr instanceof OWLCardinalityRestriction ) {
-                            if ( expr instanceof OWLDataMinCardinality ) {
-                                minCards.put(inKlass.getIRI().toQuotedString(),
-                                        ((OWLDataMinCardinality) expr).getProperty().asOWLDataProperty().getIRI().toQuotedString(),
-                                        ((OWLDataMinCardinality) expr).getCardinality());
-                                minCounter++;
-                            } else if ( expr instanceof OWLDataMaxCardinality ) {
-                                maxCards.put( inKlass.getIRI().toQuotedString(),
-                                        ((OWLDataMaxCardinality) expr).getProperty().asOWLDataProperty().getIRI().toQuotedString(),
-                                        ((OWLDataMaxCardinality) expr).getCardinality() );
-                                maxCounter++;
-                            } else if ( expr instanceof OWLObjectMaxCardinality ) {
-                                maxCards.put( inKlass.getIRI().toQuotedString(),
-                                        ((OWLObjectMaxCardinality) expr).getProperty().asOWLObjectProperty().getIRI().toQuotedString(),
-                                        ((OWLObjectMaxCardinality) expr).getCardinality() );
-                                maxCounter++;
-                            } else if ( expr instanceof OWLObjectMinCardinality ) {
-                                minCards.put( inKlass.getIRI().toQuotedString(),
-                                        ((OWLObjectMinCardinality) expr).getProperty().asOWLObjectProperty().getIRI().toQuotedString(),
-                                        ((OWLObjectMinCardinality) expr).getCardinality() );
-                                minCounter++;
-                            }
-                            System.out.println( expr );
-                        }
-                        else return;
-                    }
-
-                    public void visit(OWLClass ce) {
-                        process( ce );
-                    }
-
-                    public void visit(OWLObjectIntersectionOf ce) {
-                        process( ce );
-                    }
-
-                    public void visit(OWLObjectUnionOf ce) {
-                        process( ce );
-                    }
-
-                    public void visit(OWLObjectComplementOf ce) {
-                        process( ce );
-                    }
-
-                    public void visit(OWLObjectSomeValuesFrom ce) {
-                        process(ce);
-                    }
-
-                    public void visit(OWLObjectAllValuesFrom ce) {
-                        process(ce);
-                    }
-
-                    public void visit(OWLObjectHasValue ce) {
-                        process(ce);
-                    }
-
-                    public void visit(OWLObjectMinCardinality ce) {
-//                        minCards.put(inKlass, ce.getProperty().asOWLObjectProperty().getIRI().toQuotedString(), ce.getCardinality());
-//                        minCounter++;
-                        process(ce);
-                    }
-
-                    public void visit(OWLObjectExactCardinality ce) {
-//                        maxCards.put(inKlass, ce.getProperty().asOWLObjectProperty().getIRI().toQuotedString(), ce.getCardinality());
-//                        minCards.put(inKlass, ce.getProperty().asOWLObjectProperty().getIRI().toQuotedString(), ce.getCardinality());
-//                        minCounter++;
-//                        maxCounter++;
-                        process(ce);
-                    }
-
-                    public void visit(OWLObjectMaxCardinality ce) {
-//                        maxCards.put(inKlass, ce.getProperty().asOWLObjectProperty().getIRI().toQuotedString(), ce.getCardinality());
-//                        maxCounter++;
-                        process(ce);
-                    }
-
-                    public void visit(OWLObjectHasSelf ce) {
-                        throw new UnsupportedOperationException();
-                    }
-
-                    public void visit(OWLObjectOneOf ce) {
-                        throw new UnsupportedOperationException();
-                    }
-
-                    public void visit(OWLDataSomeValuesFrom ce) {
-                        process(ce);
-                    }
-
-                    public void visit(OWLDataAllValuesFrom ce) {
-                        process(ce);
-                    }
-
-                    public void visit(OWLDataHasValue ce) {
-                        process(ce);
-                    }
-
-                    public void visit(OWLDataMinCardinality ce) {
-//                        minCards.put(inKlass, ce.getProperty().asOWLDataProperty().getIRI().toQuotedString(), ce.getCardinality());
-//                        minCounter++;
-                        process(ce);
-                    }
-
-                    public void visit(OWLDataExactCardinality ce) {
-//                        minCards.put(inKlass, ce.getProperty().asOWLDataProperty().getIRI().toQuotedString(), ce.getCardinality());
-//                        maxCards.put(inKlass, ce.getProperty().asOWLDataProperty().getIRI().toQuotedString(), ce.getCardinality());
-//                        maxCounter++;
-//                        minCounter++;
-                        process(ce);
-                    }
-
-                    public void visit(OWLDataMaxCardinality ce) {
-//                        maxCards.put(inKlass, ce.getProperty().asOWLDataProperty().getIRI().toQuotedString(), ce.getCardinality());
-//                        maxCounter++;
-                        process(ce);
-                    }
-                });
-
-            }
-        }
-
-
-
-
-        for ( OWLProperty prop : domains.keySet() ) {
-            if ( domains.get( prop ).size() > 1 ) {
-                dirty = true;
-                OWLClass dom = factory.getOWLClass(
-                        IRI.create(DLUtils.getInstance().buildNameFromIri(prop.getIRI().toQuotedString() + "Domain")))  ;
-                ontoDescr.getOWLOntologyManager().applyChange(
-                        new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( dom ) )
-                );
-                ontoDescr.getOWLOntologyManager().applyChange(
-                        new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( dom, factory.getOWLObjectUnionOf( domains.get( prop ) ) ) )
-                );
-            }
-        }
-        for ( OWLProperty prop : ranges.keySet() ) {
-            if ( ranges.get( prop ).size() > 1 ) {
-                dirty = true;
-                OWLClass dom = factory.getOWLClass(
-                        IRI.create(DLUtils.getInstance().buildNameFromIri(prop.getIRI().toQuotedString() + "Range")))  ;
-                ontoDescr.getOWLOntologyManager().applyChange(
-                        new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( dom ) )
-                );
-                ontoDescr.getOWLOntologyManager().applyChange(
-                        new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( dom, factory.getOWLObjectUnionOf( ranges.get( prop ) ) ) )
-                );
-            }
-        }
-        for ( OWLProperty prop : dataRanges.keySet() ) {
-            if ( dataRanges.get( prop ).size() > 1 ) {
-                dirty = true;
-                OWLDatatype dom = factory.getOWLDatatype(
-                        IRI.create(DLUtils.getInstance().buildNameFromIri(prop.getIRI().toQuotedString() + "Range")))  ;
-                ontoDescr.getOWLOntologyManager().applyChange(
-                        new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( dom ) )
-                );
-                ontoDescr.getOWLOntologyManager().applyChange(
-                        new AddAxiom( ontoDescr, factory.getOWLDataPropertyRangeAxiom( prop.asOWLDataProperty(), factory.getOWLDataUnionOf( dataRanges.get( prop ) )
-                        ) )
-                );
-            }
-        }
-
-
-
-//
-
-
-
-        for ( OWLProperty prop : domains.keySet() ) {
-            if ( prop instanceof OWLObjectProperty ) {
-                OWLObjectProperty oProp = (OWLObjectProperty) prop;
-                for ( OWLClassExpression d : domains.get( prop ) ) {
-                    if ( ! ontoDescr.getObjectPropertyDomainAxioms( oProp ).contains( d ) ) {
-                        ontoDescr.getOWLOntologyManager().applyChange(
-                                new AddAxiom( ontoDescr, factory.getOWLObjectPropertyDomainAxiom( oProp, d ) )
-                        );
-                    }
-                }
-
-            } else if ( prop instanceof OWLDataProperty ) {
-                OWLDataProperty dProp = (OWLDataProperty) prop;
-                for ( OWLClassExpression d : domains.get( prop ) ) {
-                    if ( ! ontoDescr.getDataPropertyDomainAxioms( dProp ).contains( d ) ) {
-                        ontoDescr.getOWLOntologyManager().applyChange(
-                                new AddAxiom( ontoDescr, factory.getOWLDataPropertyDomainAxiom( dProp, d ) )
-                        );
-                    }
-                }
-
-            }
-        }
-
-        for ( OWLProperty prop : ranges.keySet() ) {
-            if ( prop instanceof OWLObjectProperty ) {
-                OWLObjectProperty oProp = (OWLObjectProperty) prop;
-                for ( OWLClassExpression r : ranges.get( prop ) ) {
-                    if ( ! ontoDescr.getObjectPropertyRangeAxioms( oProp ).contains( r ) ) {
-                        ontoDescr.getOWLOntologyManager().applyChange(
-                                new AddAxiom( ontoDescr, factory.getOWLObjectPropertyRangeAxiom( oProp, r ) )
-                        );
-                    }
-                }
-
-            }
-        }
-
-        for ( OWLProperty prop : dataRanges.keySet() ) {
-            if ( prop instanceof OWLDataProperty ) {
-                OWLDataProperty dProp = (OWLDataProperty) prop;
-                for ( OWLDataRange r : dataRanges.get( prop ) ) {
-                    if ( ! ontoDescr.getDataPropertyRangeAxioms( dProp ).contains( r ) ) {
-                        ontoDescr.getOWLOntologyManager().applyChange(
-                                new AddAxiom( ontoDescr, factory.getOWLDataPropertyRangeAxiom( dProp, r ) )
-                        );
-                    }
-                }
-
-            }
-        }
-
-
-        for ( OWLDataProperty dProp : ontoDescr.getDataPropertiesInSignature() ) {
-            for ( OWLDataPropertyDomainAxiom dom : ontoDescr.getDataPropertyDomainAxioms( dProp ) ) {
-                if ( domains.get( dProp ) == null || ! domains.get( dProp ).contains( dom.getDomain() ) ) {
-                    addDomain( domains, dProp, dom.getDomain(), factory );
-                }
-            }
-
-            for ( OWLDataPropertyRangeAxiom ran : ontoDescr.getDataPropertyRangeAxioms( dProp ) ) {
-                if ( dataRanges.get( dProp ) == null || ! dataRanges.get( dProp ).contains( ran.getRange() ) ) {
-                    addDataRange(dataRanges, dProp, ran.getRange(), factory);
-                }
-            }
-        }
-
-        for ( OWLObjectProperty oProp : ontoDescr.getObjectPropertiesInSignature() ) {
-            for ( OWLObjectPropertyDomainAxiom dom : ontoDescr.getObjectPropertyDomainAxioms( oProp ) ) {
-                if ( domains.get( oProp ) == null || ! domains.get( oProp ).contains( dom.getDomain() ) ) {
-                    addDomain( domains, oProp, dom.getDomain(), factory );
-                }
-            }
-
-            for ( OWLObjectPropertyRangeAxiom ran : ontoDescr.getObjectPropertyRangeAxioms(oProp) ) {
-                if ( ranges.get( oProp ) == null || ! ranges.get( oProp ).contains( ran.getRange() ) ) {
-                    addRange( ranges, oProp, ran.getRange(), factory );
-                }
-            }
-        }
-
-        // set domains and ranges
-//        for ( OWLProperty prop : domains.keySet() ) {
-
-//            OWLClassExpression dom;
-//            if ( domains.get( prop ).size() > 1 ) {
-//                dom = factory.getOWLObjectUnionOf( domains.get( prop ) );
-//            } else {
-//                dom = domains.get( prop ).iterator().next();
-//            }
-//            dirty = true;
-//            if ( prop instanceof OWLObjectPropertyExpression ) {
-//                OWLObjectPropertyExpression oxProp = (OWLObjectPropertyExpression) prop;
-//                ontoDescr.getOWLOntologyManager().applyChange(
-//                        new AddAxiom( ontoDescr, factory.getOWLObjectPropertyDomainAxiom( oxProp, dom ) )
-//                );
-//            } else {
-//                OWLDataPropertyExpression datProp = (OWLDataPropertyExpression) prop;
-//                ontoDescr.getOWLOntologyManager().applyChange(
-//                        new AddAxiom( ontoDescr, factory.getOWLDataPropertyDomainAxiom( datProp, dom ) )
-//                );
-//            }
-//        }
-//
-//
-//        for ( OWLProperty prop : ranges.keySet() ) {
-//            OWLClassExpression ran;
-//            if ( ranges.get( prop ).size() > 1 ) {
-//                ran = factory.getOWLObjectUnionOf( ranges.get( prop ) );
-//            } else {
-//                ran = ranges.get( prop ).iterator().next();
-//            }
-//            dirty = true;
-//            if ( prop instanceof OWLObjectPropertyExpression ) {
-//                OWLObjectPropertyExpression oxProp = (OWLObjectPropertyExpression) prop;
-//                ontoDescr.getOWLOntologyManager().applyChange(
-//                        new AddAxiom( ontoDescr, factory.getOWLObjectPropertyRangeAxiom( oxProp, ran ) )
-//                );
-//            }
-//        }
-//        for ( OWLProperty prop : dataRanges.keySet() ) {
-//            OWLDataRange ran = dataRanges.get( prop ).iterator().next();;
-//
-//            if ( prop instanceof OWLDataPropertyExpression ) {
-//                OWLDataPropertyExpression dataProp = (OWLDataPropertyExpression) prop;
-//                ontoDescr.getOWLOntologyManager().applyChange(
-//                        new AddAxiom( ontoDescr, factory.getOWLDataPropertyRangeAxiom( dataProp, ran ) )
-//                );
-//            }
-//        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // Handle anonymous domains and ranges
-        for ( OWLDataProperty dp : ontoDescr.getDataPropertiesInSignature() ) {
-            String propIri = dp.getIRI().toQuotedString();
-            String propName = DLUtils.getInstance().buildLowCaseNameFromIri( dp.getIRI() );
-            String typeName = DLUtils.getInstance().buildNameFromIri( dp.getIRI() );
-
-            for (OWLClassExpression dom : dp.getDomains( ontoDescr )) {
-                for (OWLDataRange ran : dp.getRanges( ontoDescr )) {
-                    String domainIri = dom.isAnonymous() ? "" : dom.asOWLClass().getIRI().toQuotedString();
-                    if ( dom.isAnonymous() ) {
-                        OWLClass domain = factory.getOWLClass(IRI.create( typeName + "Domain") );
-                        domainIri = domain.getIRI().toQuotedString();
-                        ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( domain ) ) );
-                        ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom(ontoDescr, factory.getOWLEquivalentClassesAxiom(domain, dom)));
-                        dirty = true;
-                    }
-
-//                    hierachicalModel.addProperty( new PropertyRelation( domainIri, propIri, ran.asOWLDatatype().getIRI().toQuotedString(), propName ) );
-                    addDomain(domains, dp, dom, factory);
-                }
-            }
-
-        }
-
-
-        for ( OWLObjectProperty op : ontoDescr.getObjectPropertiesInSignature() ) {
-            String propIri = op.getIRI().toQuotedString();
-            String propName = DLUtils.getInstance().buildLowCaseNameFromIri( op.getIRI() );
-            String typeName = DLUtils.getInstance().buildNameFromIri( op.getIRI() );
-
-
-            for (OWLClassExpression dom : op.getDomains( ontoDescr )) {
-                for (OWLClassExpression ran : op.getRanges( ontoDescr )) {
-                    String domainIri = dom.isAnonymous() ? "" : dom.asOWLClass().getIRI().toQuotedString();
-                    String rangeIri = ran.isAnonymous() ? "" : ran.asOWLClass().getIRI().toQuotedString();
-
-                    if ( dom.isAnonymous() ) {
-                        OWLClass domain = factory.getOWLClass(IRI.create( typeName + "Domain") );
-                        domainIri = domain.getIRI().toQuotedString();
-                        ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( domain ) ) );
-                        ontoDescr.getOWLOntologyManager().applyChange(new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( domain, dom ) ) );
-                        dirty = true;
-                    }
-
-                    if ( ran.isAnonymous() ) {
-                        OWLClass range = factory.getOWLClass(IRI.create( typeName + "Range") );
-                        rangeIri = range.getIRI().toQuotedString();
-                        ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( range ) ) );
-                        ontoDescr.getOWLOntologyManager().applyChange(new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( range, ran ) ) );
-                        dirty = true;
-                    }
-
-//                    hierachicalModel.addProperty( new PropertyRelation( domainIri, propIri, rangeIri, propName ) );
-                    addDomain( domains, op, dom, factory );
-
-                }
-            }
-
-        }
-
-
-
-
-
-
-
-
-
-
+        fillPropNamesInDataStructs( ontoDescr );
 
         // Complete missing domains and ranges for properties. Might be overridden later, if anything can be inferred
+        createAndAddBasicProperties( ontoDescr, factory, hierachicalModel );
+
+        // Apply any cardinality / range restriction
+        applyPropertyRestrictions( ontoDescr, hierachicalModel );
+
+        System.out.println( hierachicalModel );
+
+
+        return hierachicalModel;
+    }
+
+
+
+    private void applyPropertyRestrictions( OWLOntology ontoDescr, OntoModel hierachicalModel ) {
+
+        for ( PropertyRelation prop : hierachicalModel.getProperties() ) {
+            if ( prop.getTarget() == null ) {
+                System.err.println("WARNING : Prperty without target concept " +  prop.getName() );
+            }
+        }
+        
+        
+        Map<String, Set<OWLClassExpression>> supers = new HashMap<String, Set<OWLClassExpression>>();
+        for ( OWLClass klass : ontoDescr.getClassesInSignature() ) {
+            supers.put( klass.getIRI().toQuotedString(), new HashSet<OWLClassExpression>() );
+        }
+        for ( OWLClass klass : ontoDescr.getClassesInSignature() ) {
+            if ( isDelegating( klass ) ) {
+                OWLClassExpression delegate = aliases.get( klass );
+                supers.get( delegate.asOWLClass().getIRI().toQuotedString() ).addAll( klass.getSuperClasses( ontoDescr ) );
+            } else {
+                supers.get( klass.asOWLClass().getIRI().toQuotedString() ).addAll( klass.getSuperClasses( ontoDescr ) );
+            }
+
+        }
+
+        for ( Concept con : hierachicalModel.getConcepts() ) {      //use concepts as they're sorted!
+
+
+            if ( isDelegating( con.getIri() ) ) {
+                continue;
+            }
+
+            if ( con == null ) {
+                System.err.println("WARNING : Looking for superclasses of an undefined concept");
+                continue;
+            }
+            for ( OWLClassExpression sup : supers.get( con.getIri() ) ) {
+                if ( sup.isClassExpressionLiteral() ) {
+                    continue;
+                }
+
+
+                String propIri;
+                PropertyRelation rel;
+                switch ( sup.getClassExpressionType() ) {
+                    case DATA_SOME_VALUES_FROM:
+                        //check that it's a subclass of the domain. Should have already been done, or it would be an inconsistency
+                        break;
+                    case DATA_ALL_VALUES_FROM:
+                        OWLDataAllValuesFrom forall = (OWLDataAllValuesFrom) sup;
+                        propIri = forall.getProperty().asOWLDataProperty().getIRI().toQuotedString();
+                        rel = extractProperty( con, propIri );
+                        rel.setObject( forall.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
+                        con.addProperty( propIri, props.get( propIri ), rel );
+                        hierachicalModel.addProperty( rel );
+                        break;
+                    case DATA_MIN_CARDINALITY:
+                        OWLDataMinCardinality min = (OWLDataMinCardinality) sup;
+                        propIri = min.getProperty().asOWLDataProperty().getIRI().toQuotedString();
+                        rel = extractProperty( con, propIri );
+                        rel.setMinCard( min.getCardinality() );
+                        break;
+                    case DATA_MAX_CARDINALITY:
+                        OWLDataMaxCardinality max = (OWLDataMaxCardinality) sup;
+                        propIri = max.getProperty().asOWLDataProperty().getIRI().toQuotedString();
+                        rel = extractProperty( con, propIri );
+                        rel.setMaxCard( max.getCardinality() );
+                        break;
+                    case DATA_EXACT_CARDINALITY:
+                        OWLDataExactCardinality ex = (OWLDataExactCardinality) sup;
+                        propIri = ex.getProperty().asOWLDataProperty().getIRI().toQuotedString();
+                        rel = extractProperty( con, propIri );
+                        rel.setMinCard( ex.getCardinality() );
+                        rel.setMaxCard( ex.getCardinality() );
+                        break;
+                    case OBJECT_SOME_VALUES_FROM:
+                        //check that it's a subclass of the domain. Should have already been done, or it would be an inconsistency
+                        break;
+                    case OBJECT_ALL_VALUES_FROM:
+                        OWLObjectAllValuesFrom forallO = (OWLObjectAllValuesFrom) sup;
+                        propIri = forallO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
+                        rel = extractProperty( con, propIri );
+                        Concept tgt = cache.get( filterAliases( forallO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
+                        rel.setObject( tgt.getName() );
+                        con.addProperty( propIri, props.get( propIri ), rel );
+                        hierachicalModel.addProperty( rel );
+                        break;
+                    case OBJECT_MIN_CARDINALITY:
+                        OWLObjectMinCardinality minO = (OWLObjectMinCardinality) sup;
+                        propIri = minO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
+                        rel = extractProperty( con, propIri );
+                        rel.setMinCard( minO.getCardinality() );
+                        break;
+                    case OBJECT_MAX_CARDINALITY:
+                        OWLObjectMaxCardinality maxO = (OWLObjectMaxCardinality) sup;
+                        propIri = maxO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
+                        rel = extractProperty( con, propIri );
+                        rel.setMaxCard( maxO.getCardinality() );
+                        break;
+                    case OBJECT_EXACT_CARDINALITY:
+                        OWLObjectExactCardinality exO = (OWLObjectExactCardinality) sup;
+                        propIri = exO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
+                        rel = extractProperty( con, propIri );
+                        rel.setMinCard( exO.getCardinality() );
+                        rel.setMaxCard( exO.getCardinality() );
+                        break;
+                }
+            }
+        }
+
+    }
+
+    private PropertyRelation extractProperty( Concept con, String propIri ) {
+        PropertyRelation rel = con.getProperties().get( propIri );
+        if ( rel != null ) {
+            return rel;
+        } else {
+            rel = inheritProperty( con, con, propIri );
+            if ( rel == null ) {
+                System.err.println( "WARNING : Restricting non-existent property " + propIri + " in class " + con.getName() );
+            } else {
+                rel.setSubject( con.getName() );
+                con.addProperty( propIri, props.get( propIri ), rel );
+            }
+        }
+        return rel;
+    }
+
+    private PropertyRelation inheritProperty( Concept original, Concept current, String propName ) {
+        PropertyRelation rel;
+        for ( Concept sup : current.getSuperConcepts() ) {
+            rel = extractProperty( sup, propName );
+            if ( rel != null ) {
+                PropertyRelation restrictedRel = new PropertyRelation( rel.getSubject(), rel.getProperty(), rel.getObject(), propName );
+                restrictedRel.setMinCard( rel.getMinCard() );
+                restrictedRel.setMaxCard( rel.getMaxCard() );
+                restrictedRel.setTarget( rel.getTarget() );
+                return restrictedRel;
+            } else {
+                rel = inheritProperty( original, sup, propName );
+                if ( rel != null ) {
+                    return rel;
+                }
+            }
+        }
+        return null;
+
+    }
+
+
+    private void createAndAddBasicProperties(OWLOntology ontoDescr, OWLDataFactory factory, OntoModel hierachicalModel ) {
         int missDomain = 0;
         int missDataRange = 0;
-        int missObjRange = 0;
-        for ( OWLDataProperty dp : ontoDescr.getDataPropertiesInSignature() ) {
-            if ( ! dp.isOWLTopDataProperty() && dp.getDomains( ontoDescr ).isEmpty() ) {
-                ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDataPropertyDomainAxiom( dp, factory.getOWLThing() ) ) );
-                addDomain( domains, dp, factory.getOWLThing(), factory );
-                System.err.println( "Added missing domain for" + dp);
-                missDomain++;
-            }
-        }
-
-        for ( OWLObjectProperty op : ontoDescr.getObjectPropertiesInSignature() ) {
-            if ( ! op.isOWLTopObjectProperty() && op.getRanges( ontoDescr ).isEmpty() ) {
-                ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLObjectPropertyRangeAxiom( op, factory.getOWLThing() ) ) );
-                addRange( ranges, op, factory.getOWLThing(), factory );
-                System.err.println( "Added missing range for" + op);
-                missObjRange++;
-            }
-        }
+        int missObjectRange = 0;
 
         for ( OWLDataProperty dp : ontoDescr.getDataPropertiesInSignature() ) {
-            if ( ! dp.isOWLTopDataProperty() && dp.getRanges( ontoDescr ).isEmpty() ) {
-                ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDataPropertyRangeAxiom( dp, factory.getTopDatatype() ) ) );
-                addDataRange(dataRanges, dp, factory.getTopDatatype(), factory );
-                System.err.println( "Added missing dataRange for" + dp);
-                missDataRange++;
+            if ( ! dp.isOWLTopDataProperty() && ! dp.isOWLBottomDataProperty() ) {
+                Set<OWLClassExpression> domains = dp.getDomains( ontoDescr );
+                if ( domains.isEmpty() ) {
+                    domains.add( factory.getOWLThing() );
+                    System.err.println( "WARNING Added missing domain for" + dp);
+                    missDomain++;
+                }
+                Set<OWLDataRange> ranges = dp.getRanges( ontoDescr );
+                if ( ranges.isEmpty() ) {
+                    ranges.add( factory.getRDFPlainLiteral() );
+                    System.err.println( "WARNING Added missing range for" + dp);
+                    missDataRange++;
+                }
+
+                for ( OWLClassExpression domain : domains ) {
+                    for ( OWLDataRange range : ranges ) {
+                        OWLClassExpression realDom = filterAliases( domain );
+                        PropertyRelation rel = new PropertyRelation( realDom.asOWLClass().getIRI().toQuotedString(),
+                                dp.getIRI().toQuotedString(),
+                                range.asOWLDatatype().getIRI().toQuotedString(),
+                                props.get( dp.getIRI().toQuotedString() ) );
+
+                        Concept con = cache.get( rel.getSubject() );
+                        rel.setTarget( primitives.get( rel.getObject() ) );
+
+                        con.addProperty( rel.getProperty(), rel.getName(), rel );
+                        hierachicalModel.addProperty( rel );
+                    }
+                }
             }
         }
 
+
         for ( OWLObjectProperty op : ontoDescr.getObjectPropertiesInSignature() ) {
-            if ( ! op.isOWLTopObjectProperty() && op.getDomains( ontoDescr ).isEmpty() ) {
-                ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLObjectPropertyDomainAxiom( op, factory.getOWLThing() ) ) );
-                addDomain( domains, op, factory.getOWLThing(), factory );
-                System.err.println( "Added missing domain for" + op);
-                missDomain++;
+            if ( ! op.isOWLTopObjectProperty() && ! op.isOWLBottomObjectProperty() ) {
+                Set<OWLClassExpression> domains = op.getDomains( ontoDescr );
+                if ( domains.isEmpty() ) {
+                    domains.add( factory.getOWLThing() );
+                    System.err.println( "WARNING Added missing domain for" + op);
+                    missDomain++;
+                }
+                Set<OWLClassExpression> ranges = op.getRanges( ontoDescr );
+                if ( ranges.isEmpty() ) {
+                    ranges.add( factory.getOWLThing() );
+                    System.err.println( "WARNING Added missing range for" + op);
+                    missObjectRange++;
+                }
+
+                for ( OWLClassExpression domain : domains ) {
+                    for ( OWLClassExpression range : ranges ) {
+                        OWLClassExpression realDom = filterAliases( domain );
+                        OWLClassExpression realRan = filterAliases( range );
+
+                        PropertyRelation rel = new PropertyRelation( realDom.asOWLClass().getIRI().toQuotedString(),
+                                op.getIRI().toQuotedString(),
+                                realRan.asOWLClass().getIRI().toQuotedString(),
+                                props.get( op.getIRI().toQuotedString() ) );
+
+                        Concept con = cache.get( rel.getSubject() );
+                        rel.setTarget( cache.get( rel.getObject() ) );
+
+                        con.addProperty( rel.getProperty(), rel.getName(), rel );
+                        hierachicalModel.addProperty( rel );
+                    }
+                }
             }
         }
 
         System.err.println("Misses : ");
-        System.err.println(inferredDomains);
         System.err.println(missDomain);
         System.err.println(missDataRange);
-        System.err.println(missObjRange);
+        System.err.println(missObjectRange);
+    }
+
+
+    private Map<OWLClassExpression,OWLClassExpression> buildAliasesForEquivalentClasses(OWLOntology ontoDescr) {
+        Map<OWLClassExpression,OWLClassExpression> aliases = new HashMap<OWLClassExpression,OWLClassExpression>();
+        Set<OWLEquivalentClassesAxiom> pool = new HashSet<OWLEquivalentClassesAxiom>();
+        Set<OWLEquivalentClassesAxiom> temp = new HashSet<OWLEquivalentClassesAxiom>();
+
+
+        for ( OWLClass klass : ontoDescr.getClassesInSignature() ) {
+            for ( OWLEquivalentClassesAxiom klassEq : ontoDescr.getEquivalentClassesAxioms( klass ) ) {
+                for (OWLEquivalentClassesAxiom eq2 : klassEq.asPairwiseAxioms() ) {
+                    pool.add( eq2 );
+                }
+            }
+        }
+
+        boolean stable = false;
+        while ( ! stable ) {
+            stable = true;
+            temp.addAll( pool );
+            for ( OWLEquivalentClassesAxiom eq2 : pool ) {
+
+                List<OWLClassExpression> pair = eq2.getClassExpressionsAsList();
+                OWLClassExpression first = pair.get( 0 );
+                OWLClassExpression secnd = pair.get( 1 );
+                OWLClassExpression removed = null;
+
+                if ( aliases.containsValue( first ) ) {
+                    // add to existing eqSet, put reversed
+                    // A->X,  add X->C          ==> A->X, C->X
+                    removed = aliases.put( secnd, first );
+                    System.out.println("TAAKING OUT 1" + eq2 );
+                    if ( removed != null ) {
+                        System.err.println( "WARNING : DOUBLE KEY WHILE RESOLVING EQUALITIES" + removed + " for value " + eq2 );
+                    }
+
+                    stable = false;
+                    temp.remove( eq2 );
+                } else if ( aliases.containsValue( secnd ) ) {
+                    // add to existing eqSet, put as is
+                    // A->X,  add C->X          ==> A->X, C->X
+                    removed = aliases.put( first, secnd );
+                    System.out.println("TAAKING OUT 2" + eq2 );
+                    if ( removed != null ) {
+                        System.err.println( "WARNING : DOUBLE KEY WHILE RESOLVING EQUALITIES" + removed + " for value " + eq2 );
+                    }
+
+                    stable = false;
+                    temp.remove( eq2 );
+                } else if ( aliases.containsKey( first ) ) {
+                    // apply transitivity, reversed
+                    // A->X,  add A->C          ==> A->X, C->X
+                    removed = aliases.put( secnd, aliases.get( first ) );
+                    System.out.println("TAAKING OUT 3" + eq2 );
+                    if ( removed != null ) {
+                        System.err.println( "WARNING : DOUBLE KEY WHILE RESOLVING EQUALITIES" + removed + " for value " + eq2 );
+                    }
+
+                    stable = false;
+                    temp.remove( eq2 );
+                } else if ( aliases.containsKey( secnd ) ) {
+                    // apply transitivity, as is
+                    // A->X,  add C->A          ==> A->X, C->X
+                    removed = aliases.put( first, aliases.get( secnd ) );
+                    System.out.println("TAAKING OUT 4" + eq2 );
+                    if ( removed != null ) {
+                        System.err.println( "WARNING : DOUBLE KEY WHILE RESOLVING EQUALITIES" + removed + " for value " + eq2 );
+                    }
+
+                    stable = false;
+                    temp.remove( eq2 );
+                } else if ( ! first.isAnonymous() ) {
+                    removed = aliases.put( secnd, first );
+                    System.out.println("TAAKING OUT 5" + eq2 );
+                    if ( removed != null ) {
+                        System.err.println( "WARNING : DOUBLE KEY WHILE RESOLVING EQUALITIES" + removed + " for value " + eq2 );
+                    }
+
+                    stable = false;
+                    temp.remove( eq2 );
+                } else if ( ! secnd.isAnonymous() ) {
+                    removed = aliases.put( first, secnd );
+                    System.out.println("TAAKING OUT 6" + eq2 );
+                    if ( removed != null ) {
+                        System.err.println( "WARNING : DOUBLE KEY WHILE RESOLVING EQUALITIES" + removed + " for value " + eq2 );
+                    }
+
+                    stable = false;
+                    temp.remove( eq2 );
+                } else {
+                    // both anonymous
+                }
+
+
+            }
+            pool.clear();
+            pool.addAll(temp);
+        }
+
+        if ( ! pool.isEmpty() ) {
+            System.err.println( "WARNING : COULD NOT RESOLVE ANON=ANON EQUALITIES " + pool );
+            for ( OWLEquivalentClassesAxiom eq2 : pool ) {
+                List<OWLClassExpression> l = eq2.getClassExpressionsAsList();
+                if ( ! (l.get(0).isAnonymous() && l.get(1).isAnonymous())) {
+                    System.err.println( "WARNING : " + l + " EQUALITY WAS NOT RESOLVED" );
+                }
+            }
+        }
+
+
+        System.out.println("----------------------------------------------------------------------- " + aliases.size());
+        for(Map.Entry<OWLClassExpression,OWLClassExpression> entry : aliases.entrySet()) {
+            System.out.println( entry.getKey() + " == " + entry.getValue() );
+        }
+        System.out.println("-----------------------------------------------------------------------");
+
+        return aliases;
+    }
+
+
+    private void launchReasoner( boolean dirty, StatefulKnowledgeSession kSession, OWLOntology ontoDescr ) {
+        if ( dirty ) {
+            initReasoner( kSession, ontoDescr );
+            reasoner.fillOntology( ontoDescr.getOWLOntologyManager(), ontoDescr );
+        }
+
+
+    }
+
+
+    private boolean processComplexDomainAndRanges(OWLOntology ontoDescr, OWLDataFactory factory) {
+        boolean dirty = false;
+        dirty |= processComplexDataPropertyDomains( ontoDescr, factory );
+        dirty |= processComplexObjectPropertyDomains( ontoDescr, factory );
+        dirty |= processComplexObjectPropertyRanges( ontoDescr, factory );
+        return dirty;
+    }
+
+
+    private boolean processComplexObjectPropertyDomains(OWLOntology ontoDescr, OWLDataFactory factory ) {
+        boolean dirty = false;
+        for ( OWLObjectProperty op : ontoDescr.getObjectPropertiesInSignature() ) {
+            String typeName = DLUtils.getInstance().buildNameFromIri( op.getIRI() );
+
+            Set<OWLObjectPropertyDomainAxiom> domains = ontoDescr.getObjectPropertyDomainAxioms( op );
+            if ( domains.size() > 1 ) {
+                Set<OWLClassExpression> domainClasses = new HashSet<OWLClassExpression>();
+                for ( OWLObjectPropertyDomainAxiom dom : domains ) {
+                    domainClasses.add( dom.getDomain() );
+                }
+                OWLObjectIntersectionOf and = factory.getOWLObjectIntersectionOf( domainClasses );
+
+                for ( OWLObjectPropertyDomainAxiom dom : domains ) {
+                    ontoDescr.getOWLOntologyManager().applyChange( new RemoveAxiom( ontoDescr, dom ) );
+                }
+                ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLObjectPropertyDomainAxiom( op, and ) ) );
+                dirty = true;
+            }
+
+            if ( op.getDomains( ontoDescr ).size() > 1 ) {
+                System.err.println(" WARNING : Property " + op + " should have a single domain class, found " + op.getDomains( ontoDescr ) );
+            }
+
+            for ( OWLClassExpression dom : op.getDomains( ontoDescr ) ) {
+                if ( dom.isAnonymous() ) {
+                    OWLClass domain = factory.getOWLClass(IRI.create( typeName + "Domain") );
+                    System.out.println("REPLACED ANON DOMAIN " + op + " with " + domain + ", was " + dom);
+                    ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( domain ) ) );
+                    ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( domain, dom ) ) );
+                    ontoDescr.getOWLOntologyManager().applyChange( new RemoveAxiom( ontoDescr, ontoDescr.getObjectPropertyDomainAxioms( op ).iterator().next() ) );
+                    ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLObjectPropertyDomainAxiom( op, domain ) ) );
+                    dirty = true;
+                }
+            }
+
+        }
+        return dirty;
+    }
+
+
+    private boolean processComplexDataPropertyDomains(OWLOntology ontoDescr, OWLDataFactory factory ) {
+        boolean dirty = false;
+        for ( OWLDataProperty dp : ontoDescr.getDataPropertiesInSignature() ) {
+            String typeName = DLUtils.getInstance().buildNameFromIri( dp.getIRI() );
+
+            Set<OWLDataPropertyDomainAxiom> domains = ontoDescr.getDataPropertyDomainAxioms(dp);
+            if ( domains.size() > 1 ) {
+                Set<OWLClassExpression> domainClasses = new HashSet<OWLClassExpression>();
+                for ( OWLDataPropertyDomainAxiom dom : domains ) {
+                    domainClasses.add( dom.getDomain() );
+                }
+                OWLObjectIntersectionOf and = factory.getOWLObjectIntersectionOf( domainClasses );
+
+                for ( OWLDataPropertyDomainAxiom dom : domains ) {
+                    ontoDescr.getOWLOntologyManager().applyChange( new RemoveAxiom( ontoDescr, dom ) );
+                }
+                ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDataPropertyDomainAxiom(dp, and) ) );
+                dirty = true;
+            }
+
+            if ( dp.getDomains( ontoDescr ).size() > 1 ) {
+                System.err.println(" WARNING : Property " + dp + " should have a single domain class, found " + dp.getDomains( ontoDescr ) );
+            }
+
+            for ( OWLClassExpression dom : dp.getDomains( ontoDescr ) ) {
+                if ( dom.isAnonymous() ) {
+                    OWLClass domain = factory.getOWLClass(IRI.create( typeName + "Domain") );
+                    System.out.println("REPLACED ANON DOMAIN " + dp + " with " + domain + ", was " + dom);
+                    ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( domain ) ) );
+                    ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( domain, dom ) ) );
+                    ontoDescr.getOWLOntologyManager().applyChange( new RemoveAxiom( ontoDescr, ontoDescr.getDataPropertyDomainAxioms(dp).iterator().next() ) );
+                    ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDataPropertyDomainAxiom(dp, domain) ) );
+                    dirty = true;
+                }
+            }
+
+        }
+        return dirty;
+    }
+
+
+    private boolean processComplexObjectPropertyRanges( OWLOntology ontoDescr, OWLDataFactory factory ) {
+        System.out.println("Im in");
+        boolean dirty = false;
+        for ( OWLObjectProperty op : ontoDescr.getObjectPropertiesInSignature() ) {
+            String typeName = DLUtils.getInstance().buildNameFromIri( op.getIRI() );
+
+            Set<OWLObjectPropertyRangeAxiom> ranges = ontoDescr.getObjectPropertyRangeAxioms(op);
+            if ( ranges.size() > 1 ) {
+                Set<OWLClassExpression> rangeClasses = new HashSet<OWLClassExpression>();
+                for ( OWLObjectPropertyRangeAxiom dom : ranges ) {
+                    rangeClasses.add( dom.getRange() );
+                }
+                OWLObjectIntersectionOf and = factory.getOWLObjectIntersectionOf( rangeClasses );
+
+                for ( OWLObjectPropertyRangeAxiom ran : ranges ) {
+                    ontoDescr.getOWLOntologyManager().applyChange( new RemoveAxiom( ontoDescr, ran ) );
+                }
+                ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLObjectPropertyRangeAxiom(op, and) ) );
+                dirty = true;
+            }
+
+            if ( op.getRanges(ontoDescr).size() > 1 ) {
+                System.err.println(" WARNING : Property " + op + " should have a single range class, found " + op.getRanges(ontoDescr) );
+            }
+
+            for ( OWLClassExpression ran : op.getRanges(ontoDescr) ) {
+                if ( ran.isAnonymous() ) {
+                    OWLClass range = factory.getOWLClass(IRI.create( typeName + "Range") );
+                    System.out.println("REPLACED ANON RANGE " + op + " with " + range + ", was " + ran );
+                    ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( range ) ) );
+                    ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( range, ran ) ) );
+                    ontoDescr.getOWLOntologyManager().applyChange( new RemoveAxiom( ontoDescr, ontoDescr.getObjectPropertyRangeAxioms(op).iterator().next() ) );
+                    ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLObjectPropertyRangeAxiom(op, range) ) );
+                    dirty = true;
+                }
+            }
+
+        }
+        return dirty;
+    }
+
+
+    private void processQuantifiedRestrictions( OWLOntology ontoDescr, OWLDataFactory factory ) {
+        // infer domain / range from quantified restrictions...
+        for ( OWLClass klassAx : ontoDescr.getClassesInSignature() ) {
+            OWLClass klass = klassAx;
+//            System.out.println("Taking a look at " + klass);
+
+            for ( OWLClassExpression clax : klass.getSuperClasses( ontoDescr ) ) {
+                clax = clax.getNNF();
+//                System.out.println("\thas SuperXompakt " + clax);
+                processQuantifiedRestrictionsInClass( klass, clax, ontoDescr, factory );
+            }
+
+            for ( OWLClassExpression clax : klass.getEquivalentClasses( ontoDescr ) ) {
+                clax = clax.getNNF();
+//                System.out.println("\thas SuperXompakt " + clax);
+                processQuantifiedRestrictionsInClass( klass, clax, ontoDescr, factory );
+            }
+        }
+
+    }
+
+    private void processQuantifiedRestrictionsInClass(OWLClass klass, OWLClassExpression clax, OWLOntology ontology, OWLDataFactory fac) {
+        final OWLClass inKlass = klass;
+        final OWLDataFactory factory = fac;
+        final OWLOntology ontoDescr = ontology;
+
+        clax.accept( new OWLClassExpressionVisitor() {
 
 
 
+            private void process( OWLClassExpression expr ) {
+//                System.out.println("\t\t\t Visiting " + expr);
+
+                if ( expr instanceof OWLNaryBooleanClassExpression ) {
+                    for (OWLClassExpression clax : ((OWLNaryBooleanClassExpression) expr).getOperandsAsList() ) {
+                        process( clax );
+                    }
+                } else if ( expr instanceof OWLQuantifiedObjectRestriction  ) {
+
+                    OWLQuantifiedObjectRestriction rest = (OWLQuantifiedObjectRestriction) expr;
+                    OWLObjectProperty prop = rest.getProperty().asOWLObjectProperty();
+                    OWLClassExpression fil = rest.getFiller();
+                    if ( fil.isAnonymous() ) {
+                        System.out.println("MARKED ANON FILLER OF" + rest );
+                        OWLClass filler = factory.getOWLClass(IRI.create( prop.getIRI().getFragment() + "Filler" + (counter++)) );
+                        ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( filler ) ) );
+                        ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( filler, fil ) ) );
+
+                    }
+
+                    process( fil );
+
+
+                } else if (  expr instanceof  OWLQuantifiedDataRestriction ) {
 
 
 
+                } else if ( expr instanceof OWLCardinalityRestriction ) {
+                    if ( expr instanceof OWLDataMinCardinality ) {
+                        minCards.put(inKlass.getIRI().toQuotedString(),
+                                ((OWLDataMinCardinality) expr).getProperty().asOWLDataProperty().getIRI().toQuotedString(),
+                                ((OWLDataMinCardinality) expr).getCardinality());
+                        minCounter++;                        ;
+                    } else if ( expr instanceof OWLDataMaxCardinality ) {
+                        maxCards.put( inKlass.getIRI().toQuotedString(),
+                                ((OWLDataMaxCardinality) expr).getProperty().asOWLDataProperty().getIRI().toQuotedString(),
+                                ((OWLDataMaxCardinality) expr).getCardinality() );
+                        maxCounter++;
+                    } else if ( expr instanceof OWLObjectMaxCardinality ) {
+                        maxCards.put( inKlass.getIRI().toQuotedString(),
+                                ((OWLObjectMaxCardinality) expr).getProperty().asOWLObjectProperty().getIRI().toQuotedString(),
+                                ((OWLObjectMaxCardinality) expr).getCardinality() );
+                        process( ((OWLObjectMaxCardinality) expr).getFiller() );
+                        maxCounter++;
+                    } else if ( expr instanceof OWLObjectMinCardinality ) {
+                        minCards.put( inKlass.getIRI().toQuotedString(),
+                                ((OWLObjectMinCardinality) expr).getProperty().asOWLObjectProperty().getIRI().toQuotedString(),
+                                ((OWLObjectMinCardinality) expr).getCardinality() );
+                        process( ((OWLObjectMinCardinality) expr).getFiller() );
+                        minCounter++;
+                    }
+                    //                            System.out.println( expr );
+                }
+                else return;
+            }
+
+            public void visit(OWLClass ce) {
+                process( ce );
+            }
+
+            public void visit(OWLObjectIntersectionOf ce) {
+                process( ce );
+            }
+
+            public void visit(OWLObjectUnionOf ce) {
+                process( ce );
+            }
+
+            public void visit(OWLObjectComplementOf ce) {
+                process( ce );
+            }
+
+            public void visit(OWLObjectSomeValuesFrom ce) {
+                process(ce);
+            }
+
+            public void visit(OWLObjectAllValuesFrom ce) {
+                process(ce);
+            }
+
+            public void visit(OWLObjectHasValue ce) {
+                process(ce);
+            }
+
+            public void visit(OWLObjectMinCardinality ce) {
+                //                        minCards.put(inKlass, ce.getProperty().asOWLObjectProperty().getIRI().toQuotedString(), ce.getCardinality());
+                //                        minCounter++;
+                process(ce);
+            }
+
+            public void visit(OWLObjectExactCardinality ce) {
+                //                        maxCards.put(inKlass, ce.getProperty().asOWLObjectProperty().getIRI().toQuotedString(), ce.getCardinality());
+                //                        minCards.put(inKlass, ce.getProperty().asOWLObjectProperty().getIRI().toQuotedString(), ce.getCardinality());
+                //                        minCounter++;
+                //                        maxCounter++;
+                process(ce);
+            }
+
+            public void visit(OWLObjectMaxCardinality ce) {
+                //                        maxCards.put(inKlass, ce.getProperty().asOWLObjectProperty().getIRI().toQuotedString(), ce.getCardinality());
+                //                        maxCounter++;
+                process(ce);
+            }
+
+            public void visit(OWLObjectHasSelf ce) {
+                throw new UnsupportedOperationException();
+            }
+
+            public void visit(OWLObjectOneOf ce) {
+                throw new UnsupportedOperationException();
+            }
+
+            public void visit(OWLDataSomeValuesFrom ce) {
+                process(ce);
+            }
+
+            public void visit(OWLDataAllValuesFrom ce) {
+                process(ce);
+            }
+
+            public void visit(OWLDataHasValue ce) {
+                process(ce);
+            }
+
+            public void visit(OWLDataMinCardinality ce) {
+                //                        minCards.put(inKlass, ce.getProperty().asOWLDataProperty().getIRI().toQuotedString(), ce.getCardinality());
+                //                        minCounter++;
+                process(ce);
+            }
+
+            public void visit(OWLDataExactCardinality ce) {
+                //                        minCards.put(inKlass, ce.getProperty().asOWLDataProperty().getIRI().toQuotedString(), ce.getCardinality());
+                //                        maxCards.put(inKlass, ce.getProperty().asOWLDataProperty().getIRI().toQuotedString(), ce.getCardinality());
+                //                        maxCounter++;
+                //                        minCounter++;
+                process(ce);
+            }
+
+            public void visit(OWLDataMaxCardinality ce) {
+                //                        maxCards.put(inKlass, ce.getProperty().asOWLDataProperty().getIRI().toQuotedString(), ce.getCardinality());
+                //                        maxCounter++;
+                process(ce);
+            }
+        });
 
 
 
+    }
 
 
-
-
-
-
-
-
-
-//        if ( dirty ) {
-//            initReasoner( kSession, ontoDescr );
-//            reasoner.fillOntology( ontoDescr.getOWLOntologyManager(), ontoDescr );
-//        }
-
-
-        addConceptsToModel( kSession, ontoDescr, hierachicalModel );
-
-        addSubConceptsToModel(kSession, ontoDescr, hierachicalModel);
-
+    private void fillPropNamesInDataStructs( OWLOntology ontoDescr ) {
+        for ( OWLDataProperty dp : ontoDescr.getDataPropertiesInSignature() ) {
+            if ( ! dp.isTopEntity() && ! dp.isBottomEntity() ) {
+                String propIri = dp.getIRI().toQuotedString();
+                String propName = DLUtils.getInstance().buildLowCaseNameFromIri( dp.getIRI() );
+                props.put( propIri, propName );
+            }
+        }
 
         for ( OWLObjectProperty op : ontoDescr.getObjectPropertiesInSignature() ) {
-            if ( ! op.isTopEntity() ) {
-//                PropertyRelation prop = hierachicalModel.getProperty( op.getIRI().toQuotedString() );
-//                Concept con = cache.get( prop.getSubject() );
-//                con.getProperties().put( prop, cache.get( prop.getObject() ) );
+            if ( ! op.isTopEntity() && ! op.isBottomEntity() ) {
                 String propIri = op.getIRI().toQuotedString();
-                String propName = props.get( propIri );
-                for ( OWLClassExpression dom : domains.get( op ) ) {
-                    for ( OWLClassExpression ran : ranges.get( op ) ) {
-                        PropertyRelation rel = new PropertyRelation( dom.asOWLClass().getIRI().toQuotedString(),
-                                propIri,
-                                ran.asOWLClass().getIRI().toQuotedString(),
-                                propName );
-
-                        Concept con = cache.get( rel.getSubject() );
-
-                        Integer min = (Integer) minCards.get( rel.getSubject(), propIri );
-                        if ( min != null ) {
-                            rel.setMinCard( min );
-                        } else {
-                            rel.setMinCard( 0 );
-                        }
-                        Integer max = (Integer) maxCards.get( rel.getSubject(), propIri );
-                        if ( max != null ) {
-                            rel.setMaxCard( max );
-                        }
-                        con.getProperties().put( rel, cache.get( rel.getObject() ) );
-                        hierachicalModel.addProperty( rel );
-                    }
-                }
+                String propName = DLUtils.getInstance().buildLowCaseNameFromIri( op.getIRI() );
+                props.put( propIri, propName );
             }
         }
 
-        for ( OWLDataProperty dp : ontoDescr.getDataPropertiesInSignature() ) {
-            if ( ! dp.isTopEntity() ) {
-//                PropertyRelation prop = hierachicalModel.getProperty( dp.getIRI().toQuotedString() );
-//                Concept con = cache.get( prop.getSubject() );
-//                con.getProperties().put( prop, primitives.get( prop.getObject() ) );
-//            }
-                String propIri = dp.getIRI().toQuotedString();
-                String propName = props.get( propIri );
-                for ( OWLClassExpression dom : domains.get( dp ) ) {
-                    for ( OWLDataRange ran : dataRanges.get( dp ) ) {
 
-                        PropertyRelation rel = null;
-                        try {
-                            rel  = new PropertyRelation( dom.asOWLClass().getIRI().toQuotedString(),
-                                propIri,
-                                ran.asOWLDatatype().getIRI().toQuotedString(),
-                                propName );
-
-
-                        } catch ( RuntimeException re ) {
-                            re.printStackTrace();
-                        }
-
-                        Concept con = cache.get( rel.getSubject() );
-
-                        Integer min = (Integer) minCards.get( rel.getSubject(), propIri );
-                        if ( min != null ) {
-                            rel.setMinCard( min );
-                        }  else {
-                            rel.setMinCard( 0 );
-                        }
-                        Integer max = (Integer) maxCards.get( rel.getSubject(), propIri );
-                        if ( max != null ) {
-                            rel.setMaxCard(max);
-                        }
-
-//                        later mapping
-//                        con.getProperties().put( rel, primitives.get( rel.getObject() ) );
-                        con.getProperties().put( rel, primitives.get( rel.getObject() ) );
-                        hierachicalModel.addProperty( rel );
-                    }
-                }
-            }
-        }
-
-        kSession.fireAllRules();
-
-        return hierachicalModel;
     }
+
+
+    private void reportStats(OWLOntology ontoDescr) {
+
+        System.out.println( " *** Stats for ontology  : " + ontoDescr.getOntologyID() );
+
+        System.out.println( " Number of classes " + ontoDescr.getClassesInSignature().size() );
+        System.out.println( " \t Number of classes " + ontoDescr.getClassesInSignature().size() );
+
+        System.out.println( " Number of datatypes " + ontoDescr.getDatatypesInSignature().size() );
+
+        System.out.println( " Number of dataProps " + ontoDescr.getDataPropertiesInSignature().size() );
+        System.out.println( "\t Number of dataProp domains " + ontoDescr.getAxiomCount( AxiomType.DATA_PROPERTY_DOMAIN ));
+        for ( OWLDataProperty p : ontoDescr.getDataPropertiesInSignature() ) {
+            int num = ontoDescr.getDataPropertyDomainAxioms( p ).size();
+            if ( num != 1 ) {
+                System.out.println( "\t\t Domain" + p + " --> " + num );
+            } else {
+                OWLDataPropertyDomainAxiom dom = ontoDescr.getDataPropertyDomainAxioms( p ).iterator().next();
+                if ( ! ( dom.getDomain() instanceof OWLClass ) ) {
+                    System.out.println( "\t\t Complex Domain"  + p + " --> " + dom.getDomain() );
+                }
+            }
+        }
+        System.out.println( "\t Number of dataProp ranges " + ontoDescr.getAxiomCount( AxiomType.DATA_PROPERTY_RANGE ));
+        for ( OWLDataProperty p : ontoDescr.getDataPropertiesInSignature() ) {
+            int num = ontoDescr.getDataPropertyRangeAxioms( p ).size();
+            if ( num != 1 ) {
+                System.out.println( "\t\t Range" + p + " --> " + num );
+            } else {
+                OWLDataPropertyRangeAxiom range = ontoDescr.getDataPropertyRangeAxioms( p ).iterator().next();
+                if ( ! ( range.getRange() instanceof OWLDatatype ) ) {
+                    System.out.println( "\t\t Complex Range" + p + " --> " + range.getRange()  );
+                }
+            }
+        }
+
+        System.out.println( " Number of objProps " + ontoDescr.getObjectPropertiesInSignature().size() );
+        System.out.println( "\t Number of objProp domains " + ontoDescr.getAxiomCount( AxiomType.OBJECT_PROPERTY_DOMAIN ));
+        for ( OWLObjectProperty p : ontoDescr.getObjectPropertiesInSignature() ) {
+            int num = ontoDescr.getObjectPropertyDomainAxioms( p ).size();
+            if ( num != 1 ) {
+                System.out.println( "\t\t Domain" + p + " --> " + num );
+            } else {
+                OWLObjectPropertyDomainAxiom dom = ontoDescr.getObjectPropertyDomainAxioms( p ).iterator().next();
+                if ( ! ( dom.getDomain() instanceof OWLClass ) ) {
+                    System.out.println( "\t\t Complex Domain" + p + " --> " + dom.getDomain()  );
+                }
+            }
+        }
+        System.out.println( "\t Number of objProp ranges " + ontoDescr.getAxiomCount( AxiomType.OBJECT_PROPERTY_RANGE ));
+        for ( OWLObjectProperty p : ontoDescr.getObjectPropertiesInSignature() ) {
+            int num = ontoDescr.getObjectPropertyRangeAxioms( p ).size();
+            if ( num != 1 ) {
+                System.out.println( "\t\t Range" + p + " --> " + num );
+            }  else {
+                OWLObjectPropertyRangeAxiom range = ontoDescr.getObjectPropertyRangeAxioms( p ).iterator().next();
+                if ( ! ( range.getRange() instanceof OWLClass ) ) {
+                    System.out.println( "\t\t Complex Domain" + p + " --> " + range.getRange()  );
+                }
+            }
+        }
+
+//        System.exit(0);
+
+
+
+
+
+    }
+
+
+
+
+
+
 
     private OWLProperty lookupDataProperty(String propId, Set<OWLDataProperty> set ) {
         for (OWLDataProperty prop : set ) {
@@ -775,13 +948,46 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
     @Override
     protected OntoModel buildClassLattice(OWLOntology ontoDescr, StatefulKnowledgeSession kSession, Map<InferenceTask, Resource> theory, OntoModel baseModel) {
-//        initReasoner( kSession, ontoDescr );
-//        reasoner.fillOntology( ontoDescr.getOWLOntologyManager(), ontoDescr );
+
+        boolean dirty = true;
+        OWLDataFactory factory = ontoDescr.getOWLOntologyManager().getOWLDataFactory();
+        addResource(kSession, theory.get(InferenceTask.CLASS_LATTICE_PRUNE));
+        kSession.setGlobal("latticeModel", baseModel);
+
+        launchReasoner( dirty, kSession, ontoDescr );
 
 
-        addConceptsToModel( kSession, ontoDescr, baseModel );
+        // reify complex domains and ranges
+        dirty |= processComplexDomainAndRanges( ontoDescr, factory );
 
+
+        /************************************************************************************************************************************/
+
+        // reify complex restriction fillers
+        processQuantifiedRestrictions( ontoDescr, factory );
+
+        /************************************************************************************************************************************/
+
+        // new classes have been added, classify them
+        launchReasoner( dirty, kSession, ontoDescr );
+
+        /************************************************************************************************************************************/
+
+        // resolve aliases, choosing delegators
+        aliases = buildAliasesForEquivalentClasses(ontoDescr);
+
+        /************************************************************************************************************************************/
+
+        reportStats( ontoDescr );
+
+
+        // classes are stable now
+        addConceptsToModel(kSession, ontoDescr, baseModel);
+
+        // lattice is too. applies aliasing
         addSubConceptsToModel( kSession, ontoDescr, baseModel );
+
+
 
 
         kSession.fireAllRules();
@@ -795,30 +1001,68 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
 
     private void addSubConceptsToModel(StatefulKnowledgeSession kSession, OWLOntology ontoDescr, OntoModel model) {
-        for ( OWLClass con : ontoDescr.getClassesInSignature() ) {
-            Concept concept = cache.get( con.getIRI().toQuotedString() );
 
-            int namedSupers = 0;
-            for ( OWLSubClassOfAxiom sc : ontoDescr.getSubClassAxiomsForSubClass( con ) ) {
-                if ( ! sc.getSuperClass().isAnonymous() ) {
-                    namedSupers++;
-                    SubConceptOf subcon = new SubConceptOf( sc.getSubClass().asOWLClass().getIRI().toQuotedString(), sc.getSuperClass().asOWLClass().getIRI().toQuotedString() );
-                    if ( model.getSubConceptOf( subcon.getSubject(), subcon.getObject() ) == null ) {
-                        concept.getSuperConcepts().add( cache.get( subcon.getObject() ) );
-                        model.addSubConceptOf( subcon );
-                        kSession.insert( subcon );
-                    }
-                }
-            }
-            if ( namedSupers == 0 && ! concept.getName().equals("Thing")) {
-                SubConceptOf subcon = new SubConceptOf( con.getIRI().toQuotedString(), ontoDescr.getOWLOntologyManager().getOWLDataFactory().getOWLThing().getIRI().toQuotedString() );
-                    if ( model.getSubConceptOf( subcon.getSubject(), subcon.getObject() ) == null ) {
-                        concept.getSuperConcepts().add( cache.get( subcon.getObject() ) );
-                        model.addSubConceptOf( subcon );
-                        kSession.insert( subcon );
-                    }
+        kSession.fireAllRules();
+
+        String thing = ontoDescr.getOWLOntologyManager().getOWLDataFactory().getOWLThing().getIRI().toQuotedString();
+
+        for ( OWLSubClassOfAxiom ax : ontoDescr.getAxioms( AxiomType.SUBCLASS_OF ) ) {
+            if ( ! ax.getSuperClass().isAnonymous() ) {
+
+                String sub = filterAliases( ax.getSubClass() ).asOWLClass().getIRI().toQuotedString();
+                String sup = isDelegating( ax.getSuperClass() ) ?
+                        thing : filterAliases( ax.getSuperClass() ).asOWLClass().getIRI().toQuotedString();
+
+                SubConceptOf subcon = new SubConceptOf( sub, sup );
+                kSession.insert(subcon);
             }
         }
+
+        for ( OWLClassExpression delegator : aliases.keySet() ) {
+            if ( ! delegator.isAnonymous() ) {
+                SubConceptOf subcon = new SubConceptOf( delegator.asOWLClass().getIRI().toQuotedString() , thing );
+                kSession.insert(subcon);
+            }
+        }
+
+        for ( OWLClassExpression delegator : aliases.keySet() ) {
+            if ( ! delegator.isAnonymous() ) {
+                OWLClassExpression delegate = aliases.get( delegator );
+                SubConceptOf subcon = new SubConceptOf( delegate.asOWLClass().getIRI().toQuotedString() , delegator.asOWLClass().getIRI().toQuotedString() );
+                cache.get( subcon.getSubject() ).getEquivalentConcepts().add( cache.get( subcon.getObject() ) );
+                kSession.insert(subcon);
+            }
+        }
+
+        kSession.fireAllRules();
+
+        System.out.println(" >>>>>>>>>> ");
+        for ( Object s : kSession.getObjects(new ClassObjectFilter(SubConceptOf.class))) {
+            System.out.println( " >>>> " + s );
+            SubConceptOf subConceptOf = (SubConceptOf) s;
+            model.addSubConceptOf( subConceptOf );
+            cache.get( subConceptOf.getSubject() ).getSuperConcepts().add( cache.get( subConceptOf.getObject() ) );
+        }
+        System.out.println(" >>>>>>>>>> ");
+    }
+
+    private boolean isDelegating( OWLClassExpression superClass ) {
+        return aliases.containsKey( superClass );
+    }
+
+    private boolean isDelegating( String classIri ) {
+        for ( OWLClassExpression klass : aliases.keySet() ) {
+            if ( ! klass.isAnonymous() && klass.asOWLClass().getIRI().toQuotedString().equals( classIri ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private OWLClassExpression filterAliases( OWLClassExpression klass ) {
+        if ( aliases.containsKey( klass ) ) {
+            return aliases.get( klass );
+        } else return klass;
     }
 
 
@@ -831,7 +1075,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                 baseModel.addConcept( concept );
                 kSession.insert( concept );
                 cache.put( con.getIRI().toQuotedString(), concept );
-                System.out.println(" ADD concept " + con.getIRI() );
+//                System.out.println(" ADD concept " + con.getIRI() );
             }
         }
     }
@@ -873,6 +1117,31 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
         if ( set.size() >= 2 && set.contains( factory.getOWLThing() ) ) {
             set.remove( factory.getOWLThing() );
         }
+    }
+
+
+
+    private void setDomain(Map<OWLProperty, Set<OWLClassExpression>> domains, OWLProperty dp, OWLClassExpression owlKlass, OWLDataFactory factory ) {
+        Set<OWLClassExpression> set = domains.get( dp );
+        if ( set == null ) {
+            set = new HashSet<OWLClassExpression>();
+            domains.put( dp, set );
+        } else {
+            set.clear();
+            set.add( owlKlass );
+        }
+    }
+
+    private void setRange(Map<OWLProperty, Set<OWLClassExpression>> ranges, OWLProperty rp, OWLClassExpression owlKlass, OWLDataFactory factory ) {
+        Set<OWLClassExpression> set = ranges.get( rp );
+        if ( set == null ) {
+            set = new HashSet<OWLClassExpression>();
+            ranges.put( rp, set );
+        } else {
+            set.clear();
+            set.add( owlKlass );
+        }
+
     }
 
 

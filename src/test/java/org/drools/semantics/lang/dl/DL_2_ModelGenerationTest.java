@@ -22,10 +22,7 @@ import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.semantics.builder.DLFactory;
 import org.drools.semantics.builder.DLFactoryBuilder;
-import org.drools.semantics.builder.model.Concept;
-import org.drools.semantics.builder.model.DRLModel;
-import org.drools.semantics.builder.model.ModelFactory;
-import org.drools.semantics.builder.model.OntoModel;
+import org.drools.semantics.builder.model.*;
 import org.drools.semantics.builder.model.compilers.ModelCompiler;
 import org.drools.semantics.builder.model.compilers.ModelCompilerFactory;
 import org.junit.Test;
@@ -60,7 +57,7 @@ public class DL_2_ModelGenerationTest {
 
     @Test
     public void testDiamondModelGenerationExternal() {
-        String source = "DLex3.manchester";
+        String source = "diamond.manchester";
         org.drools.io.Resource res = ResourceFactory.newClassPathResource( source );
 
         OntoModel results;
@@ -77,7 +74,7 @@ public class DL_2_ModelGenerationTest {
     @Test
     public void testDiamondModelInternal() {
 
-        String source = "DLex3.manchester";
+        String source = "diamond.manchester";
         org.drools.io.Resource res = ResourceFactory.newClassPathResource( source );
 
         OntoModel results;
@@ -116,9 +113,9 @@ public class DL_2_ModelGenerationTest {
 
 
     private void checkDiamond(OntoModel results) {
-        assertNotNull(results.getSubConceptOf("<_Right>", "<_Top>"));
+        assertTrue(results.getSubConceptOf("<_Right>", "<_Top>") != null || results.getSubConceptOf("<_Right>", "<_C0>") != null);
+        assertTrue(results.getSubConceptOf("<_Left>", "<_Top>") != null || results.getSubConceptOf("<_Left>", "<_C0>") != null);
 
-        assertNotNull(results.getSubConceptOf("<_Left>", "<_Top>"));
         assertNotNull(results.getSubConceptOf("<_Low>", "<_Left>"));
         assertNotNull(results.getSubConceptOf("<_Low>", "<_Right>"));
         assertNotNull(results.getSubConceptOf("<_Bottom>", "<_Low>"));
@@ -210,31 +207,31 @@ public class DL_2_ModelGenerationTest {
         );
 
         assertTrue(
-                results.getConcept( "<YourPropDomain>").getProperties().containsKey(
-                        results.getProperty( "<_yourProp>" )
+                results.getConcept( "<YourPropDomain>").getProperties().containsValue(
+                        results.getProperty("<_yourProp>")
                 )
         );
         assertTrue(
-                results.getConcept( "<_A>").getProperties().containsKey(
-                        results.getProperty( "<_myProp>" )
+                results.getConcept( "<_A>").getProperties().containsValue(
+                        results.getProperty("<_myProp>")
                 )
         );
 
         assertTrue(
-                results.getConcept( "<YourPropDomain>").getProperties().get(
-                        results.getProperty( "<_yourProp>")
-                ).equals( results.getConcept( "<_D>" ) )
-        );
+                results.getConcept("<YourPropDomain>").getProperties().get(
+                        "<_yourProp>"
+                ).getTarget().equals(results.getConcept("<_D>"))
+                );
         assertTrue(
                 results.getConcept( "<_A>").getProperties().get(
-                        results.getProperty( "<_myProp>")
-                ).equals( results.getConcept( "<MyPropRange>" ) )
+                        "<_myProp>"
+                ).getTarget().equals( results.getConcept( "<MyPropRange>" ) )
         );
 
         assertTrue(
                 results.getConcept( "<ZimpleDomain>").getProperties().get(
-                        results.getProperty( "<_zimple>")
-                ).equals( new Concept( "<http://www.w3.org/2001/XMLSchema#int>", "java.lang.Integer" ) )
+                        "<_zimple>"
+                ).getTarget().equals( new Concept( "<http://www.w3.org/2001/XMLSchema#int>", "java.lang.Integer" ) )
         );
 
 
@@ -247,14 +244,22 @@ public class DL_2_ModelGenerationTest {
 
 
     @Test
-    public void testLoadFamilyOntology() {
-        String source = "org/drools/semantics/lang/dl/family.manchester";
+    public void testComplexAnonymous() {
+        KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
+        StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
 
-        org.drools.io.Resource res = ResourceFactory.newClassPathResource(source);
 
-        OWLOntology ontoDescr = factory.parseOntology( res );
+        String source = "DLex8.manchester";
+        org.drools.io.Resource res = ResourceFactory.newClassPathResource( source );
 
-        assertNotNull( ontoDescr );
+        factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
+        OntoModel results = factory.buildModel( res, kSession );
+
+
+        ModelCompiler compiler = ModelCompilerFactory.newModelCompiler(ModelFactory.CompileTarget.DRL);
+        DRLModel drlModel = (DRLModel) compiler.compile( results );
+
+        System.out.println( drlModel.getDRL() );
     }
 
 

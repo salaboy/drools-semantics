@@ -52,7 +52,7 @@ public class DLUtils {
 
 
     public String compactUpperCase(String s) {
-        System.out.println("Try to normalize " + s);
+//        System.out.println("Try to normalize " + s);
         java.util.StringTokenizer tok = new java.util.StringTokenizer(s);
         StringBuilder sb = new StringBuilder();
 

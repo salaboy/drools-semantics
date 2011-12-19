@@ -20,6 +20,7 @@ import org.drools.semantics.builder.DLUtils;
 import org.drools.semantics.builder.model.CompiledOntoModel;
 import org.drools.semantics.builder.model.Concept;
 import org.drools.semantics.builder.model.OntoModel;
+import org.drools.semantics.builder.model.PropertyRelation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,11 +44,11 @@ public abstract class ModelCompilerImpl implements ModelCompiler {
             for ( Concept con : getModel().getConcepts() ) {
                 String name = DLUtils.getInstance().compactUpperCase( con.getName() );
                 Map map = new HashMap();
-                    map.put( "package", getModel().getPackage() );
-                    map.put( "iri", con.getIri() );
-                    map.put( "name", name );
-                    map.put( "superConcepts", con.getSuperConcepts() );
-                    map.put( "properties", con.getProperties() );
+                map.put( "package", getModel().getPackage() );
+                map.put( "iri", con.getIri() );
+                map.put( "name", name );
+                map.put( "superConcepts", con.getSuperConcepts() );
+                map.put( "properties", con.getProperties() );
                 compile( name, DLUtils.getInstance(), map );
             }
         }

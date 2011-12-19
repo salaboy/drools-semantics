@@ -15,11 +15,11 @@ public interface @{name} extends com.clarkparsia.empire.SupportsRdfId
     // @{prop.property}   --    @{prop.maxCard}   --- @{properties[ prop ].name}
     public
         @if{ prop.maxCard == 1 }
-            @{ map( properties[ prop ].name, false ) }
+            @{ map( properties[ prop ].target.name, false ) }
         @else{}
-            java.util.List<@{ map( properties[ prop ].name, true ) }>
+            java.util.List<@{ map( properties[ prop ].target.name, true ) }>
         @end{}
-        @if{ properties[ prop ].name.equals("xsd:boolean") && prop.maxCard == 1 }
+        @if{ properties[ prop ].target.name.equals("xsd:boolean") && prop.maxCard == 1 }
             is@{ compactUpperCase(prop.name) }();
         @else{}
             get@{ compactUpperCase(prop.name) }();
@@ -28,9 +28,9 @@ public interface @{name} extends com.clarkparsia.empire.SupportsRdfId
     // @{prop.property}
     public void set@{ compactUpperCase(prop.name) }(
         @if{ prop.maxCard == 1 }
-            @{ map( properties[ prop ].name, false ) }
+            @{ map( properties[ prop ].target.name, false ) }
         @else{}
-            java.util.List<@{ map( properties[ prop ].name, true ) }>
+            java.util.List<@{ map( properties[ prop ].target.name, true ) }>
         @end{}
         value );
 

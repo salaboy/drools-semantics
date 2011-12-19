@@ -29,7 +29,6 @@ import java.util.Map;
 public class InternalInferenceStrategy extends AbstractModelInferenceStrategy {
 
 
-    @Override
     protected OntoModel buildProperties(OWLOntology ontoDescr, StatefulKnowledgeSession kSession, Map<InferenceTask, Resource> theory, OntoModel latticeModel) {
         addResource( kSession, theory.get( InferenceTask.PROPERTY_MATCH ) );
         kSession.setGlobal("propertyModel", latticeModel);
@@ -37,13 +36,12 @@ public class InternalInferenceStrategy extends AbstractModelInferenceStrategy {
         return (OntoModel) kSession.getGlobal("propertyModel");
     }
 
-    @Override
     protected OntoModel buildClassLattice(OWLOntology ontoDescr, StatefulKnowledgeSession kSession, Map<InferenceTask, Resource> theory, OntoModel baseModel) {
         addResource( kSession, theory.get( InferenceTask.TABLEAU ) );
         initReasoner( kSession, ontoDescr );
         kSession.fireAllRules();
 
-        addResource(kSession, theory.get(InferenceTask.CLASS_LATTICE));
+        addResource(kSession, theory.get(InferenceTask.CLASS_LATTICE_BUILD_AND_PRUNE));
         kSession.setGlobal("latticeModel", baseModel);
         kSession.fireAllRules();
         return (OntoModel) kSession.getGlobal("latticeModel");

@@ -25,6 +25,7 @@ public class PropertyRelation extends Relation {
 
     private Integer minCard = 0;
     private Integer maxCard = null;
+    private Concept target = null;
 
     public PropertyRelation( String subject, String property, String object, String name ) {
         this.subject = subject;
@@ -61,6 +62,13 @@ public class PropertyRelation extends Relation {
     }
 
 
+    public Concept getTarget() {
+        return target;
+    }
+
+    public void setTarget(Concept target) {
+        this.target = target;
+    }
 
     public String toString() {
         return name;
@@ -72,6 +80,7 @@ public class PropertyRelation extends Relation {
                 ", property='" + property + '\'' +
                 ", object='" + object + '\'' +
                 ", name='" + name + '\'' +
+                "," + minCard  +" .. " + maxCard +
                 '}';
     }
 
