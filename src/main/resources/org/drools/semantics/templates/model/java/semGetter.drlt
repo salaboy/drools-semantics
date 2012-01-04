@@ -1,0 +1,39 @@
+ @comment{
+    Statically inserts a logically insert value
+}
+
+
+
+@declare{'semGetter'}
+    @code{ typeName = map( target.name, false ); if( ! target.primitive ) typeName += "__Type"; }
+
+    public
+        @if{ maxCard == 1 }
+            @{ typeName }
+        @else{}
+            java.util.List<@{ typeName }>
+        @end{}
+
+        @if{ target.name.equals("xsd:boolean") && maxCard == 1 }
+            is@{ compactUpperCase( name ) }() {
+        @else{}
+            get@{ compactUpperCase( name ) }() {
+        @end{}
+
+        @if{ maxCard == 1 }
+            @{ typeName } ans = null;
+        @else{}
+            java.util.List<@{ typeName }> = new java.util.ArrayList<@{ typeName }>
+        @end{}
+
+
+
+    }
+@end{}
+
+@includeNamed{'semGetter'}
+
+
+
+
+

@@ -30,6 +30,7 @@ import org.apache.commons.collections15.Transformer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -99,19 +100,31 @@ public class GraphModelImpl extends ModelImpl implements GraphModel {
         frame.setVisible(true);
     }
 
+
+
+
     public void addRelationEdge( Relation rel ) {
         if ( rel == null ){
-            System.out.println();
+            System.err.println( "WARNING : adding null relation/edge to graph");
         }
-        Object sub =  getTrait(rel.getSubject());
-        Object obj =  getTrait(rel.getObject());
+        Object sub =  getTrait( rel.getSubject() );
+        Object obj =  null;
+        if ( rel instanceof PropertyRelation ) {
+            obj = getTrait( ((PropertyRelation) rel).getTarget().getIri());
+        } else {
+            obj = getTrait( rel.getObject() );
+        }
         if ( obj == null ) {
             // literal aka datatype, most probably
-            Concept k = new Concept( rel.getObject(), rel.getObject() );
+            Concept k = new Concept( rel.getObject(), ((PropertyRelation) rel).getTarget().getName() );
             cgraph.addVertex( k );
             obj = k;
         }
-        cgraph.addEdge( rel, (Concept) sub, (Concept) obj, EdgeType.DIRECTED );
+        if ( sub != null && obj != null ) {
+            cgraph.addEdge( rel, (Concept) sub, (Concept) obj, EdgeType.DIRECTED );
+        } else {
+            System.err.println(" WARNING : Broken edge for " + rel.getProperty() + " : sub = " + sub + " | obj = " + obj );
+        }
 
     }
 
@@ -125,8 +138,9 @@ public class GraphModelImpl extends ModelImpl implements GraphModel {
     }
 
     public Object getTrait(String name) {
-        for ( Concept con : cgraph.getVertices() ) {
-            if ( con.getIri().equals( name ) ) {
+        Collection<Concept> vertix = cgraph.getVertices();
+        for ( Concept con : vertix ) {
+            if ( con.getName().equals( name ) || con.getIri().equals( name ) ) {
                 return con;
             }
         }

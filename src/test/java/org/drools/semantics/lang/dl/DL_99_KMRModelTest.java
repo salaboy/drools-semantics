@@ -34,7 +34,7 @@ import org.junit.rules.TemporaryFolder;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 
 /**
@@ -46,7 +46,7 @@ public class DL_99_KMRModelTest {
 
 
     protected DLFactory factory = DLFactoryBuilder.newDLFactoryInstance();
-    
+
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
@@ -58,7 +58,7 @@ public class DL_99_KMRModelTest {
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
 
-        OntoModel results = factory.buildModel( res, kSession );
+        OntoModel results = factory.buildModel( "kmr2mini", res, kSession );
 
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.DRL );
         DRLModel drlModel = (DRLModel) compiler.compile( results );
@@ -93,13 +93,13 @@ public class DL_99_KMRModelTest {
     @Test
     public void testGraphModelGeneration() {
 //        String source = "org/drools/semantics/lang/dl/kmr2_miniExample.manchester";
-         String source = "kmr2/Kmr2.ttl";
+        String source = "kmr2/Kmr2.ttl";
         Resource res = ResourceFactory.newClassPathResource( source );
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
 
         factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
-        OntoModel results = factory.buildModel( res, kSession );
+        OntoModel results = factory.buildModel( "kmr2", res, kSession );
 
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.GRAPH );
         GraphModel gModel = (GraphModel) compiler.compile( results );
@@ -132,7 +132,7 @@ public class DL_99_KMRModelTest {
 
         factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
 
-        OntoModel results = factory.buildModel( res, kSession );
+        OntoModel results = factory.buildModel( "kmr2mini", res, kSession );
 
 
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.XSD );
@@ -149,7 +149,7 @@ public class DL_99_KMRModelTest {
         String source = "kmr2/kmr2_miniExample.manchester";
         Resource res = ResourceFactory.newClassPathResource(source);
 
-        OntoModel results = factory.buildModel( res );
+        OntoModel results = factory.buildModel( "kmr2mini", res );
 
 
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.XSD );
@@ -168,7 +168,7 @@ public class DL_99_KMRModelTest {
         String source = "kmr2/kmr2_miniExample.manchester";
         Resource res = ResourceFactory.newClassPathResource( source );
 
-        OntoModel results = factory.buildModel( res );
+        OntoModel results = factory.buildModel( "kmr2mini", res );
 
 
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.WORKSET );
@@ -190,91 +190,14 @@ public class DL_99_KMRModelTest {
 
         factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
 
-        OntoModel results = factory.buildModel( res, kSession );
+        OntoModel results = factory.buildModel( "kmr2", res, kSession );
 
 
         ModelCompiler jcompiler =  ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.JAR );
         JarModel jarModel = (JarModel) jcompiler.compile( results );
 
-        try {
-            FileOutputStream fos = new FileOutputStream("/home/davide/Projects/KMR2/workspace/Factz/lib/kmr2.jar");
-            byte[] content = jarModel.buildJar().toByteArray();
-
-            fos.write( content, 0, content.length );
-            fos.flush();
-            fos.close();
-        } catch ( IOException e ) {
-            fail( e.getMessage() );
-        }
-
-
-        /**************************************************************************************************************/
-
-
-        ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.XSDX );
-        SemanticXSDModel xsdModel = (SemanticXSDModel) compiler.compile( results );
-
-//        xsdModel.stream( System.out );
-//        xsdModel.streamBindings( System.out );
-
-
-
-        try {
-            FileOutputStream fos = new FileOutputStream("/home/davide/Projects/KMR2/workspace/Factz/src/main/resources/kmr2.xsd");
-            xsdModel.stream( fos );
-            fos.flush();
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            FileOutputStream fos = new FileOutputStream("/home/davide/Projects/KMR2/workspace/Factz/src/main/resources/bindings.xjb");
-            xsdModel.streamBindings( fos );
-            fos.flush();
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-
-//    @Test
-//    public void testJAVAModelGeneration() {
-//        String source = "org/drools/semantics/lang/dl/kmr2.manchester";
-//        Resource res = ResourceFactory.newClassPathResource( source );
-//        KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
-//        StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
-//
-//        OntoModel results = factory.buildModel( res, kSession );
-//
-//        ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.JAVA );
-//        JavaModel javaModel = (JavaModel) compiler.compile( results );
-//
-//        System.err.println( javaModel.save( "gen-sources" ) );
-//
-//    }
-//
-//
-//
-//
-//    @Test
-//    public void testJarModelGeneration() {
-//        String source = "org/drools/semantics/lang/dl/kmr2.manchester";
-//        Resource res = ResourceFactory.newClassPathResource( source );
-//        KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
-//        StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
-//
-//        OntoModel results = factory.buildModel( res, kSession );
-//
-//        ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.JAR );
-//        JarModel jarModel = (JarModel) compiler.compile( results );
-//
 //        try {
-//            FileOutputStream fos = new FileOutputStream("gen-sources/test.jar");
+//            FileOutputStream fos = new FileOutputStream("/home/davide/Projects/KMR2/workspace/Factz/lib/kmr2.jar");
 //            byte[] content = jarModel.buildJar().toByteArray();
 //
 //            fos.write( content, 0, content.length );
@@ -283,9 +206,151 @@ public class DL_99_KMRModelTest {
 //        } catch ( IOException e ) {
 //            fail( e.getMessage() );
 //        }
+
+
+        /**************************************************************************************************************/
+
+
+        ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.XSDX );
+        compiler.setMode(ModelCompiler.Mode.FLAT);
+        SemanticXSDModel xsdModel = (SemanticXSDModel) compiler.compile( results );
+
+//        xsdModel.stream( System.out );
+//        xsdModel.streamBindings( System.out );
+
+
+
+//        try {
+//            FileOutputStream fos = new FileOutputStream("/home/davide/Projects/KMR2/workspace/Factz/src/main/resources/kmr2.xsd");
+//            xsdModel.stream( fos );
+//            fos.flush();
+//            fos.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 //
-//    }
 //
+//        try {
+//            FileOutputStream fos = new FileOutputStream("/home/davide/Projects/KMR2/workspace/Factz/src/main/resources/bindings.xjb");
+//            xsdModel.streamBindings( fos );
+//            fos.flush();
+//            fos.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Test
+    public void testConyardComplexModelGeneration() {
+
+        Resource res = ResourceFactory.newClassPathResource( "conyard.manchester.owl" );
+        factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
+        OntoModel results = factory.buildModel( "conyard", res );
+
+        results.flatten();
+
+        ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.XSDX );
+                compiler.setMode(ModelCompiler.Mode.FLAT);
+                SemanticXSDModel xsdModel = (SemanticXSDModel) compiler.compile( results );
+
+
+
+        String pack = "<http://org.drools.conyard.owl#>";
+        Concept painting = results.getConcept(pack.replace("#", "#Painting") );
+        Concept ironInst = results.getConcept(pack.replace("#", "#IronInstallation") );
+        Concept wallRais = results.getConcept(pack.replace("#", "#WallRaising") );
+
+        assertNotNull( painting );
+        assertNotNull( ironInst );
+        assertNotNull( wallRais );
+
+
+        Concept fallProt = results.getConcept(pack.replace("#", "#FallProtection") );
+        Concept frostProt = results.getConcept(pack.replace("#", "#FrostProtection") );
+        Concept fireProt = results.getConcept(pack.replace("#", "#FireProtection") );
+
+        assertNotNull( fallProt );
+        assertNotNull( fireProt );
+        assertNotNull( frostProt );
+
+        Concept beltX = results.getConcept(pack.replace("#", "#BeltBrandX") );
+        Concept glove = results.getConcept(pack.replace("#", "#Gloves") );
+        Concept gloveX = results.getConcept(pack.replace("#", "#GlovesBrandX") );
+
+        assertNotNull( beltX );
+        assertNotNull( gloveX );
+        assertNotNull( glove );
+
+
+        Concept fire = results.getConcept(pack.replace("#", "#Fire") );
+        Concept anotherfire = results.getConcept(pack.replace("#", "#AnotherFire") );
+        Concept anotherheat = results.getConcept(pack.replace("#", "#AnotherHeat") );
+        Concept testfire = results.getConcept(pack.replace("#", "#TestFire") );
+
+        assertNotNull( fire );
+        assertNotNull( anotherfire );
+        assertNotNull( anotherheat );
+        assertNotNull( testfire );
+
+
+
+        assertTrue( beltX.getSuperConcepts().contains( fallProt ) );
+        assertTrue( gloveX.getSuperConcepts().contains( fireProt ) );
+        assertTrue( gloveX.getSuperConcepts().contains( glove ) );
+        assertTrue( glove.getSuperConcepts().contains( frostProt ) );
+
+        assertTrue( testfire.getSuperConcepts().contains( fire ) );
+        assertTrue( anotherfire.getSuperConcepts().contains( fire ) );
+        assertTrue( anotherheat.getSuperConcepts().contains( anotherfire ) );
+
+
+        assertTrue( checkProperty( painting, pack, "involves", "Person", 1, null ) );
+        assertTrue( checkProperty( painting, pack, "involvesLabourer", "Labourer", 1, null ) );
+        assertTrue( checkProperty( painting, pack, "requires", "Equipment", 0, null ) );
+        assertTrue( checkProperty( painting, pack, "requiresPaint", "Paint", 1, null ) );
+        assertTrue( checkProperty( painting, pack, "requiresStair", "Stair", 1, 1 ) );
+
+
+        assertEquals( 11, ironInst.getProperties().size() );
+        assertTrue( checkProperty( ironInst, pack, "involvesMason", "Mason", 1, null ) );
+        assertTrue( checkProperty( ironInst, pack, "requiresWeldingTorch", "WeldingTorch", 1, null ) );
+        assertTrue( checkProperty( ironInst, pack, "requiresIronBar", "IronBar", 1, null ) );
+        assertTrue( checkProperty( ironInst, pack, "requiresGrinder", "Grinder", 1, null ) );
+        assertTrue( checkProperty( ironInst, pack, "requiresCrane", "Crane", 1, 1 ) );
+        assertTrue( checkProperty( ironInst, pack, "involvesSmith", "Smith", 1, 4 ) );
+        assertTrue( checkProperty( ironInst, pack, "involves", "Person", 1, null ) );
+        assertTrue( checkProperty( ironInst, pack, "involvesLabourer", "Labourer", 2, null ) );
+        assertTrue( checkProperty( ironInst, pack, "requires", "Equipment", 0, null ) );
+
+        assertTrue( checkProperty( wallRais, pack, "involves", "Mason", 3, null ) );
+        assertTrue( checkProperty( wallRais, pack, "requires", "Bricks", 0, null ) );
+
 //
+    }
+
+    private boolean checkProperty( Concept base, String pack, String propName, String target, Integer minCard, Integer maxCard) {
+        PropertyRelation rel = base.getProperties().get( pack.replace("#", "#"+propName) );
+        if ( rel == null ) {
+            return false;
+        }
+        if ( ! rel.getTarget().getName().equals( target ) ) {
+            return false;
+        }
+        return rel.getMinCard() == minCard && rel.getMaxCard() == maxCard;
+    }
+
 
 }

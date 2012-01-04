@@ -17,8 +17,13 @@
 package org.drools.semantics.builder.model;
 
 import org.drools.semantics.builder.model.OntoModel;
+import org.drools.semantics.builder.model.compilers.XSDModelCompiler;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public interface JavaInterfaceModel extends CompiledOntoModel {
 
     public boolean save( String target );
+
 }

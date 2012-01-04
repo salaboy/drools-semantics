@@ -17,6 +17,7 @@
 package org.drools.semantics.builder.model.compilers;
 
 import cern.colt.matrix.linalg.Property;
+import org.drools.semantics.builder.DLUtils;
 import org.drools.semantics.builder.model.*;
 import org.jdom.Element;
 import org.jdom.Namespace;
@@ -25,13 +26,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class XSDModelCompilerImpl extends ModelCompilerImpl implements DRLModelCompiler {
+public class XSDModelCompilerImpl extends ModelCompilerImpl implements XSDModelCompiler {
 
-    public static enum Mode  { FLAT, HIERARCHY }
+
 
     protected Mode mode = Mode.HIERARCHY;
 
-    protected Map<String,Map<PropertyRelation,Concept>> propCache = new HashMap<String, Map<PropertyRelation, Concept>>();
+    protected Map<String,Map<String,PropertyRelation>> propCache = new HashMap<String, Map<String, PropertyRelation>>();
 
     public void setMode( Mode m ) {
         mode = m;
@@ -45,7 +46,7 @@ public class XSDModelCompilerImpl extends ModelCompilerImpl implements DRLModelC
     public void setModel(OntoModel model) {
         this.model = (CompiledOntoModel) ModelFactory.newModel( ModelFactory.CompileTarget.XSD, model );
 
-        ((XSDModel) getModel()).setNamespace( "tns", model.getPackage() );
+        ((XSDModel) getModel()).setNamespace( "tns", DLUtils.reverse( model.getPackage() ) );
     }
 
     public void compile( String name, Object context, Map<String, Object> params ) {
@@ -59,8 +60,10 @@ public class XSDModelCompilerImpl extends ModelCompilerImpl implements DRLModelC
         getModel().addTrait( name, element );
 
         if ( getCurrentMode().equals( Mode.FLAT ) ) {
+            getModel().flatten();
             getModel().addTrait(name, buildTypeAsFlat( name, params ) );
         } else {
+            getModel().elevate();
             getModel().addTrait(name, buildAsHierarchy( name, params ) );
         }
     }
@@ -68,8 +71,11 @@ public class XSDModelCompilerImpl extends ModelCompilerImpl implements DRLModelC
     private Element buildAsHierarchy(String name, Map<String, Object> params) {
         XSDModel xmodel = (XSDModel) getModel();
 
-        Element type = new Element("complexType", xmodel.getNamespace( "xsd" ) );
-            type.setAttribute( "name", name );
+        Element type = new Element( "complexType", xmodel.getNamespace( "xsd" ) );
+        type.setAttribute( "name", name );
+        if ( params.containsKey( "abstract" ) ) {
+            type.setAttribute( "abstract", "true" );
+        }
         Set<Concept> supers = (Set<Concept>) params.get( "superConcepts");
         if ( supers.size() > 1 ) {
             System.err.println( " Cannot build a hierarchy with more than 1 ancestor for " + name + ", found " + supers );
@@ -80,83 +86,90 @@ public class XSDModelCompilerImpl extends ModelCompilerImpl implements DRLModelC
             Element complex = new Element( "complexContent", xmodel.getNamespace( "xsd" ) );
 
             Element ext = new Element("extension", xmodel.getNamespace( "xsd" ) );
-                ext.setAttribute("base", "tns:"+sup.getName() );
+            ext.setAttribute("base", "tns:"+sup.getName() );
 
-                buildProperties( name, (Map<PropertyRelation, Concept>) params.get( "properties" ), ext );
+            buildProperties( name, (Map<String, PropertyRelation>) params.get( "properties" ), ext );
 
             complex.setContent( ext );
             type.setContent( complex );
         } else {
-            buildProperties( name, (Map<PropertyRelation, Concept>) params.get( "properties" ), type );
+            buildProperties( name, (Map<String, PropertyRelation>) params.get( "properties" ), type );
         }
 
         return type;
     }
 
-    private Element buildProperties( String name, Map<PropertyRelation, Concept> props, Element root ) {
+    private Element buildProperties( String name, Map<String, PropertyRelation> props, Element root ) {
         XSDModel xmodel = (XSDModel) getModel();
         propCache.put( name, props );
 
         Element seq = new Element( "sequence", xmodel.getNamespace( "xsd" ) );
         root.addContent( seq );
-            for ( PropertyRelation rel : props.keySet() ) {
-                Concept tgt = props.get( rel );
-                if ( tgt.isPrimitive() ) {
-                    Element prop = new Element( "attribute", xmodel.getNamespace( "xsd" ) );
-                    prop.setAttribute( "name", rel.getName() );
-                    prop.setAttribute( "type", map( tgt ) );
+        for ( String propKey : props.keySet() ) {
+            PropertyRelation rel = props.get( propKey );
+            Concept tgt = rel.getTarget();
 
-                    Integer minCard = rel.getMinCard();
-                        if (minCard == null) {
-                            minCard = 0;
-                            rel.setMinCard( 0 );
-                        }
-                    Integer maxCard = rel.getMaxCard();
-                        if (maxCard != null && maxCard == 0) {
-                            maxCard = null;
-                            rel.setMaxCard( null );
-                        }
-                    if ( minCard != null && maxCard != null && minCard == 1 && maxCard == 1 ) {
-                        prop.setAttribute( "use", "required" );
-                        root.addContent( prop );
-                    } else if ( minCard != null && minCard <= 1 && maxCard != null && maxCard == 1 ) {
-                        prop.setAttribute( "use", "optional" );
-                        root.addContent( prop );
-                    } else {
+            if ( rel.isRestricted() ) {
+                continue;
+            }
+
+
+            if ( tgt.isPrimitive() ) {
+                Element prop = new Element( "attribute", xmodel.getNamespace( "xsd" ) );
+                prop.setAttribute( "name", rel.getName() );
+                prop.setAttribute( "type", map( tgt ) );
+
+                Integer minCard = rel.getMinCard();
+                if (minCard == null) {
+                    minCard = 0;
+                    rel.setMinCard( 0 );
+                }
+                Integer maxCard = rel.getMaxCard();
+                if (maxCard != null && maxCard == 0) {
+                    maxCard = null;
+                    rel.setMaxCard( null );
+                }
+                if ( minCard != null && maxCard != null && minCard == 1 && maxCard == 1 ) {
+                    prop.setAttribute( "use", "required" );
+                    root.addContent( prop );
+                } else if ( minCard != null && minCard <= 1 && maxCard != null && maxCard == 1 ) {
+                    prop.setAttribute( "use", "optional" );
+                    root.addContent( prop );
+                } else {
 //                        prop.setAttribute( "minOccurs", rel.getMinCard().toString() );
 //                        prop.setAttribute( "maxOccurs", rel.getMaxCard() == null ? "unbounded" : rel.getMaxCard().toString() );
-                        prop = new Element( "element", xmodel.getNamespace( "xsd" ) );
-                        prop.setAttribute( "name", rel.getName() );
-                        prop.setAttribute( "type", map( tgt ) );
-                        prop.setAttribute( "minOccurs", rel.getMinCard().toString() );
-                        prop.setAttribute( "maxOccurs", "unbounded" );
-                        seq.addContent( prop );
-                    }
-
-
-                } else {
-                    Element prop = new Element( "element", xmodel.getNamespace( "xsd" ) );
+                    prop = new Element( "element", xmodel.getNamespace( "xsd" ) );
                     prop.setAttribute( "name", rel.getName() );
                     prop.setAttribute( "type", map( tgt ) );
-
-                    Integer minCard = rel.getMinCard();
-                        if (minCard == null) {
-                            minCard = 0;
-                            rel.setMinCard( 0 );
-                        }
-                    Integer maxCard = rel.getMaxCard();
-                        if (maxCard != null && maxCard == 0) {
-                            maxCard = null;
-                            rel.setMaxCard( null );
-                        }
-
                     prop.setAttribute( "minOccurs", rel.getMinCard().toString() );
-                    prop.setAttribute( "maxOccurs", rel.getMaxCard() == null ? "unbounded" : rel.getMaxCard().toString() );
-
+                    prop.setAttribute( "maxOccurs", "unbounded" );
                     seq.addContent( prop );
                 }
 
+
+            } else {
+                Element prop = new Element( "element", xmodel.getNamespace( "xsd" ) );
+                prop.setAttribute( "name", rel.getName() );
+                prop.setAttribute( "type", map( tgt ) );
+
+                Integer minCard = rel.getMinCard();
+                if (minCard == null) {
+                    minCard = 0;
+                    rel.setMinCard( 0 );
+                }
+                Integer maxCard = rel.getMaxCard();
+                if (maxCard != null && maxCard == 0) {
+                    maxCard = null;
+                    rel.setMaxCard( null );
+                }
+
+                prop.setAttribute( "minOccurs", rel.getMinCard().toString() );
+                prop.setAttribute( "maxOccurs", rel.getMaxCard() == null ? "unbounded" : rel.getMaxCard().toString() );
+
+                seq.addContent( prop );
             }
+
+        }
 
         return seq;
     }
@@ -173,17 +186,24 @@ public class XSDModelCompilerImpl extends ModelCompilerImpl implements DRLModelC
         XSDModel xmodel = (XSDModel) getModel();
 
         Element type = new Element("complexType", xmodel.getNamespace( "xsd" ) );
-            type.setAttribute( "name", name );
-        Set<Concept> supers = (Set<Concept>) params.get( "superConcepts");
-        Map<PropertyRelation, Concept> props = new HashMap<PropertyRelation, Concept>( ( Map<PropertyRelation, Concept>) params.get( "properties" ) );
+        type.setAttribute( "name", name );
+        if ( params.containsKey( "abstract" ) ) {
+            type.setAttribute( "abstract", "true" );
+        }
+        Set<Concept> supers = (Set<Concept>) params.get( "superConcepts" );
+        Map<String, PropertyRelation> props = new HashMap<String, PropertyRelation>( ( Map<String, PropertyRelation>) params.get( "properties" ) );
 
         if ( ! supers.isEmpty() ) {
             for ( Concept sup : supers ) {
-                Map<PropertyRelation, Concept> inheritedProps = propCache.get( sup.getName() );
+                Map<String, PropertyRelation> inheritedProps = propCache.get( sup.getName() );
                 if ( inheritedProps == null ) {
                     throw new RuntimeException( "Error accessing inherited properties : Concept " + name + " built before its ancestor " + sup.getName() + "?" );
                 }
-                props.putAll( inheritedProps );
+                for ( String propKey : inheritedProps.keySet() ) {
+                    if ( ! props.containsKey( propKey ) ) {
+                        props.put( propKey, inheritedProps.get( propKey ) );
+                    }
+                }
             }
         }
 

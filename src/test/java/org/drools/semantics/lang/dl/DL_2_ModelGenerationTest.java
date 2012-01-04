@@ -63,7 +63,7 @@ public class DL_2_ModelGenerationTest {
         OntoModel results;
 
         factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
-        results = factory.buildModel( res, KnowledgeBaseFactory.newKnowledgeBase().newStatefulKnowledgeSession() );
+        results = factory.buildModel( "diamond", res, KnowledgeBaseFactory.newKnowledgeBase().newStatefulKnowledgeSession() );
 
         checkDiamond( results );
 
@@ -81,7 +81,7 @@ public class DL_2_ModelGenerationTest {
 
 
         factory.setInferenceStrategy(DLFactory.INFERENCE_STRATEGY.INTERNAL);
-        results = factory.buildModel( res, KnowledgeBaseFactory.newKnowledgeBase().newStatefulKnowledgeSession() );
+        results = factory.buildModel( "diamond", res, KnowledgeBaseFactory.newKnowledgeBase().newStatefulKnowledgeSession() );
 
         checkDiamond( results );
 
@@ -101,7 +101,7 @@ public class DL_2_ModelGenerationTest {
         org.drools.io.Resource res = ResourceFactory.newClassPathResource( source );
 
         factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
-        OntoModel results = factory.buildModel( res, kSession );
+        OntoModel results = factory.buildModel( "ex6", res, kSession );
 
 
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler(ModelFactory.CompileTarget.DRL);
@@ -148,7 +148,7 @@ public class DL_2_ModelGenerationTest {
         org.drools.io.Resource res = ResourceFactory.newClassPathResource( source );
 
         factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.INTERNAL );
-        OntoModel results = factory.buildModel( res, kSession );
+        OntoModel results = factory.buildModel( "ex6", res, kSession );
 
 
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler(ModelFactory.CompileTarget.DRL);
@@ -253,7 +253,7 @@ public class DL_2_ModelGenerationTest {
         org.drools.io.Resource res = ResourceFactory.newClassPathResource( source );
 
         factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
-        OntoModel results = factory.buildModel( res, kSession );
+        OntoModel results = factory.buildModel( "ex8", res, kSession );
 
 
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler(ModelFactory.CompileTarget.DRL);

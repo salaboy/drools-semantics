@@ -28,10 +28,11 @@ public class Concept {
     @Position(0)    private     String                          iri;
     @Position(1)    private     String                          name;
     @Position(2)    private     Set<Concept>                    superConcepts;
-    @Position(3)    private     Map                             properties;
+    @Position(3)    private     Map<String, PropertyRelation>   properties;
     @Position(4)    private     Set<Concept>                    equivalentConcepts;
 
     private     boolean                         primitive               = false;
+    private     boolean                         abstrakt                = false;
 
 
 
@@ -149,6 +150,14 @@ public class Concept {
 
     public void setPrimitive(boolean primitive) {
         this.primitive = primitive;
+    }
+
+    public boolean isAbstrakt() {
+        return abstrakt;
+    }
+
+    public void setAbstrakt(boolean abstrakt) {
+        this.abstrakt = abstrakt;
     }
 
     public static class Range {

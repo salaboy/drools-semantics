@@ -42,7 +42,13 @@ public class DLTemplateManager {
             "model/drl/trait.drlt"
     };
     protected static final String[] NAMED_TEMPLATES_JAVA = new String[] {
-            "model/java/trait.drlt"
+            "model/java/trait.drlt",
+            "model/java/dataTrait.drlt",
+            "model/java/typeTrait.drlt"
+    };
+    protected static final String[] ACCESSOR_TEMPLATES_JAVA = new String[] {
+            "model/java/semGetter.drlt",
+            "model/java/semSetter.drlt"
     };
     protected static final String[] FALC_TABLEAU_TEMPLATES = new String[] {
             "tableau/falc/header.drlt",
@@ -60,6 +66,7 @@ public class DLTemplateManager {
     public static TemplateRegistry traitRegistry;
     public static TemplateRegistry javaRegistry;
     public static TemplateRegistry tableauRegistry;
+    public static TemplateRegistry accessorsRegistry;
 
 
 
@@ -67,15 +74,18 @@ public class DLTemplateManager {
         traitRegistry = new SimpleTemplateRegistry();
         javaRegistry = new SimpleTemplateRegistry();
         tableauRegistry = new SimpleTemplateRegistry();
+        accessorsRegistry = new SimpleTemplateRegistry();
 
         buildRegistry( traitRegistry, NAMED_TEMPLATES_TRAITS );
         buildRegistry( javaRegistry, NAMED_TEMPLATES_JAVA );
+        buildRegistry( accessorsRegistry, ACCESSOR_TEMPLATES_JAVA );
         buildRegistry( tableauRegistry, FALC_TABLEAU_TEMPLATES );
     }
 
 
     public static TemplateRegistry getDataModelRegistry( ModelFactory.CompileTarget target ) {
         switch ( target ) {
+            case XSDX : return accessorsRegistry;
             case JAVA : return javaRegistry;
             case DRL  : return traitRegistry;
             default   : return traitRegistry;

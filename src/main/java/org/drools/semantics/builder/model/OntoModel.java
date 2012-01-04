@@ -22,9 +22,14 @@ import java.util.Set;
 public interface OntoModel {
 
     public String getPackage();
-
+        
     public void setPackage( String pack );
 
+    public String getName();
+        
+    public void setName( String name );
+    
+    
 
     public List<Concept> getConcepts();
 
@@ -57,6 +62,12 @@ public interface OntoModel {
 
 
     public void sort();
+    
+    public void flatten();
+
+    public void elevate();
+
+    public boolean isFlat();
 
 
 }

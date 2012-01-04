@@ -16,11 +16,8 @@
 
 package org.drools.semantics.builder.model.compilers;
 
-import edu.uci.ics.jung.graph.Graph;
-import org.drools.semantics.builder.DLUtils;
 import org.drools.semantics.builder.model.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class GraphModelCompilerImpl extends ModelCompilerImpl implements GraphModelCompiler {
@@ -32,14 +29,16 @@ public class GraphModelCompilerImpl extends ModelCompilerImpl implements GraphMo
     }
 
 
-
+    public void setMode(Mode mode) {
+        //TODO
+    }
 
     public CompiledOntoModel compile( OntoModel model ) {
         setModel( model );
         GraphModel gModel = (GraphModel) getModel();
         if ( gModel != null ) {
             for ( Concept con : gModel.getConcepts() ) {
-                gModel.addTrait(con.getIri(), con);
+                gModel.addTrait(con.getName(), con);
             }
 
             for ( Concept con : gModel.getConcepts() ) {
@@ -49,8 +48,8 @@ public class GraphModelCompilerImpl extends ModelCompilerImpl implements GraphMo
             }
 
             for ( Concept con : gModel.getConcepts() ) {
-                for ( Object rel : con.getProperties().keySet() ) {
-                    gModel.addRelationEdge( (Relation) rel );
+                for ( String relIri : con.getProperties().keySet() ) {
+                    gModel.addRelationEdge( con.getProperties().get( relIri ) );
                 }
             }
 

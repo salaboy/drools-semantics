@@ -16,12 +16,12 @@
 
 package org.drools.semantics.builder.model.inference;
 
-import org.apache.commons.collections15.BidiMap;
-import org.apache.commons.collections15.bidimap.TreeBidiMap;
+import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
 import org.apache.commons.collections15.map.MultiKeyMap;
 import org.drools.io.Resource;
 import org.drools.runtime.ClassObjectFilter;
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.semantics.builder.DLFactory;
 import org.drools.semantics.builder.DLUtils;
 import org.drools.semantics.builder.model.Concept;
 import org.drools.semantics.builder.model.OntoModel;
@@ -30,12 +30,9 @@ import org.drools.semantics.builder.model.SubConceptOf;
 import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.*;
-import uk.ac.manchester.cs.owl.owlapi.OWLIndividualImpl;
-import uk.ac.manchester.cs.owl.owlapi.OWLObjectSomeValuesFromImpl;
 
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.*;
 
 public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
@@ -49,13 +46,18 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
     private Map<OWLClassExpression,OWLClassExpression> aliases;
 
-    private Map<String, Concept> cache = new HashMap<String, Concept>();
+    private Map<String, Concept> conceptCache = new HashMap<String, Concept>();
+    private Map<OWLClassExpression, OWLClass> fillerCache = new HashMap<OWLClassExpression, OWLClass>();
     private Map<String, String> props = new HashMap<String, String>();
 
 
-//    private Map<OWLProperty, Set<OWLClassExpression> > domains = new HashMap<OWLProperty, Set<OWLClassExpression>>();
-//    private Map<OWLProperty, Set<OWLClassExpression> > ranges = new HashMap<OWLProperty, Set<OWLClassExpression>>();
-//    private Map<OWLProperty, Set<OWLDataRange> > dataRanges = new HashMap<OWLProperty, Set<OWLDataRange>>();
+
+    private static DLFactory.SupportedReasoners externalReasoner = DLFactory.SupportedReasoners.PELLET;
+    public static void setExternalReasoner( DLFactory.SupportedReasoners newReasoner ) {
+        externalReasoner = newReasoner;
+    }
+
+
 
     private MultiKeyMap minCards = new MultiKeyMap();
     private MultiKeyMap maxCards = new MultiKeyMap();
@@ -70,39 +72,6 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
     private static Map<String, Concept> primitives = new HashMap<String, Concept>();
 
     {
-//        register( "http://www.w3.org/2001/XMLSchema#string", String.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#dateTime", Date.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#date", Date.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#time", Date.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#int", int.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#integer", BigInteger.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#long", long.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#float", float.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#double", double.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#short", short.class );
-//
-//        register( "http://www.w3.org/2000/01/rdf-schema#Literal", Object.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#boolean", boolean.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#decimal", BigDecimal.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#byte", byte.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#unsignedByte", short.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#unsignedShort", int.class );
-//
-//        register( "http://www.w3.org/2001/XMLSchema#unsignedInt", long.class );
 
         register( "http://www.w3.org/2001/XMLSchema#string", "xsd:string" );
 
@@ -141,35 +110,35 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
 
     @Override
-    protected OntoModel buildProperties( OWLOntology ontoDescr, StatefulKnowledgeSession kSession, Map<InferenceTask, Resource> theory, OntoModel hierachicalModel ) {
+    protected OntoModel buildProperties( OWLOntology ontoDescr, StatefulKnowledgeSession kSession, Map<InferenceTask, Resource> theory, OntoModel hierarchicalModel ) {
 
         OWLDataFactory factory = ontoDescr.getOWLOntologyManager().getOWLDataFactory();
 
         fillPropNamesInDataStructs( ontoDescr );
 
         // Complete missing domains and ranges for properties. Might be overridden later, if anything can be inferred
-        createAndAddBasicProperties( ontoDescr, factory, hierachicalModel );
+        createAndAddBasicProperties( ontoDescr, factory, hierarchicalModel );
 
         // Apply any cardinality / range restriction
-        applyPropertyRestrictions( ontoDescr, hierachicalModel );
+        applyPropertyRestrictions( ontoDescr, hierarchicalModel );
 
-        System.out.println( hierachicalModel );
+        System.out.println( hierarchicalModel );
 
 
-        return hierachicalModel;
+        return hierarchicalModel;
     }
 
 
 
-    private void applyPropertyRestrictions( OWLOntology ontoDescr, OntoModel hierachicalModel ) {
+    private void applyPropertyRestrictions( OWLOntology ontoDescr, OntoModel hierarchicalModel ) {
 
-        for ( PropertyRelation prop : hierachicalModel.getProperties() ) {
+        for ( PropertyRelation prop : hierarchicalModel.getProperties() ) {
             if ( prop.getTarget() == null ) {
                 System.err.println("WARNING : Prperty without target concept " +  prop.getName() );
             }
         }
-        
-        
+
+
         Map<String, Set<OWLClassExpression>> supers = new HashMap<String, Set<OWLClassExpression>>();
         for ( OWLClass klass : ontoDescr.getClassesInSignature() ) {
             supers.put( klass.getIRI().toQuotedString(), new HashSet<OWLClassExpression>() );
@@ -184,7 +153,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
         }
 
-        for ( Concept con : hierachicalModel.getConcepts() ) {      //use concepts as they're sorted!
+        for ( Concept con : hierarchicalModel.getConcepts() ) {      //use concepts as they're sorted!
 
 
             if ( isDelegating( con.getIri() ) ) {
@@ -195,110 +164,232 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                 System.err.println("WARNING : Looking for superclasses of an undefined concept");
                 continue;
             }
+
+            LinkedList<OWLClassExpression> orderedSupers = new LinkedList<OWLClassExpression>();
+            // cardinalities should be fixed last
             for ( OWLClassExpression sup : supers.get( con.getIri() ) ) {
+                if ( sup instanceof OWLCardinalityRestriction ) {
+                    orderedSupers.addLast( sup );
+                } else {
+                    orderedSupers.addFirst( sup );
+                }
+            }
+
+            for ( OWLClassExpression sup : orderedSupers ) {
                 if ( sup.isClassExpressionLiteral() ) {
                     continue;
                 }
 
 
-                String propIri;
-                PropertyRelation rel;
-                switch ( sup.getClassExpressionType() ) {
-                    case DATA_SOME_VALUES_FROM:
-                        //check that it's a subclass of the domain. Should have already been done, or it would be an inconsistency
-                        break;
-                    case DATA_ALL_VALUES_FROM:
-                        OWLDataAllValuesFrom forall = (OWLDataAllValuesFrom) sup;
-                        propIri = forall.getProperty().asOWLDataProperty().getIRI().toQuotedString();
-                        rel = extractProperty( con, propIri );
-                        rel.setObject( forall.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
-                        con.addProperty( propIri, props.get( propIri ), rel );
-                        hierachicalModel.addProperty( rel );
-                        break;
-                    case DATA_MIN_CARDINALITY:
-                        OWLDataMinCardinality min = (OWLDataMinCardinality) sup;
-                        propIri = min.getProperty().asOWLDataProperty().getIRI().toQuotedString();
-                        rel = extractProperty( con, propIri );
-                        rel.setMinCard( min.getCardinality() );
-                        break;
-                    case DATA_MAX_CARDINALITY:
-                        OWLDataMaxCardinality max = (OWLDataMaxCardinality) sup;
-                        propIri = max.getProperty().asOWLDataProperty().getIRI().toQuotedString();
-                        rel = extractProperty( con, propIri );
-                        rel.setMaxCard( max.getCardinality() );
-                        break;
-                    case DATA_EXACT_CARDINALITY:
-                        OWLDataExactCardinality ex = (OWLDataExactCardinality) sup;
-                        propIri = ex.getProperty().asOWLDataProperty().getIRI().toQuotedString();
-                        rel = extractProperty( con, propIri );
-                        rel.setMinCard( ex.getCardinality() );
-                        rel.setMaxCard( ex.getCardinality() );
-                        break;
-                    case OBJECT_SOME_VALUES_FROM:
-                        //check that it's a subclass of the domain. Should have already been done, or it would be an inconsistency
-                        break;
-                    case OBJECT_ALL_VALUES_FROM:
-                        OWLObjectAllValuesFrom forallO = (OWLObjectAllValuesFrom) sup;
-                        propIri = forallO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
-                        rel = extractProperty( con, propIri );
-                        Concept tgt = cache.get( filterAliases( forallO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
-                        rel.setObject( tgt.getName() );
-                        con.addProperty( propIri, props.get( propIri ), rel );
-                        hierachicalModel.addProperty( rel );
-                        break;
-                    case OBJECT_MIN_CARDINALITY:
-                        OWLObjectMinCardinality minO = (OWLObjectMinCardinality) sup;
-                        propIri = minO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
-                        rel = extractProperty( con, propIri );
-                        rel.setMinCard( minO.getCardinality() );
-                        break;
-                    case OBJECT_MAX_CARDINALITY:
-                        OWLObjectMaxCardinality maxO = (OWLObjectMaxCardinality) sup;
-                        propIri = maxO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
-                        rel = extractProperty( con, propIri );
-                        rel.setMaxCard( maxO.getCardinality() );
-                        break;
-                    case OBJECT_EXACT_CARDINALITY:
-                        OWLObjectExactCardinality exO = (OWLObjectExactCardinality) sup;
-                        propIri = exO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
-                        rel = extractProperty( con, propIri );
-                        rel.setMinCard( exO.getCardinality() );
-                        rel.setMaxCard( exO.getCardinality() );
-                        break;
-                }
+                processSuperClass( sup, con, hierarchicalModel );
             }
         }
 
     }
 
-    private PropertyRelation extractProperty( Concept con, String propIri ) {
+    private void processSuperClass(OWLClassExpression sup, Concept con, OntoModel hierarchicalModel ) {
+        String propIri;
+        PropertyRelation rel;
+        Concept tgt;
+        switch ( sup.getClassExpressionType() ) {
+            case DATA_SOME_VALUES_FROM:
+                //check that it's a subclass of the domain. Should have already been done, or it would be an inconsistency
+                break;
+            case DATA_ALL_VALUES_FROM:
+                OWLDataAllValuesFrom forall = (OWLDataAllValuesFrom) sup;
+                propIri = forall.getProperty().asOWLDataProperty().getIRI().toQuotedString();
+                tgt = primitives.get( forall.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
+                rel = extractProperty( con, propIri, tgt );
+                if ( rel != null ) {
+                    rel.setObject( forall.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
+                    rel.setTarget( primitives.get( forall.getFiller().asOWLDatatype().getIRI().toQuotedString() ) );
+                    con.addProperty( propIri, props.get( propIri ), rel );
+                    hierarchicalModel.addProperty( rel );
+                } else {
+                    System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
+                }
+                break;
+            case DATA_MIN_CARDINALITY:
+                OWLDataMinCardinality min = (OWLDataMinCardinality) sup;
+                propIri = min.getProperty().asOWLDataProperty().getIRI().toQuotedString();
+                tgt = primitives.get( min.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
+                rel = extractProperty( con, propIri, tgt );
+                if ( rel != null ) {
+                    rel.setMinCard( min.getCardinality() );
+                } else {
+                    System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
+                }
+                break;
+            case DATA_MAX_CARDINALITY:
+                OWLDataMaxCardinality max = (OWLDataMaxCardinality) sup;
+                propIri = max.getProperty().asOWLDataProperty().getIRI().toQuotedString();
+                tgt = primitives.get( max.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
+                rel = extractProperty( con, propIri, tgt );
+                if ( rel != null ) {
+                    rel.setMaxCard( max.getCardinality() );
+                } else {
+                    System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
+                }
+                break;
+            case DATA_EXACT_CARDINALITY:
+                OWLDataExactCardinality ex = (OWLDataExactCardinality) sup;
+                propIri = ex.getProperty().asOWLDataProperty().getIRI().toQuotedString();
+                tgt = primitives.get( ex.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
+                rel = extractProperty( con, propIri, tgt );
+                if ( rel != null ) {
+                    rel.setMinCard( ex.getCardinality() );
+                    rel.setMaxCard( ex.getCardinality() );
+                } else {
+                    System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
+                }
+                break;
+            case OBJECT_SOME_VALUES_FROM:
+                OWLObjectSomeValuesFrom someO = (OWLObjectSomeValuesFrom) sup;
+                propIri = someO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
+                if ( filterAliases( someO.getFiller() ).isAnonymous() ) {
+                    System.err.println( "WARNING : Complex unaliased restriction " + someO );
+                    break;
+                }
+                tgt = conceptCache.get( filterAliases( someO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
+                rel = extractProperty( con, propIri, tgt );
+                if ( rel != null ) {
+                    rel.setMinCard( Math.max( rel.getMinCard(), 1 ) );
+//                    rel.setObject( tgt.getName() );
+//                    rel.setTarget( tgt );
+//                    con.addProperty( propIri, props.get( propIri ), rel );
+                    hierarchicalModel.addProperty( rel );
+                } else {
+                    System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
+                }
+                break;
+            case OBJECT_ALL_VALUES_FROM:
+                OWLObjectAllValuesFrom forallO = (OWLObjectAllValuesFrom) sup;
+                propIri = forallO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
+                if ( filterAliases( forallO.getFiller() ).isAnonymous() ) {
+                    System.err.println( "WARNING : Complex unaliased restriction " + forallO );
+                    break;
+                }
+                tgt = conceptCache.get( filterAliases( forallO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
+                rel = extractProperty( con, propIri, tgt, true );
+                if ( rel != null ) {
+//                    rel.setObject( tgt.getName() );
+//                    rel.setTarget( tgt );
+//                    con.addProperty( propIri, props.get( propIri ), rel );
+                    hierarchicalModel.addProperty( rel );
+                } else {
+                    System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
+                }
+                break;
+            case OBJECT_MIN_CARDINALITY:
+                OWLObjectMinCardinality minO = (OWLObjectMinCardinality) sup;
+                propIri = minO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
+                tgt = conceptCache.get( filterAliases( minO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
+                rel = extractProperty( con, propIri, tgt );
+                if ( rel != null ) {
+                    rel.setMinCard( minO.getCardinality() );
+                } else {
+                    System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
+                }
+                break;
+            case OBJECT_MAX_CARDINALITY:
+                OWLObjectMaxCardinality maxO = (OWLObjectMaxCardinality) sup;
+                propIri = maxO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
+                tgt = conceptCache.get( filterAliases( maxO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
+                rel = extractProperty( con, propIri, tgt );
+                if ( rel != null ) {
+                    rel.setMaxCard( maxO.getCardinality() );
+                } else {
+                    System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
+                }
+                break;
+            case OBJECT_EXACT_CARDINALITY:
+                OWLObjectExactCardinality exO = (OWLObjectExactCardinality) sup;
+                propIri = exO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
+                tgt = conceptCache.get( filterAliases( exO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
+                rel = extractProperty( con, propIri, tgt );
+                if ( rel != null ) {
+                    rel.setMinCard( exO.getCardinality() );
+                    rel.setMaxCard( exO.getCardinality() );
+                } else {
+                    System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
+                }
+                break;
+            case OBJECT_INTERSECTION_OF:
+                OWLObjectIntersectionOf and = (OWLObjectIntersectionOf) sup;
+                for ( OWLClassExpression arg : and.asConjunctSet() ) {
+                    processSuperClass( arg, con, hierarchicalModel );
+                }
+            default:
+                System.err.println("WARNING : Cannot handle " + sup );
+        }
+
+    }
+
+    private PropertyRelation extractProperty( Concept con, String propIri, Concept target ) {
+        return extractProperty( con, propIri, target, false );
+    }
+
+    private PropertyRelation extractProperty( Concept con, String propIri, Concept target, boolean override ) {
+        override = false;
+        if ( target == null ) {
+            System.err.println( "WARNING : Null target for property " + propIri );
+        }
+
+        String restrictedPropIri = propIri.replace(">", target.getName()+">");
         PropertyRelation rel = con.getProperties().get( propIri );
-        if ( rel != null ) {
-            return rel;
-        } else {
-            rel = inheritProperty( con, con, propIri );
-            if ( rel == null ) {
-                System.err.println( "WARNING : Restricting non-existent property " + propIri + " in class " + con.getName() );
-            } else {
-                rel.setSubject( con.getName() );
-                con.addProperty( propIri, props.get( propIri ), rel );
+        if ( rel == null ) {
+            rel = con.getProperties().get( restrictedPropIri );
+        }
+
+        if ( rel == null ) {
+
+            rel = inheritPropertyCopy( con, con, propIri );
+
+            if ( rel != null ) {
+                rel.setRestricted( true );
+                if ( ! rel.getTarget().equals( target ) ) {
+                    rel.setSubject( con.getName() );
+
+                    if ( override ) {
+                        rel.setSubject( con.getName() );
+                        con.addProperty( propIri, props.get( propIri ), rel );
+
+                    } else {
+                        rel.setName( rel.getName() + target.getName() );
+                        rel.setProperty( restrictedPropIri );
+                        con.addProperty( restrictedPropIri, props.get( propIri ) + target.getName(), rel );
+
+                    }
+                    rel.setTarget( target );
+                    rel.setObject( target.getIri() );
+
+                    System.err.println( "INFO : RESTRICTED property " + propIri + " to " + target );
+                } else {
+                    rel.setSubject( con.getName() );
+                    con.addProperty( propIri, props.get( propIri ), rel );
+                }
             }
         }
         return rel;
     }
 
-    private PropertyRelation inheritProperty( Concept original, Concept current, String propName ) {
+
+
+
+    private PropertyRelation inheritPropertyCopy( Concept original, Concept current, String propIri ) {
         PropertyRelation rel;
         for ( Concept sup : current.getSuperConcepts() ) {
-            rel = extractProperty( sup, propName );
+            System.err.println( "Looking for " +propIri + " among the ancestors of " + current.getName() + ", now try " + sup.getName() );
+            rel = sup.getProperties().get( propIri );
             if ( rel != null ) {
-                PropertyRelation restrictedRel = new PropertyRelation( rel.getSubject(), rel.getProperty(), rel.getObject(), propName );
+                PropertyRelation restrictedRel = new PropertyRelation( rel.getSubject(), rel.getProperty(), rel.getObject(), rel.getName() );
                 restrictedRel.setMinCard( rel.getMinCard() );
                 restrictedRel.setMaxCard( rel.getMaxCard() );
                 restrictedRel.setTarget( rel.getTarget() );
+                System.err.println( "Found " +propIri + " in " + sup.getName() );
                 return restrictedRel;
             } else {
-                rel = inheritProperty( original, sup, propName );
+                rel = inheritPropertyCopy( original, sup, propIri );
                 if ( rel != null ) {
                     return rel;
                 }
@@ -309,7 +400,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
     }
 
 
-    private void createAndAddBasicProperties(OWLOntology ontoDescr, OWLDataFactory factory, OntoModel hierachicalModel ) {
+    private void createAndAddBasicProperties(OWLOntology ontoDescr, OWLDataFactory factory, OntoModel hierarchicalModel ) {
         int missDomain = 0;
         int missDataRange = 0;
         int missObjectRange = 0;
@@ -337,11 +428,11 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                                 range.asOWLDatatype().getIRI().toQuotedString(),
                                 props.get( dp.getIRI().toQuotedString() ) );
 
-                        Concept con = cache.get( rel.getSubject() );
+                        Concept con = conceptCache.get( rel.getSubject() );
                         rel.setTarget( primitives.get( rel.getObject() ) );
 
                         con.addProperty( rel.getProperty(), rel.getName(), rel );
-                        hierachicalModel.addProperty( rel );
+                        hierarchicalModel.addProperty( rel );
                     }
                 }
             }
@@ -373,11 +464,11 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                                 realRan.asOWLClass().getIRI().toQuotedString(),
                                 props.get( op.getIRI().toQuotedString() ) );
 
-                        Concept con = cache.get( rel.getSubject() );
-                        rel.setTarget( cache.get( rel.getObject() ) );
+                        Concept con = conceptCache.get( rel.getSubject() );
+                        rel.setTarget( conceptCache.get(rel.getObject()) );
 
                         con.addProperty( rel.getProperty(), rel.getName(), rel );
-                        hierachicalModel.addProperty( rel );
+                        hierarchicalModel.addProperty( rel );
                     }
                 }
             }
@@ -459,7 +550,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
                     stable = false;
                     temp.remove( eq2 );
-                } else if ( ! first.isAnonymous() ) {
+                } else if ( ! first.isAnonymous() && ! isAbstract( first )  ) {
                     removed = aliases.put( secnd, first );
                     System.out.println("TAAKING OUT 5" + eq2 );
                     if ( removed != null ) {
@@ -468,7 +559,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
                     stable = false;
                     temp.remove( eq2 );
-                } else if ( ! secnd.isAnonymous() ) {
+                } else if ( ! secnd.isAnonymous() && ! isAbstract( secnd ) ) {
                     removed = aliases.put( first, secnd );
                     System.out.println("TAAKING OUT 6" + eq2 );
                     if ( removed != null ) {
@@ -507,11 +598,19 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
         return aliases;
     }
 
+    private boolean isAbstract(OWLClassExpression clax) {
+        return  clax.asOWLClass().getIRI().toQuotedString().contains("Filler");
+    }
+
 
     private void launchReasoner( boolean dirty, StatefulKnowledgeSession kSession, OWLOntology ontoDescr ) {
         if ( dirty ) {
-            initReasoner( kSession, ontoDescr );
+            System.err.println( " START REASONER " );
+            initReasoner(kSession, ontoDescr);
             reasoner.fillOntology( ontoDescr.getOWLOntologyManager(), ontoDescr );
+            System.err.println( " STOP REASONER " );
+        } else {
+            System.err.println( " REASONER NOT NEEDED" );
         }
 
 
@@ -530,7 +629,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
     private boolean processComplexObjectPropertyDomains(OWLOntology ontoDescr, OWLDataFactory factory ) {
         boolean dirty = false;
         for ( OWLObjectProperty op : ontoDescr.getObjectPropertiesInSignature() ) {
-            String typeName = DLUtils.getInstance().buildNameFromIri( op.getIRI() );
+            String typeName = DLUtils.buildNameFromIri(op.getIRI());
 
             Set<OWLObjectPropertyDomainAxiom> domains = ontoDescr.getObjectPropertyDomainAxioms( op );
             if ( domains.size() > 1 ) {
@@ -571,7 +670,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
     private boolean processComplexDataPropertyDomains(OWLOntology ontoDescr, OWLDataFactory factory ) {
         boolean dirty = false;
         for ( OWLDataProperty dp : ontoDescr.getDataPropertiesInSignature() ) {
-            String typeName = DLUtils.getInstance().buildNameFromIri( dp.getIRI() );
+            String typeName = DLUtils.buildNameFromIri(dp.getIRI());
 
             Set<OWLDataPropertyDomainAxiom> domains = ontoDescr.getDataPropertyDomainAxioms(dp);
             if ( domains.size() > 1 ) {
@@ -595,7 +694,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
             for ( OWLClassExpression dom : dp.getDomains( ontoDescr ) ) {
                 if ( dom.isAnonymous() ) {
                     OWLClass domain = factory.getOWLClass(IRI.create( typeName + "Domain") );
-                    System.out.println("REPLACED ANON DOMAIN " + dp + " with " + domain + ", was " + dom);
+                    System.out.println("INFO : REPLACED ANON DOMAIN " + dp + " with " + domain + ", was " + dom);
                     ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( domain ) ) );
                     ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( domain, dom ) ) );
                     ontoDescr.getOWLOntologyManager().applyChange( new RemoveAxiom( ontoDescr, ontoDescr.getDataPropertyDomainAxioms(dp).iterator().next() ) );
@@ -613,7 +712,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
         System.out.println("Im in");
         boolean dirty = false;
         for ( OWLObjectProperty op : ontoDescr.getObjectPropertiesInSignature() ) {
-            String typeName = DLUtils.getInstance().buildNameFromIri( op.getIRI() );
+            String typeName = DLUtils.buildNameFromIri(op.getIRI());
 
             Set<OWLObjectPropertyRangeAxiom> ranges = ontoDescr.getObjectPropertyRangeAxioms(op);
             if ( ranges.size() > 1 ) {
@@ -637,7 +736,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
             for ( OWLClassExpression ran : op.getRanges(ontoDescr) ) {
                 if ( ran.isAnonymous() ) {
                     OWLClass range = factory.getOWLClass(IRI.create( typeName + "Range") );
-                    System.out.println("REPLACED ANON RANGE " + op + " with " + range + ", was " + ran );
+                    System.out.println("INFO : REPLACED ANON RANGE " + op + " with " + range + ", was " + ran );
                     ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( range ) ) );
                     ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( range, ran ) ) );
                     ontoDescr.getOWLOntologyManager().applyChange( new RemoveAxiom( ontoDescr, ontoDescr.getObjectPropertyRangeAxioms(op).iterator().next() ) );
@@ -677,6 +776,8 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
         final OWLDataFactory factory = fac;
         final OWLOntology ontoDescr = ontology;
 
+
+
         clax.accept( new OWLClassExpressionVisitor() {
 
 
@@ -694,9 +795,21 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                     OWLObjectProperty prop = rest.getProperty().asOWLObjectProperty();
                     OWLClassExpression fil = rest.getFiller();
                     if ( fil.isAnonymous() ) {
-                        System.out.println("MARKED ANON FILLER OF" + rest );
-                        OWLClass filler = factory.getOWLClass(IRI.create( prop.getIRI().getFragment() + "Filler" + (counter++)) );
-                        ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLDeclarationAxiom( filler ) ) );
+                        System.out.println("INFO :MARKED ANON FILLER OF" + rest );
+                        OWLClass filler = fillerCache.get( fil );
+
+                        if ( filler == null ) {
+                            String fillerName = DLUtils.capitalize( inKlass.getIRI().getFragment() ) +
+                                    DLUtils.capitalize( prop.getIRI().getFragment() ) +
+                                    "Filler" +
+                                    (counter++);
+                            filler = factory.getOWLClass( IRI.create( fillerName ) );
+                            fillerCache.put( fil, filler );
+                        } else {
+                            System.out.println("INFO : REUSED FILLER FOR" + fil );
+                        }
+
+                        ontoDescr.getOWLOntologyManager().applyChange(new AddAxiom(ontoDescr, factory.getOWLDeclarationAxiom(filler)));
                         ontoDescr.getOWLOntologyManager().applyChange( new AddAxiom( ontoDescr, factory.getOWLEquivalentClassesAxiom( filler, fil ) ) );
 
                     }
@@ -713,7 +826,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                         minCards.put(inKlass.getIRI().toQuotedString(),
                                 ((OWLDataMinCardinality) expr).getProperty().asOWLDataProperty().getIRI().toQuotedString(),
                                 ((OWLDataMinCardinality) expr).getCardinality());
-                        minCounter++;                        ;
+                        minCounter++;
                     } else if ( expr instanceof OWLDataMaxCardinality ) {
                         maxCards.put( inKlass.getIRI().toQuotedString(),
                                 ((OWLDataMaxCardinality) expr).getProperty().asOWLDataProperty().getIRI().toQuotedString(),
@@ -835,7 +948,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
         for ( OWLDataProperty dp : ontoDescr.getDataPropertiesInSignature() ) {
             if ( ! dp.isTopEntity() && ! dp.isBottomEntity() ) {
                 String propIri = dp.getIRI().toQuotedString();
-                String propName = DLUtils.getInstance().buildLowCaseNameFromIri( dp.getIRI() );
+                String propName = DLUtils.buildLowCaseNameFromIri(dp.getIRI());
                 props.put( propIri, propName );
             }
         }
@@ -843,7 +956,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
         for ( OWLObjectProperty op : ontoDescr.getObjectPropertiesInSignature() ) {
             if ( ! op.isTopEntity() && ! op.isBottomEntity() ) {
                 String propIri = op.getIRI().toQuotedString();
-                String propName = DLUtils.getInstance().buildLowCaseNameFromIri( op.getIRI() );
+                String propName = DLUtils.buildLowCaseNameFromIri(op.getIRI());
                 props.put( propIri, propName );
             }
         }
@@ -968,8 +1081,8 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
         /************************************************************************************************************************************/
 
-        // new classes have been added, classify them
-        launchReasoner( dirty, kSession, ontoDescr );
+        // new classes have been added, classify the
+        launchReasoner(dirty, kSession, ontoDescr);
 
         /************************************************************************************************************************************/
 
@@ -1000,6 +1113,23 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
 
 
+    private void processSubConceptAxiom( OWLClassExpression subClass, OWLClassExpression superClass, StatefulKnowledgeSession kSession, String thing ) {
+        if ( ! superClass.isAnonymous() ) {
+
+            String sub = filterAliases( subClass ).asOWLClass().getIRI().toQuotedString();
+            String sup = isDelegating( superClass ) ?
+                    thing : filterAliases( superClass ).asOWLClass().getIRI().toQuotedString();
+
+            SubConceptOf subcon = new SubConceptOf( sub, sup );
+            kSession.insert(subcon);
+        } else if ( superClass instanceof OWLObjectIntersectionOf ) {
+            OWLObjectIntersectionOf and = (OWLObjectIntersectionOf) superClass;
+            for ( OWLClassExpression ex : and.asConjunctSet() ) {
+                processSubConceptAxiom( subClass, ex, kSession, thing );
+            }
+        }
+    }
+
     private void addSubConceptsToModel(StatefulKnowledgeSession kSession, OWLOntology ontoDescr, OntoModel model) {
 
         kSession.fireAllRules();
@@ -1007,15 +1137,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
         String thing = ontoDescr.getOWLOntologyManager().getOWLDataFactory().getOWLThing().getIRI().toQuotedString();
 
         for ( OWLSubClassOfAxiom ax : ontoDescr.getAxioms( AxiomType.SUBCLASS_OF ) ) {
-            if ( ! ax.getSuperClass().isAnonymous() ) {
-
-                String sub = filterAliases( ax.getSubClass() ).asOWLClass().getIRI().toQuotedString();
-                String sup = isDelegating( ax.getSuperClass() ) ?
-                        thing : filterAliases( ax.getSuperClass() ).asOWLClass().getIRI().toQuotedString();
-
-                SubConceptOf subcon = new SubConceptOf( sub, sup );
-                kSession.insert(subcon);
-            }
+            processSubConceptAxiom( ax.getSubClass(), ax.getSuperClass(), kSession, thing );
         }
 
         for ( OWLClassExpression delegator : aliases.keySet() ) {
@@ -1029,7 +1151,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
             if ( ! delegator.isAnonymous() ) {
                 OWLClassExpression delegate = aliases.get( delegator );
                 SubConceptOf subcon = new SubConceptOf( delegate.asOWLClass().getIRI().toQuotedString() , delegator.asOWLClass().getIRI().toQuotedString() );
-                cache.get( subcon.getSubject() ).getEquivalentConcepts().add( cache.get( subcon.getObject() ) );
+                conceptCache.get(subcon.getSubject()).getEquivalentConcepts().add( conceptCache.get( subcon.getObject() ) );
                 kSession.insert(subcon);
             }
         }
@@ -1041,7 +1163,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
             System.out.println( " >>>> " + s );
             SubConceptOf subConceptOf = (SubConceptOf) s;
             model.addSubConceptOf( subConceptOf );
-            cache.get( subConceptOf.getSubject() ).getSuperConcepts().add( cache.get( subConceptOf.getObject() ) );
+            conceptCache.get(subConceptOf.getSubject()).getSuperConcepts().add(conceptCache.get(subConceptOf.getObject()));
         }
         System.out.println(" >>>>>>>>>> ");
     }
@@ -1071,10 +1193,20 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
             if ( baseModel.getConcept( con.getIRI().toQuotedString()) == null ) {
                 Concept concept =  new Concept(
                         con.getIRI().toQuotedString(),
-                        DLUtils.getInstance().buildNameFromIri( con.getIRI() ) );
+                        DLUtils.buildNameFromIri(con.getIRI()) );
+
+                for ( OWLAnnotation ann : con.getAnnotations( ontoDescr ) ) {
+                    if ( ann.getProperty().isComment() && ann.getValue() instanceof OWLLiteral ) {
+                        OWLLiteral lit = (OWLLiteral) ann.getValue();
+                        if ( lit.getLiteral().trim().equals( "abstract" ) ) {
+                            concept.setAbstrakt( true );
+                        }
+                    }
+                }
+
                 baseModel.addConcept( concept );
-                kSession.insert( concept );
-                cache.put( con.getIRI().toQuotedString(), concept );
+                kSession.insert(concept);
+                conceptCache.put(con.getIRI().toQuotedString(), concept);
 //                System.out.println(" ADD concept " + con.getIRI() );
             }
         }
@@ -1146,8 +1278,15 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
 
     protected void initReasoner( StatefulKnowledgeSession kSession, OWLOntology ontoDescr ) {
-        Reasoner hermit = new Reasoner( ontoDescr );
-        reasoner = new InferredOntologyGenerator( hermit );
+
+        switch ( externalReasoner ) {
+            case HERMIT: reasoner = new InferredOntologyGenerator( new Reasoner( ontoDescr ) );
+                break;
+            case PELLET:
+            default:
+                reasoner = new InferredOntologyGenerator( PelletReasonerFactory.getInstance().createReasoner( ontoDescr ) ) ;
+        }
+
         reasoner.addGenerator( new InferredSubClassAxiomGenerator() );
         reasoner.addGenerator( new InferredEquivalentClassAxiomGenerator() );
         reasoner.addGenerator( new InferredClassAssertionAxiomGenerator() );

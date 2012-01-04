@@ -88,4 +88,8 @@ public class WorkingSetModelCompilerImpl extends ModelCompilerImpl implements Wo
         newWs[ ws.length ] = children;
         father.setWorkingSets( newWs );
     }
+
+    public void setMode(Mode mode) {
+        //TODO
+    }
 }

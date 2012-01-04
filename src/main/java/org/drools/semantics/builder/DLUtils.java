@@ -18,7 +18,10 @@ package org.drools.semantics.builder;
 
 import org.semanticweb.owlapi.model.IRI;
 
-import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 public class DLUtils {
@@ -37,11 +40,11 @@ public class DLUtils {
     }
 
 
-    private String delims = ":/#!.<> _?";
-    private final String NEG = "ObjectComplementOf";
+    private static String delims = ":/#!.<> _?";
+    private static final String NEG = "ObjectComplementOf";
 
 
-    public String iriToPackage( String iri ) {
+    public static String iriToPackage( String iri ) {
         StringTokenizer tok = new StringTokenizer( iri, delims );
         String pack = "";
         while ( tok.hasMoreTokens() ) {
@@ -51,7 +54,7 @@ public class DLUtils {
     }
 
 
-    public String compactUpperCase(String s) {
+    public static String compactUpperCase(String s) {
 //        System.out.println("Try to normalize " + s);
         java.util.StringTokenizer tok = new java.util.StringTokenizer(s);
         StringBuilder sb = new StringBuilder();
@@ -62,7 +65,7 @@ public class DLUtils {
         return sb.toString();
     }
 
-    public String capitalize(String s) {
+    public static String capitalize(String s) {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
@@ -70,7 +73,7 @@ public class DLUtils {
 
 
 
-    public String negate( String expr ) {
+    public static String negate( String expr ) {
         if ( expr.startsWith(NEG) ) {
             return expr.substring(NEG.length()+1,expr.length()-1);
         } else {
@@ -79,19 +82,19 @@ public class DLUtils {
     }
 
 
-    public String buildNameFromIri( IRI iri ) {
+    public static String buildNameFromIri( IRI iri ) {
         if ( iri.getFragment() != null ) {
             return iri.getFragment();
         }
         return buildNameFromIri( iri.toQuotedString() );
     }
 
-    public String buildLowCaseNameFromIri( IRI iri ) {
+    public static String buildLowCaseNameFromIri( IRI iri ) {
         String name = buildNameFromIri( iri );
         return name.substring(0,1).toLowerCase() + name.substring(1);
     }
 
-    public String buildNameFromIri(String iri) {
+    public static String buildNameFromIri(String iri) {
 
         iri = iri.substring( 1, iri.length() - 1 );
         StringTokenizer tok = new StringTokenizer( iri, delims );
@@ -174,5 +177,48 @@ public class DLUtils {
         }
 
     }
+
+    public static String reverse(String aPackage) {
+
+
+        StringTokenizer tok = new StringTokenizer( aPackage, "." );
+        String ans = tok.nextToken();
+
+        while ( tok.hasMoreTokens() ) {
+            ans = tok.nextToken() + "." + ans;
+        }
+
+        return ans;
+    }
+
+
+
+
+
+
+    private static DateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss.SSS Z");
+
+    public static void setDateFormatter( DateFormat format ) {
+        formatter = format;
+    }
+
+    public static DateFormat getFormatter() {
+        return formatter;
+    }
+
+    public static String marshalDate( Date d ) {
+        return formatter.format( d );
+    }
+
+    public static Date unmarshalDate( String d ) {
+        try {
+            return formatter.parse( d );
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date( 0 );
+    }
+
+
 
 }

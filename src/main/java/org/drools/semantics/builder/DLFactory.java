@@ -13,8 +13,10 @@ public interface DLFactory {
 
 
     public enum INFERENCE_STRATEGY { INTERNAL, EXTERNAL }
+    public enum SupportedReasoners { HERMIT, PELLET }
 
     public void setInferenceStrategy( INFERENCE_STRATEGY strategy );
+    public void setExternalReasoner( SupportedReasoners externalReasoner );
 
 
 
@@ -32,11 +34,11 @@ public interface DLFactory {
 
 
 
-    public OntoModel buildModel( OWLOntology ontoDescr, Map<ModelInferenceStrategy.InferenceTask, Resource> theory );
+    public OntoModel buildModel( String name, OWLOntology ontoDescr, Map<ModelInferenceStrategy.InferenceTask, Resource> theory );
 
-    public OntoModel buildModel( Resource res, StatefulKnowledgeSession kSession );
+    public OntoModel buildModel( String name, Resource res, StatefulKnowledgeSession kSession );
 
-    public OntoModel buildModel( Resource res );
+    public OntoModel buildModel( String name, Resource res );
 
 
 }

@@ -27,6 +27,8 @@ public class PropertyRelation extends Relation {
     private Integer maxCard = null;
     private Concept target = null;
 
+    private boolean restricted = false;
+
     public PropertyRelation( String subject, String property, String object, String name ) {
         this.subject = subject;
         this.property = property;
@@ -72,6 +74,14 @@ public class PropertyRelation extends Relation {
 
     public String toString() {
         return name;
+    }
+
+    public boolean isRestricted() {
+        return restricted;
+    }
+
+    public void setRestricted(boolean restricted) {
+        this.restricted = restricted;
     }
 
     public String toFullString() {

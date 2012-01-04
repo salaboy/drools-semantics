@@ -44,7 +44,7 @@ public class DL_5_KMR_ClassHierarchyTest  {
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
 
         factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.INTERNAL );
-        OntoModel results = factory.buildModel( res, kSession );
+        OntoModel results = factory.buildModel( "ex7", res, kSession );
         System.out.println(results);
     }
 
@@ -57,7 +57,7 @@ public class DL_5_KMR_ClassHierarchyTest  {
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
 
         factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
-        OntoModel results = factory.buildModel( res, kSession );
+        OntoModel results = factory.buildModel( "ex7", res, kSession );
         System.out.println(results);
     }
 

@@ -25,6 +25,10 @@ public class GenericModelImpl implements OntoModel {
 
 
     private String pack;
+    
+    private String name;
+
+    private boolean flat = false;
 
     private LinkedHashMap<String, Concept> concepts = new LinkedHashMap<String, Concept>();
 
@@ -38,7 +42,23 @@ public class GenericModelImpl implements OntoModel {
     }
 
     public void setPackage(String pack) {
-        this.pack = DLUtils.getInstance().iriToPackage( pack );
+        this.pack = DLUtils.iriToPackage( pack );
+    }
+
+    public String getPack() {
+        return pack;
+    }
+
+    public void setPack(String pack) {
+        this.pack = pack;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Concept> getConcepts() {
@@ -154,9 +174,54 @@ public class GenericModelImpl implements OntoModel {
 
     }
 
-    
-    
-    
+
+
+
+    public void flatten() {
+        if ( ! isFlat() ) {
+            for ( String conceptName : concepts.keySet() ) {
+                Concept con = concepts.get( conceptName );
+                Map<String, PropertyRelation> baseProps = con.getProperties();
+                Set<Concept> superConcepts = con.getSuperConcepts();
+                for ( Concept sup : superConcepts ) {
+                    Map<String,PropertyRelation> inheritedProperties = sup.getProperties();
+                    for ( String propKey : inheritedProperties.keySet() ) {
+                        if ( ! baseProps.containsKey( propKey ) ) {
+                            baseProps.put( propKey, inheritedProperties.get( propKey ) );
+                        }
+                    }
+                }
+            }
+            flat = true;
+        }
+    }
+
+    public void elevate() {
+        if ( isFlat() ) {
+            for ( String conceptName : concepts.keySet() ) {
+                Concept con = concepts.get( conceptName );
+                Map<String, PropertyRelation> baseProps = con.getProperties();
+                Set<Concept> superConcepts = con.getSuperConcepts();
+                for ( Concept sup : superConcepts ) {
+                    Map<String,PropertyRelation> inheritedProperties = sup.getProperties();
+                    for ( String propKey : inheritedProperties.keySet() ) {
+                        if ( baseProps.containsKey( propKey ) ) {
+                            if ( baseProps.get( propKey ).equals( inheritedProperties.get( propKey ) ) ) {
+                                baseProps.remove(propKey);
+                            }
+                        }
+                    }
+                }
+            }
+            flat = true;
+        }
+    }
+
+    public boolean isFlat() {
+        return flat;
+    }
+
+
     public void sort() {
         List<Concept> conceptList = new ArrayList<Concept>( getConcepts() );
         Node<Concept> root = new Node<Concept>( null );
@@ -164,15 +229,15 @@ public class GenericModelImpl implements OntoModel {
         for ( Concept con : conceptList ) {
             String key = con.getIri();
 
-                Node<Concept> node = map.get( key );
-                if ( node == null ) {
-                    node = new Node( key,
-                            con );
-                    map.put( key,
-                            node );
-                } else if ( node.getData() == null ) {
-                    node.setData( con );
-                }
+            Node<Concept> node = map.get( key );
+            if ( node == null ) {
+                node = new Node( key,
+                        con );
+                map.put( key,
+                        node );
+            } else if ( node.getData() == null ) {
+                node.setData( con );
+            }
             if ( con.getSuperConcepts().isEmpty() ) {
                 root.addChild( node );
             } else {

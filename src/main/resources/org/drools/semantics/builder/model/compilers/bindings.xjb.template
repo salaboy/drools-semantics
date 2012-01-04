@@ -3,28 +3,29 @@
           xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
           xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
           xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+          xmlns:ci="http://jaxb.dev.java.net/plugin/code-injector"
           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
           xmlns:annox="http://annox.dev.java.net"
           xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
           xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
           version="2.1"
-          extensionBindingPrefixes="xjc annox inheritance" >
-  <bindings schemaLocation="kmr2.xsd" node="/xsd:schema">
+          extensionBindingPrefixes="xjc annox inheritance ci" >
+  <bindings schemaLocation="@{modelName}.xsd" node="/xsd:schema">
 
     <globalBindings localScoping="toplevel" >
       <serializable/>
       <xjc:simple/>
       <xjc:treatRestrictionLikeNewType/>
 
-      <javaType name= "java.util.Date" xmlType="xsd:date" />
-      <javaType name= "java.util.Date" xmlType="xsd:dateTime" />
-      <javaType name= "java.util.Date" xmlType="xsd:time" />
+      <javaType name= "java.util.Date" xmlType="xsd:date" printMethod="org.drools.semantics.builder.DLUtils.marshalDate" parseMethod="org.drools.semantics.builder.DLUtils.unmarshalDate"/>
+      <javaType name= "java.util.Date" xmlType="xsd:dateTime" printMethod="org.drools.semantics.builder.DLUtils.marshalDate" parseMethod="org.drools.semantics.builder.DLUtils.unmarshalDate"/>
+      <javaType name= "java.util.Date" xmlType="xsd:time" printMethod="org.drools.semantics.builder.DLUtils.marshalDate" parseMethod="org.drools.semantics.builder.DLUtils.unmarshalDate"/>
     </globalBindings>
 
-    @code{ targetElement = ''; if (flat) targetElement='element'; else targetElement='complexType'; }
+    @code{ targetElement = ''; if (flat) targetElement='complexType'; else targetElement='complexType'; }
 
     <bindings node="//xsd:@{targetElement}[@name='Thing']">
-      <inheritance:extends>RdfIdAble</inheritance:extends>
+      <inheritance:extends>org.drools.semantics.builder.model.RdfIdAble</inheritance:extends>
     </bindings>
 
 
@@ -32,26 +33,39 @@
     <bindings node="//xsd:@{targetElement}[@name='@{concept.name}']">
         <class name="@{concept.name}Impl"/>
         <inheritance:implements>@{package}.@{concept.name}</inheritance:implements>
+        @if{ flat && concept.name != "Thing" } <inheritance:extends>org.drools.semantics.builder.model.RdfIdAble</inheritance:extends> @end{}
         <annox:annotate>
           <annox:annotate annox:class="com.clarkparsia.empire.annotation.RdfsClass" value="tns:@{concept.name}" />
-          <annox:annotate annox:class="com.clarkparsia.empire.annotation.Namespaces" value="tns http://@{package}" />
+          <annox:annotate annox:class="com.clarkparsia.empire.annotation.Namespaces" value="tns http://@{package}#" />
+          <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="@{concept.name}Impl"/>
         </annox:annotate>
+        <ci:code>
+          @{extra_code[ concept.name ] }
+        </ci:code>
 
         @foreach{ propKey : properties[ concept.name ].keySet }
 
-            @code{ nodeType = ''; if (properties[ concept.name ][ propKey ].primitive && propKey.maxCard <= 1) nodeType='attribute'; else nodeType='element'; }
+            @code{ prop = properties[ concept.name ][ propKey ] }
 
-        <bindings node=".//xsd:@{nodeType}[@name='@{propKey}']">
-           <jxb:property generateIsSetMethod="true" name="@{propKey}" >
-            @if{ "element".equals(nodeType) && ! properties[ concept.name ][ propKey ].primitive }
-                <jxb:baseType name="@{package}.@{properties[ concept.name ][ propKey ]}" />
+            @code{ nodeType = ''; if ( prop.target.primitive &&
+                                       prop.maxCard <= 1 )
+                                       nodeType='attribute';
+                                       else
+                                       nodeType='element'; }
+            @if{ ! prop.restricted }
+            <bindings node=".//xsd:@{nodeType}[@name='@{prop.name}']">
+                <jxb:property generateIsSetMethod="true" name="@{prop.name}" >
+                    @if{ "element".equals(nodeType) && ! prop.target.primitive }
+                        <jxb:baseType name="@{package}.@{prop.target.name}__Type" />
+                    @end{}
+                </jxb:property>
+
+                <annox:annotate>
+                    <annox:annotate annox:class="com.clarkparsia.empire.annotation.RdfProperty" value="tns:@{prop.name}" />
+                </annox:annotate>
+            </bindings>
             @end{}
-           </jxb:property>
 
-            <annox:annotate>
-                <annox:annotate annox:class="com.clarkparsia.empire.annotation.RdfProperty" value="tns:@{propKey}" />
-            </annox:annotate>
-        </bindings>
         @end{}
     </bindings>
     @end{}

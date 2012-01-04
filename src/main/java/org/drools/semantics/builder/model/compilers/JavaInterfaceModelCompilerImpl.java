@@ -17,21 +17,24 @@
 package org.drools.semantics.builder.model.compilers;
 
 import org.drools.semantics.builder.DLTemplateManager;
-import org.drools.semantics.builder.model.CompiledOntoModel;
-import org.drools.semantics.builder.model.ModelFactory;
-import org.drools.semantics.builder.model.OntoModel;
+import org.drools.semantics.builder.model.*;
 import org.mvel2.templates.CompiledTemplate;
 import org.mvel2.templates.TemplateRegistry;
 import org.mvel2.templates.TemplateRuntime;
 
+import java.util.HashSet;
 import java.util.Map;
 
 public class JavaInterfaceModelCompilerImpl extends ModelCompilerImpl implements JavaInterfaceModelCompiler {
 
+    private Mode currentMode = Mode.FLAT;
 
-
+    
 
     private String templateName = "trait.drlt";
+    private String dataTemplateName = "dataTrait.drlt";
+    private String typeTemplateName = "typeTrait.drlt";
+
     private TemplateRegistry registry = DLTemplateManager.getDataModelRegistry(ModelFactory.CompileTarget.JAVA);
 
 
@@ -41,11 +44,27 @@ public class JavaInterfaceModelCompilerImpl extends ModelCompilerImpl implements
 
     public void compile( String name, Object context, Map<String, Object> params ) {
         CompiledTemplate template = registry.getNamedTemplate(templateName);
+        CompiledTemplate dataTemplate = registry.getNamedTemplate(dataTemplateName);
+        CompiledTemplate typeTemplate = registry.getNamedTemplate(typeTemplateName);
+        
+        if ( getMode().equals( Mode.FLAT ) ) {
+            getModel().flatten();
+        } else {
+            getModel().elevate();
+        }
+
         getModel().addTrait(name, TemplateRuntime.execute(template, context, params).toString().trim());
+        getModel().addTrait(name+"__Datatype", TemplateRuntime.execute(dataTemplate, context, params).toString().trim());
+        getModel().addTrait(name + "__Type", TemplateRuntime.execute(typeTemplate, context, params).toString().trim());
+
     }
 
 
+    public void setMode(Mode mode) {
+        currentMode = mode;
+    }
 
-
-
+    public Mode getMode() {
+        return currentMode;
+    }
 }

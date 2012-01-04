@@ -42,13 +42,16 @@ public abstract class ModelCompilerImpl implements ModelCompiler {
         setModel( model );
         if ( getModel() != null ) {
             for ( Concept con : getModel().getConcepts() ) {
-                String name = DLUtils.getInstance().compactUpperCase( con.getName() );
+                String name = DLUtils.compactUpperCase( con.getName() );
                 Map map = new HashMap();
                 map.put( "package", getModel().getPackage() );
                 map.put( "iri", con.getIri() );
                 map.put( "name", name );
                 map.put( "superConcepts", con.getSuperConcepts() );
                 map.put( "properties", con.getProperties() );
+                if ( con.isAbstrakt() ) {
+                    map.put( "abstract", con.isAbstrakt() );
+                }
                 compile( name, DLUtils.getInstance(), map );
             }
         }

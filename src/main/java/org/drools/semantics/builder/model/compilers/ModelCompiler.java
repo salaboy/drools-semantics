@@ -24,6 +24,10 @@ import java.util.Set;
 
 public interface ModelCompiler {
 
+    public static enum Mode  { FLAT, HIERARCHY }
+
+    public void setMode( Mode mode );
+
     public CompiledOntoModel compile( OntoModel model );
 
     public CompiledOntoModel getModel();

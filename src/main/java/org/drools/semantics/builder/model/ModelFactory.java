@@ -24,8 +24,10 @@ public class ModelFactory {
     }
 
 
-    public static OntoModel newModel( CompileTarget target) {
-        return newModel( target, null );
+    public static OntoModel newModel( String name, CompileTarget target) {
+        OntoModel model = newModel( target, null );
+        model.setName( name );
+        return model;
     }
 
     public static OntoModel newModel( CompileTarget target, OntoModel base  ) {

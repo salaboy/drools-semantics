@@ -129,11 +129,14 @@ rule "Opportunistic"
 salience 9999
 when
     $q : DroolsQuery( name == "subConceptOf", $args : elements )
-    Concept( $sub : iri == $args[1] )
-    Concept( $sup : iri == $args[2] )
+    Concept( $sub : iri, iri == $args[1] )
+    Concept( $sup : iri, iri == $args[2] )
 then
 	insert( new SubsumptionGoal($sub, $sup, true) );
 end
+
+
+
 
 
 rule "Match"

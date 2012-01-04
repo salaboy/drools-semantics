@@ -41,5 +41,7 @@ public class DRLModelCompilerImpl extends ModelCompilerImpl implements DRLModelC
     }
 
 
-
+    public void setMode(Mode mode) {
+        //TODO
+    }
 }

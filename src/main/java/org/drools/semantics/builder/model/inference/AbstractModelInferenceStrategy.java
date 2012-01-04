@@ -34,13 +34,13 @@ public abstract class AbstractModelInferenceStrategy implements ModelInferenceSt
 
 
 
-    public OntoModel buildModel( OWLOntology ontoDescr,
+    public OntoModel buildModel( String name, OWLOntology ontoDescr,
                                           Map<InferenceTask, Resource> theory,
                                           StatefulKnowledgeSession kSession ) {
 
         addResource( kSession, theory.get( InferenceTask.COMMON ) );
 
-        OntoModel baseModel = ModelFactory.newModel(ModelFactory.CompileTarget.BASE);
+        OntoModel baseModel = ModelFactory.newModel( name, ModelFactory.CompileTarget.BASE );
         kSession.fireAllRules();
 
         kSession.insert( ontoDescr );

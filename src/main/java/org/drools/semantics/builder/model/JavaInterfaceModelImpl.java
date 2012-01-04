@@ -63,11 +63,11 @@ public class JavaInterfaceModelImpl extends ModelImpl implements JavaInterfaceMo
     }
 
 
-    public boolean save( String target ) {
+    public boolean save( String targetDirectory ) {
 
+        String slash = System.getProperty("file.separator");
 
-
-        String path = target + "/" + getPackage().replace(".", "/");
+        String path = targetDirectory + slash + getPackage().replace(".", "/");
         File dir = new File( path );
         if (! dir.exists()) {
             dir.mkdirs();
@@ -75,7 +75,7 @@ public class JavaInterfaceModelImpl extends ModelImpl implements JavaInterfaceMo
 
 
         for ( String key : getTraitNames() ) {
-            File f =  new File( path + "/" + key + ".java" );
+            File f =  new File( path + slash + key + ".java" );
             System.out.println(f.getAbsolutePath());
             try {
                 FileOutputStream fos = new FileOutputStream( f );

@@ -19,4 +19,5 @@ package org.drools.semantics.builder.model.compilers;
 public interface XSDModelCompiler extends ModelCompiler {
 
 
+
 }

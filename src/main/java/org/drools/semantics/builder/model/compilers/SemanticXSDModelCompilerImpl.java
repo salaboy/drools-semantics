@@ -16,13 +16,18 @@
 
 package org.drools.semantics.builder.model.compilers;
 
+import org.drools.io.ResourceFactory;
+import org.drools.semantics.builder.DLTemplateManager;
+import org.drools.semantics.builder.DLUtils;
 import org.drools.semantics.builder.model.*;
 import org.jdom.Element;
+import org.mvel2.templates.TemplateRegistry;
 import org.mvel2.templates.TemplateRuntime;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
@@ -53,6 +58,12 @@ public class SemanticXSDModelCompilerImpl extends XSDModelCompilerImpl implement
             "  </bindings>\n" +
             "</bindings>";
 
+
+    private TemplateRegistry registry = DLTemplateManager.getDataModelRegistry( ModelFactory.CompileTarget.XSDX );
+
+    private String semGetterTemplateName = "semGetter.drlt";
+    private String semSetterTemplateName = "semSetter.drlt";
+
     @Override
     public CompiledOntoModel compile(OntoModel model) {
 
@@ -66,7 +77,7 @@ public class SemanticXSDModelCompilerImpl extends XSDModelCompilerImpl implement
     public void setModel(OntoModel model) {
         this.model = (CompiledOntoModel) ModelFactory.newModel( ModelFactory.CompileTarget.XSDX, model );
 
-        ((XSDModel) getModel()).setNamespace( "tns", model.getPackage() );
+        ((XSDModel) getModel()).setNamespace( "tns", DLUtils.reverse( model.getPackage() ) );
     }
 
     private String createBindings( SemanticXSDModel sxsdModel ) {
@@ -79,31 +90,47 @@ public class SemanticXSDModelCompilerImpl extends XSDModelCompilerImpl implement
                 vars.put( "concepts", getModel().getConcepts() );
                 vars.put( "flat", this.getCurrentMode().equals( Mode.FLAT ) );
                 vars.put( "properties", propCache );
+                vars.put( "modelName", getModel().getName() );
+                vars.put( "extraCode", prepareCodeExtensions( sxsdModel ) );
             String bindings = TemplateRuntime.eval( template, vars ).toString();
 
 
 //            System.out.println( bindings );
             return bindings;
         } catch ( IOException ioe ) {
+            ioe.printStackTrace();
             return defaultBindings;
         }
     }
 
+    private Map<String,String> prepareCodeExtensions(SemanticXSDModel sxsdModel) {
+        Map<String,String> code = new HashMap<String, String>( sxsdModel.getConcepts().size() );
+        for ( Concept con : sxsdModel.getConcepts() ) {
+            StringBuilder sb = new StringBuilder("");
+            
+            for ( String propKey : con.getProperties().keySet() ) {
+                PropertyRelation prop = con.getProperties().get( propKey );
+                if ( prop.isRestricted() ) {
+
+                    sb.append("\n").append("\t public void ");
+                }
+            }
+            
+        }
+        return code;
+    }
+
 
     private static String readFile(String name) throws IOException {
-        String basePath = SemanticXSDModelCompiler.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        String fullPath = basePath
-                + SemanticXSDModelCompiler.class.getPackage().getName().replace(".",File.separator)
-                + File.separatorChar
-                + name;
-
-        System.out.println( fullPath );
-
-        FileInputStream stream = new FileInputStream( new File( fullPath ) );
+        String fullPath = SemanticXSDModelCompiler.class.getPackage().getName().replace(".",File.separator)
+                        + File.separatorChar
+                        + name;
+        
+        InputStream stream = ResourceFactory.newClassPathResource( fullPath ).getInputStream();
         try {
-            FileChannel fc = stream.getChannel();
-            MappedByteBuffer bb = fc.map( FileChannel.MapMode.READ_ONLY, 0, fc.size() );
-            return Charset.defaultCharset().decode(bb).toString();
+              byte[] data = new byte[ stream.available() ];
+              stream.read(data);
+              return new String( data );
         }
         finally {
             stream.close();

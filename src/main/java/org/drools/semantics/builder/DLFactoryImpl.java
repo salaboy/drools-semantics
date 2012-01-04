@@ -68,7 +68,12 @@ public class DLFactoryImpl implements DLFactory {
         }
     }
 
+    public void setExternalReasoner(SupportedReasoners externalReasoner) {
+        if ( strategy instanceof DelegateInferenceStrategy ) {
+            DelegateInferenceStrategy.setExternalReasoner( externalReasoner );
+        }
 
+    }
 
 
     public OWLOntology parseOntology( Resource resource ) {
@@ -128,16 +133,16 @@ public class DLFactoryImpl implements DLFactory {
 
 
 
-    public OntoModel buildModel( OWLOntology ontoDescr, Map<ModelInferenceStrategy.InferenceTask, Resource> theory ) {
+    public OntoModel buildModel( String name, OWLOntology ontoDescr, Map<ModelInferenceStrategy.InferenceTask, Resource> theory ) {
 
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase("modelGenerator");
             StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
-        return buildModel( ontoDescr, theory, kSession );
+        return buildModel( name, ontoDescr, theory, kSession );
 
     }
 
-    private OntoModel buildModel(OWLOntology ontoDescr, Map<ModelInferenceStrategy.InferenceTask, Resource> theory, StatefulKnowledgeSession kSession) {
-        return strategy.buildModel( ontoDescr, theory, kSession );
+    private OntoModel buildModel( String name, OWLOntology ontoDescr, Map<ModelInferenceStrategy.InferenceTask, Resource> theory, StatefulKnowledgeSession kSession) {
+        return strategy.buildModel( name, ontoDescr, theory, kSession );
     }
 
 
@@ -147,7 +152,7 @@ public class DLFactoryImpl implements DLFactory {
      * @param kSession
      * @return
      */
-    public OntoModel buildModel( Resource res, StatefulKnowledgeSession kSession ) {
+    public OntoModel buildModel( String name, Resource res, StatefulKnowledgeSession kSession ) {
         OWLOntology ontoDescr = DLFactoryImpl.getInstance().parseOntology( res );
 
 
@@ -183,7 +188,8 @@ public class DLFactoryImpl implements DLFactory {
         theory.put( ModelInferenceStrategy.InferenceTask.CLASS_LATTICE_PRUNE, classPruner );
         theory.put( ModelInferenceStrategy.InferenceTask.PROPERTY_MATCH, propertyBuilder );
 
-        OntoModel results = DLFactoryImpl.getInstance().buildModel( ontoDescr,
+        OntoModel results = DLFactoryImpl.getInstance().buildModel( name,
+                                                            ontoDescr,
                                                             theory,
                                                             kSession );
 
@@ -197,13 +203,13 @@ public class DLFactoryImpl implements DLFactory {
 
 
 
-    public OntoModel buildModel( Resource res ) {
+    public OntoModel buildModel( String name, Resource res ) {
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
 
         setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
 
-        return buildModel( res, kSession );
+        return buildModel( name, res, kSession );
     }
 
 

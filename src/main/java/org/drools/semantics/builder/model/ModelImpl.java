@@ -24,6 +24,15 @@ public abstract class ModelImpl implements OntoModel {
 
     private OntoModel innerModel;
 
+    
+    public String getName() {
+        return innerModel.getName();
+    }
+    
+    public void setName( String name ) {
+        innerModel.setName( name );
+    }
+
 
     public void initFromBaseModel( OntoModel base ) {
         this.innerModel = base;
@@ -107,6 +116,19 @@ public abstract class ModelImpl implements OntoModel {
 
     public void sort() {
         innerModel.sort();
+    }
+
+
+    public void flatten() {
+        innerModel.flatten();
+    }
+
+    public void elevate() {
+        innerModel.elevate();
+    }
+
+    public boolean isFlat() {
+        return innerModel.isFlat();
     }
 
 }
