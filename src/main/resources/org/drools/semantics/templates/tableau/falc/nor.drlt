@@ -15,7 +15,7 @@ when
 then
 //	System.out.println(" Rule NOR ** @{id} -> @{children} ************ // " );
 	String[] klazz = new String[] { @foreach{ child : children } "@{negate(child)}" @end{','} };
-	Object[] vars = new Object[klazz.length];
+	RealVariable[] vars = new RealVariable[klazz.length];
 //
 //
 	for (int j = 0; j < klazz.length; j++) {
@@ -30,7 +30,7 @@ then
 		insertLogical(d);
 	}
 
-	Object y = ConstraintFactory.newBooleanVariable("y_@{id}",$prob);
+	IntegerVariable y = ConstraintFactory.newBooleanVariable("y_@{id}",$prob);
 	ConstraintFactory.addAndConstraint(vars,y,$l,$prob);
 
 end

@@ -10,8 +10,8 @@
 declare @{name} @if{ superConcepts.size > 0 } extends @foreach{ sup : superConcepts } @{ compactUpperCase( sup.name ) } @end{','} @end{}
 @@format(trait)
 
-  @if{ properties.size > 0 }    @foreach{ prop : properties.keySet }
-    @{ properties[ prop ].name } : @{ properties[ prop ].target.name }
+  @if{ properties.size > 0 }    @foreach{ propKey : properties.keySet }
+    @{ properties[ propKey ].name } : @{ properties[ propKey ].target.name }
   @end{}                        @end{}
 end
 

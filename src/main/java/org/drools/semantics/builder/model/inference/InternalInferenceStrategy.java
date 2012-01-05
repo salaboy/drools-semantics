@@ -16,9 +16,6 @@
 
 package org.drools.semantics.builder.model.inference;
 
-import net.sf.javailp.Solver;
-import net.sf.javailp.SolverFactoryGLPK;
-import net.sf.javailp.SolverLpSolve;
 import org.drools.io.Resource;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.semantics.builder.model.OntoModel;
@@ -48,10 +45,6 @@ public class InternalInferenceStrategy extends AbstractModelInferenceStrategy {
     }
 
     protected void initReasoner( StatefulKnowledgeSession kSession, OWLOntology ontoDescr ) {
-
-        Solver solver = new SolverFactoryGLPK().get();
-        solver.setParameter(SolverLpSolve.VERBOSE,0);
-        kSession.setGlobal( "solver", solver );
 
     }
 }

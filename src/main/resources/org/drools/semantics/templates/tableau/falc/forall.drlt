@@ -15,7 +15,7 @@ when
 then				
 //	System.out.println("Rule Forall -------> @{prop}.@{target}" );
 
-	Object[] vars = new Object[2];							
+	RealVariable[] vars = new RealVariable[2];
 
 	HypoProperty hyprop = new HypoProperty($pred, $x, $y, $test);
 	HypoType type = new HypoType( $y, "@{target}", false , $test);
@@ -29,7 +29,7 @@ then
     System.out.println("\t\tRule Forall -------> Created " + type );
 	System.out.println("\t\tRule Forall -------> Created " + hyprop );
 						
-	Object y = ConstraintFactory.newBooleanVariable("y_@{id}",$prob);						
+	IntegerVariable y = ConstraintFactory.newBooleanVariable("y_@{id}",$prob);
 	ConstraintFactory.addForallConstraint( vars[0], vars[1], y, $l, $prob);
 
 	insertLogical(hyprop);

@@ -18,8 +18,8 @@ then
 	HypoType type = new HypoType($y,"@{target}", false ,$test);
 	HypoProperty hyprop = new HypoProperty($pred, $x, $y, $test);
 
-	Object xc = ConstraintFactory.newUnitIntervalVariable("x_"+type.getLabel(),$prob);
-	Object xp = ConstraintFactory.newUnitIntervalVariable("x_"+$p.getLabel(),$prob);
+	RealVariable xc = ConstraintFactory.newUnitIntervalVariable("x_"+type.getLabel(),$prob);
+	RealVariable xp = ConstraintFactory.newUnitIntervalVariable("x_"+$p.getLabel(),$prob);
 
 	System.out.println("\t\tRule Exists -------> Created " + type );
 	System.out.println("\t\tRule Exists -------> Created " + hyprop );
@@ -27,7 +27,7 @@ then
 
 	Degree deg = new Degree(type,xc);
 
-	ConstraintFactory.addExistConstraint(xc,xp, $l,$prob);
+	ConstraintFactory.addExistConstraint( xc, xp, $l, $prob);
 
 	insertLogical(type);
 	insertLogical(deg);

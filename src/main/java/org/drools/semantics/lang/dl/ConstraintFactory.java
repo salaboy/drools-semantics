@@ -16,101 +16,92 @@
 
 package org.drools.semantics.lang.dl;
 
-import net.sf.javailp.*;
+
+import choco.cp.model.CPModel;
+import choco.kernel.model.constraints.Constraint;
+import choco.kernel.model.variables.AbstractVariable;
+import choco.kernel.model.variables.integer.IntegerVariable;
+import choco.kernel.model.variables.real.RealExpressionVariable;
+import choco.kernel.model.variables.real.RealVariable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
+
+import static choco.Choco.*;
 
 
 public class ConstraintFactory {
 
 
+    private enum Operator { EQ, LE, GE, LEQ, GEQ, NEQ };
+
+    private static List<Pair<CPModel,Integer>> varCounter = new ArrayList<Pair<CPModel,Integer>>();
 
 
-    private static List<Pair<Problem,Integer>> varCounter = new ArrayList<Pair<Problem,Integer>>();
 
 
-
-    public static Object newUnitIntervalVariable(Object var, Problem p) {
+    public static RealVariable newUnitIntervalVariable(Object var, MinimizationProblem p) {
         return newUnitIntervalVariable(var, 0.0, 1.0, p);
     }
 
 
-    public static Object newUnitIntervalVariable(Object var, Number low, Number upp, Problem p) {
+    public static RealVariable newUnitIntervalVariable(Object var, double low, double upp, MinimizationProblem p) {
         String varName = format(var,p);
-
-        Number oldLB = p.getVarLowerBound(varName);
-//		System.out.println("Examine varName " + varName + " : found old lower bound " + oldLB +" vs new " + low);
-        if (oldLB == null || oldLB.doubleValue() <= low.doubleValue())
-            p.setVarLowerBound(varName, low);
-
-        Number oldUB = p.getVarUpperBound(varName);
-        if (oldUB == null || oldUB.doubleValue() >= upp.doubleValue())
-            p.setVarUpperBound(varName, upp);
-
-        p.setVarType(varName, VarType.REAL);
-        return varName;
-    }
-
-
-    public static Object newBooleanVariable(Object var, Problem p) {
-
-        String varName = format(var,p);
-
-        p.setVarType(varName, VarType.BOOL);
-        return varName;
-    }
-
-    private static String format(Object var, Problem p) {
-//        Pair<Problem,Integer> px = null;
-//        Integer counter = null;
-//        for ( Pair<Problem,Integer> pair : varCounter ) {
-//            if ( pair.getKey() == p ) {
-//                px = pair;
-//                break;
-//            }
-//        }
-//        if ( px == null ) {
-//            counter = new Integer( 0 );
-//            px = new Pair<Problem, Integer>(p, counter);
-//        } else {
-//            counter = px.getValue();
-//            varCounter.remove( px );
-//        }
-//
-//        px.setValue( new Integer( ++counter ) );
-//        varCounter.add(0, px);
-//
-//        return "x"+(counter);
-
-        return "x"+(var.toString().hashCode() % 10000);
-
-    }
-
-    public static Constraint buildConstraint(String expr, Operator op, Number val) {
-        Linear lhs = buildLinear(expr);
-        return new Constraint(lhs, op, val);
-    }
-
-
-    public static Linear buildLinear( String lin ) {
-//		System.err.println(lin);
-        Linear ans = new Linear();
-
-        StringTokenizer tok = new StringTokenizer(lin," ");
-        while (tok.hasMoreTokens()) {
-            String tx = tok.nextToken();
-
-            StringTokenizer subTokenizer = new StringTokenizer(tx,"*");
-            String coeff = subTokenizer.nextToken();
-            String var = subTokenizer.nextToken();
-            Term t = new Term(var, Double.parseDouble(coeff));
-            ans.add(t);
+        AbstractVariable v1 = p.getVariable( varName );
+        if ( v1 instanceof  IntegerVariable ) {
+            System.err.println("What went wrong");
         }
-
-        return ans;
+        RealVariable v = (RealVariable) v1;
+        if ( v == null ) {
+            v = makeRealVar( varName, low, upp );            
+            p.registerVar( varName, v );
+        }
+        v.setLowB( Math.max( v.getLowB(), low ) );
+        v.setUppB( Math.min( v.getUppB(), upp ) );
+        return v;
     }
+
+
+
+
+
+    public static IntegerVariable newBooleanVariable(Object var, MinimizationProblem p) {
+        String varName = format(var,p);
+        IntegerVariable v = (IntegerVariable) p.getVariable( varName );
+        if ( v == null ) {
+            v = makeBooleanVar( varName );
+            p.registerVar( varName, v );
+        }
+        return v;
+    }
+
+
+    public static RealVariable newBooleanRealVariable(Object var, MinimizationProblem p) {
+
+        IntegerVariable x = newBooleanVariable(var, p);
+
+        RealVariable Y = castIntToRealVariable(x, p);
+
+        return Y;
+    }
+
+
+
+    private static RealVariable castIntToRealVariable(IntegerVariable y, MinimizationProblem p) {
+        RealVariable Y = newUnitIntervalVariable( "S"+y, p );
+        p.addConstraint( eq( y, Y ) );
+
+        return Y;
+    }
+
+
+    private static String format(Object var, MinimizationProblem p) {
+
+//        return "x"+(var.toString().hashCode() % 10000);
+        return "x_"+var;
+    }
+
+
 
 
 //	public static void addAndConstraint(Object[] vars, Object y, Object l, Problem prob) {
@@ -125,15 +116,24 @@ public class ConstraintFactory {
 //		addUnique(ConstraintFactory.buildConstraint(terms+" -1.0*"+l+" +1.0*"+y,Operator.EQ, vars.length -1));
 //	}
 
-    public static void addAndConstraint(Object[] vars, Object y, Object l, Problem prob) {
+    public static void addAndConstraint(RealVariable[] vars, IntegerVariable y, RealVariable l, MinimizationProblem prob) {
 
-        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+l+" -1.0*"+y,Operator.LE, 0.0), prob);
-        String terms = "";
-        for (int j = 0; j < vars.length; j++) {
-            terms += "  1.0*" + vars[j];
+//        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+l+" -1.0*"+y,Operator.LE, 0.0), prob);
+
+        RealVariable Y = castIntToRealVariable(y, prob);
+        prob.addConstraint( leq(l, Y) );
+
+        RealExpressionVariable terms = vars[0];
+        for (int j = 1; j < vars.length; j++) {
+            terms = plus(terms, vars[j]);
         }
-        addUnique(ConstraintFactory.buildConstraint(terms+" -1.0*"+l,Operator.LE, vars.length -1), prob);
-        addUnique(ConstraintFactory.buildConstraint(terms+" -1.0*"+l+" -1.0*"+y,Operator.GE, vars.length -2), prob);
+
+//        addUnique(ConstraintFactory.buildConstraint(terms+" -1.0*"+l,Operator.LE, vars.length -1), prob);
+        prob.addConstraint( leq( terms, plus( l, vars.length - 1.0 ) ) );
+
+//        addUnique(ConstraintFactory.buildConstraint(terms+" -1.0*"+l+" -1.0*"+y,Operator.GE, vars.length -2), prob);
+        prob.addConstraint( geq( terms, plus( plus( l, Y ), vars.length - 2.0 ) ) );
+
     }
 
 
@@ -157,16 +157,21 @@ public class ConstraintFactory {
 
 
 
-    public static void addOrConstraint(Object[] vars, Object y, Object l, Problem prob) {
-        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+l+" -1.0*"+y,Operator.GE, 0.0), prob);
+    public static void addOrConstraint(RealVariable[] vars, IntegerVariable y, RealVariable l, MinimizationProblem prob) {
+//        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+l+" -1.0*"+y,Operator.GE, 0.0), prob);
+        RealVariable Y = castIntToRealVariable(y, prob);
+        prob.addConstraint( geq(l, Y) );
 
-        String terms = "";
-        for (int j = 0; j < vars.length; j++) {
-            terms += "  1.0*" + vars[j];
+        RealExpressionVariable terms = vars[0];
+        for (int j = 1; j < vars.length; j++) {
+            terms = plus( terms, vars[j] );
         }
 
-        addUnique(ConstraintFactory.buildConstraint(terms+" -1.0*"+l,Operator.GE, 0), prob);
-        addUnique(ConstraintFactory.buildConstraint(terms+" -1.0*"+l+" -1.0*"+y,Operator.LE, 0), prob);
+//        addUnique(ConstraintFactory.buildConstraint(terms+" -1.0*"+l,Operator.GE, 0), prob);
+        prob.addConstraint( geq(terms, l) );
+
+//        addUnique(ConstraintFactory.buildConstraint(terms+" -1.0*"+l+" -1.0*"+y,Operator.LE, 0), prob);
+        prob.addConstraint( leq(terms, plus(l, Y)) );
     }
 ////	
 
@@ -176,47 +181,58 @@ public class ConstraintFactory {
 
 
 
-    public static void addComplementConstraint(Object v1, Object v2, Problem prob) {
-        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+v1+" +1.0*"+v2,Operator.EQ, 1.0), prob);
+    public static void addComplementConstraint(RealVariable v1, RealVariable v2, MinimizationProblem prob) {
+//        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+v1+" +1.0*"+v2, Operator.EQ, 1.0), prob);
+        prob.addConstraint( eq( v1, minus( 1.0, v2 ) ) );
     }
 
-    public static void addEqualityConstraint(Object v1, Object v2, Problem prob) {
-        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+v1+" -1.0*"+v2,Operator.EQ, 0.0), prob);
+    public static void addEqualityConstraint(RealVariable v1, RealVariable v2, MinimizationProblem prob) {
+//        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+v1+" -1.0*"+v2,Operator.EQ, 0.0), prob);
+        prob.addConstraint( eq( v1, v2 ) );
     }
 
-    public static void addImplicationConstraint(Object xA, Object xB, Object l, Problem prob) {
-        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+l+" -1.0*"+xA+" 1.0*"+xB,Operator.LE,0.0), prob);
+    public static void addImplicationConstraint(RealVariable xA, RealVariable xB, RealVariable l, MinimizationProblem prob) {
+//        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+l+" -1.0*"+xA+" 1.0*"+xB,Operator.LE,0.0), prob);
+        prob.addConstraint( leq( plus( l, xB ), xA ) );
     }
 
-    public static void addLBConstraint(Object x, Object l, Problem prob) {
-        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+x+" -1.0*"+l,Operator.GE,0), prob);
+    public static void addLBConstraint(RealVariable x, RealVariable l, MinimizationProblem prob) {
+//        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+x+" -1.0*"+l,Operator.GE,0), prob);
+        prob.addConstraint( geq( x, l ) );
     }
 
-    public static void addNumericLBConstraint(Object x, Number tau, Problem prob) {
-        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+x,Operator.GE,tau), prob);
+    public static void addNumericLBConstraint(RealVariable x, Number tau, MinimizationProblem prob) {
+//        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+x,Operator.GE,tau), prob);
+        prob.addConstraint( geq( x, tau.doubleValue() ) );
     }
 
-    public static void addUBConstraint(Object x, Object l, Problem prob) {
-        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+x+" +1.0*"+l,Operator.LE,1.0), prob);
+    public static void addUBConstraint(RealVariable x, RealVariable l, MinimizationProblem prob) {
+//        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+x+" +1.0*"+l,Operator.LE,1.0), prob);
+        prob.addConstraint( leq( x, minus(1.0, l) ) );
     }
 
-    public static void addNumericUBConstraint(Object x, Number phi, Problem prob) {
-        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+x,Operator.LE,phi), prob);
+    public static void addNumericUBConstraint(RealVariable x, Number phi, MinimizationProblem prob) {
+//        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+x,Operator.LE,phi), prob);
+        prob.addConstraint( leq( x, phi.doubleValue() ) );
     }
 
 
     // ( prop && klass ) <= father
-    public static void addExistConstraint(Object prop, Object klass, Object father, Problem prob) {
-        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+prop+" +1.0*"+klass+" -1.0*"+father,Operator.LE, 1), prob);
+    public static void addExistConstraint(RealVariable prop, RealVariable klass, RealVariable father, MinimizationProblem prob) {
+//        addUnique(ConstraintFactory.buildConstraint(" 1.0*"+prop+" +1.0*"+klass+" -1.0*"+father,Operator.LE, 1), prob);
+        prob.addConstraint( leq( plus( prop, klass ), plus( father, 1.0 ) ) );
     }
 
     // ( prop => klass ) >= father
-    public static void addForallConstraint(Object prop, Object klass, Object y, Object father, Problem prob) {
-        addUnique(ConstraintFactory.buildConstraint(" -1.0*"+father+" -1.0*"+prop+" +1.0*"+klass,Operator.GE,-1), prob);
+    public static void addForallConstraint(RealVariable prop, RealVariable klass, IntegerVariable y, RealVariable father, MinimizationProblem prob) {
+        RealVariable Y = newUnitIntervalVariable( "S"+y, prob );
+
+//        addUnique(ConstraintFactory.buildConstraint(" -1.0*"+father+" -1.0*"+prop+" +1.0*"+klass,Operator.GE,-1), prob);
+        prob.addConstraint( geq( klass, minus( plus( father, prop ), 1.0 ) ) );
     }
 
 
-    private static void addUnique(Constraint c, Problem prob) {
+    private static void addUnique( Constraint c, MinimizationProblem prob ) {
         // Constraint does not redefine equals :(
 
         //if (! prob.getConstraints().contains(c))
@@ -225,7 +241,7 @@ public class ConstraintFactory {
 //			if (con.toString().equals(c.toString()))
 //				return;
 //		}
-        prob.add(c);
+        prob.addConstraint( c );
 
     }
 

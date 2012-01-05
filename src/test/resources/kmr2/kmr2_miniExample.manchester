@@ -1,265 +1,280 @@
-Prefix: xsd:  <http://www.w3.org/2001/XMLSchema#>
-Prefix: xml:  <http://www.w3.org/XML/1998/namespace>
-Prefix: rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: xsd: <http://www.w3.org/2001/XMLSchema#>
+Prefix: kmr: <http://www.kmr.org/ontology/>
+Prefix: owl: <http://www.w3.org/2002/07/owl#>
+Prefix: xml: <http://www.w3.org/XML/1998/namespace>
+Prefix: rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: dc: <http://purl.org/dc/elements/1.1/>
 Prefix: rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-Prefix: kmr:  <http://www.kmr.org/ontology/>
 Prefix: skos: <http://www.w3.org/2004/02/skos/core#>
+
 
 
 Ontology: <http://www.kmr.org/ontology/>
 
 
-AnnotationProperty: <http://www.kmr.org/ontology/AboutFactType>
+AnnotationProperty: kmr:AboutFactType
 
-    Annotations:
+    Annotations: 
         rdfs:label "Fact about Facts"
-
-    Annotations:
+    
+    Annotations: 
         rdfs:label "Fact about Facts"
-
-    Range:
+    
+    Range: 
         <http://www.kmr.org/ontology/PhysicianFactType>
-
-
+    
+    
 AnnotationProperty: rdfs:label
 
-
+    
 AnnotationProperty: rdfs:comment
 
-
+    
 Datatype: rdf:PlainLiteral
 
-
+    
 Datatype: xsd:string
 
-
+    
 Datatype: xsd:dateTime
 
+    
+ObjectProperty: kmr:reaction
 
-ObjectProperty: <http://www.kmr.org/ontology/reaction>
-
-    Annotations:
+    Annotations: 
         rdfs:label "reaction"
-
-    Domain:
-        <http://www.kmr.org/ontology/ReactionFactType>
-
-    Range:
+    
+    Domain: 
+        kmr:ReactionFactType
+    
+    Range: 
         skos:Concept
+    
+    
+ObjectProperty: kmr:assertedBy
 
-
-ObjectProperty: <http://www.kmr.org/ontology/assertedBy>
-
-    Annotations:
+    Annotations: 
         rdfs:label "who asserted a Fact."
+    
+    Domain: 
+        kmr:AboutFactType
+    
+    Range: 
+        kmr:PersonFactType
+    
+    
+ObjectProperty: kmr:assertedWhere
 
-    Domain:
-        <http://www.kmr.org/ontology/AboutFactType>
-
-    Range:
-        <http://www.kmr.org/ontology/PersonFactType>
-
-
-ObjectProperty: <http://www.kmr.org/ontology/assertedWhere>
-
-    Annotations:
+    Annotations: 
         rdfs:label "where a Fact was asserted. (need location fact)"
+    
+    Domain: 
+        kmr:AboutFactType
+    
+    Range: 
+        kmr:Location
+    
+    
+ObjectProperty: kmr:product
 
-    Domain:
-        <http://www.kmr.org/ontology/AboutFactType>
-
-
-ObjectProperty: <http://www.kmr.org/ontology/product>
-
-    Annotations:
+    Annotations: 
         rdfs:label "product"
-
-    Domain:
-        <http://www.kmr.org/ontology/AllergyFactType>
-
-    Range:
+    
+    Domain: 
+        kmr:AllergyFactType
+    
+    Range: 
         skos:Concept
+    
+    
+ObjectProperty: kmr:allergyFactType
 
-
-ObjectProperty: <http://www.kmr.org/ontology/allergyFactType>
-
-    Annotations:
+    Annotations: 
         rdfs:label "allergy fact"
+    
+    Domain: 
+        kmr:ReactionFactType
+    
+    Range: 
+        kmr:AllergyFactType
+    
+    
+ObjectProperty: kmr:patientFactType
 
-    Domain:
-        <http://www.kmr.org/ontology/ReactionFactType>
-
-    Range:
-        <http://www.kmr.org/ontology/AllergyFactType>
-
-
-ObjectProperty: <http://www.kmr.org/ontology/patientFactType>
-
-    Annotations:
+    Annotations: 
         rdfs:label "patient (from patient id)"
+    
+    Domain: 
+        kmr:FactType
+    
+    Range: 
+        kmr:PatientFactType
+    
+    
+ObjectProperty: kmr:adverseEventType
 
-    Domain:
-        <http://www.kmr.org/ontology/FactType>
-
-    Range:
-        <http://www.kmr.org/ontology/PatientFactType>
-
-
-ObjectProperty: <http://www.kmr.org/ontology/adverseEventType>
-
-    Annotations:
+    Annotations: 
         rdfs:label "adverse event type"
-
-    Domain:
-        <http://www.kmr.org/ontology/AllergyFactType>
-
-    Range:
+    
+    Domain: 
+        kmr:AllergyFactType
+    
+    Range: 
         skos:Concept
+    
+    
+DataProperty: kmr:enteredWhen
 
-
-DataProperty: <http://www.kmr.org/ontology/enteredWhen>
-
-    Annotations:
+    Annotations: 
         rdfs:label "when a Fact was entered into an EHR."
-
-    Domain:
-        <http://www.kmr.org/ontology/AboutFactType>
-
-    Range:
+    
+    Domain: 
+        kmr:AboutFactType
+    
+    Range: 
         xsd:dateTime
+    
+    
+DataProperty: kmr:code
 
-
-DataProperty: <http://www.kmr.org/ontology/code>
-
-    Annotations:
+    Annotations: 
         rdfs:label "code (from code)"
-
-    Domain:
+    
+    Domain: 
         skos:Concept
-
-    Range:
+    
+    Range: 
         xsd:string
+    
+    
+DataProperty: kmr:assertedWhen
 
-
-DataProperty: <http://www.kmr.org/ontology/assertedWhen>
-
-    Annotations:
+    Annotations: 
         rdfs:label "when a Fact was asserted."
-
-    Domain:
-        <http://www.kmr.org/ontology/AboutFactType>
-
-    Range:
+    
+    Domain: 
+        kmr:AboutFactType
+    
+    Range: 
         xsd:dateTime
+    
+    
+DataProperty: kmr:sourceSystem
 
-
-DataProperty: <http://www.kmr.org/ontology/sourceSystem>
-
-    Annotations:
+    Annotations: 
         rdfs:label "what system a fact was taken from (need fact type)"
+    
+    Domain: 
+        kmr:AboutFactType
+    
+    Range: 
+        xsd:string
+    
+    
+DataProperty: kmr:patientName
 
-    Domain:
-        <http://www.kmr.org/ontology/AboutFactType>
-
-
-DataProperty: <http://www.kmr.org/ontology/patientName>
-
-    Annotations:
+    Annotations: 
         rdfs:comment "combination of blank node with family, middle etc. components",
         rdfs:label "patient name"
-
-    Domain:
-        <http://www.kmr.org/ontology/PatientFactType>
-
-    Range:
+    
+    Domain: 
+        kmr:PatientFactType
+    
+    Range: 
         xsd:string
+    
+    
+DataProperty: kmr:adverseEventDate
 
-
-DataProperty: <http://www.kmr.org/ontology/codeSystem>
-
-    Annotations:
-        rdfs:label "code system (from code system)"
-
-    Domain:
-        skos:Concept
-
-    Range:
-        xsd:string
-
-
-DataProperty: <http://www.kmr.org/ontology/adverseEventDate>
-
-    Annotations:
+    Annotations: 
         rdfs:label "adverse event date"
+    
+    Domain: 
+        kmr:AllergyFactType
+    
+    Range: 
+        xsd:dateTime
+    
+    
+DataProperty: kmr:codeSystem
 
-    Domain:
-        <http://www.kmr.org/ontology/AllergyFactType>
+    Annotations: 
+        rdfs:label "code system (from code system)"
+    
+    Domain: 
+        skos:Concept
+    
+    Range: 
+        xsd:string
+    
+    
+DataProperty: kmr:dateEntered
 
-
-DataProperty: <http://www.kmr.org/ontology/dateEntered>
-
-    Annotations:
+    Annotations: 
         rdfs:comment "synthesized to gather all similar properties and make VSN map easier",
         rdfs:label "date entered"
-
-    Domain:
-        <http://www.kmr.org/ontology/FactType>
-
-    Range:
+    
+    Domain: 
+        kmr:FactType
+    
+    Range: 
         xsd:dateTime
+    
+    
+Class: kmr:FactType
 
+    
+Class: kmr:PhysicianFactType
 
-Class: <http://www.kmr.org/ontology/FactType>
-
-
-Class: <http://www.kmr.org/ontology/PhysicianFactType>
-
-    Annotations:
+    Annotations: 
         rdfs:label "Physician Fact Type"
+    
+    SubClassOf: 
+        kmr:FactType
+    
+    
+Class: kmr:AboutFactType
 
-    SubClassOf:
-        <http://www.kmr.org/ontology/FactType>
-
-
-Class: <http://www.kmr.org/ontology/AboutFactType>
-
-    Annotations:
+    Annotations: 
         rdfs:label "Fact about Facts"
+    
+    SubClassOf: 
+        kmr:FactType
+    
+    
+Class: kmr:AllergyFactType
 
-    SubClassOf:
-        <http://www.kmr.org/ontology/FactType>
-
-
-Class: <http://www.kmr.org/ontology/AllergyFactType>
-
-    Annotations:
+    Annotations: 
         rdfs:label "Allergy Fact"
+    
+    SubClassOf: 
+        kmr:PhysicianFactType
+    
+    
+Class: kmr:Location
 
-    SubClassOf:
-        <http://www.kmr.org/ontology/PhysicianFactType>
+    
+Class: kmr:PersonFactType
 
-
-Class: <http://www.kmr.org/ontology/PersonFactType>
-
-
+    
 Class: skos:Concept
 
+    
+Class: kmr:ReactionFactType
 
-Class: <http://www.kmr.org/ontology/ReactionFactType>
-
-    Annotations:
+    Annotations: 
         rdfs:label "Reaction Fact"
+    
+    SubClassOf: 
+        kmr:PhysicianFactType
+    
+    
+Class: kmr:PatientFactType
 
-    SubClassOf:
-        <http://www.kmr.org/ontology/PhysicianFactType>
-
-
-Class: <http://www.kmr.org/ontology/PatientFactType>
-
-    Annotations:
+    Annotations: 
         rdfs:label "Patient Fact"
-
-    SubClassOf:
-        <http://www.kmr.org/ontology/FactType>
-
-
+    
+    SubClassOf: 
+        kmr:FactType
+    
+    

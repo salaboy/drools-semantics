@@ -17,8 +17,8 @@ then
 		t.setObject("@{target}");	
 		String ylab = t.getLabel();
  	 		
- 	Object x = ConstraintFactory.newUnitIntervalVariable("x_"+$xlab,$prob);
- 	Object y = ConstraintFactory.newUnitIntervalVariable("x_"+ylab,$prob);
+ 	RealVariable x = ConstraintFactory.newUnitIntervalVariable("x_"+$xlab,$prob);
+ 	RealVariable y = ConstraintFactory.newUnitIntervalVariable("x_"+ylab,$prob);
  	Degree d = new Degree(t,y);
  	
 	ConstraintFactory.addEqualityConstraint(x,y,$prob);								

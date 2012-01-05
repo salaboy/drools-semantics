@@ -16,7 +16,7 @@
 
 package org.drools.semantics.lang.dl;
 
-import net.sf.javailp.Problem;
+import choco.cp.model.CPModel;
 
 @Deprecated
 public class RecognitionTest implements DLTest {
@@ -25,13 +25,13 @@ public class RecognitionTest implements DLTest {
 	private String targetClass;
 	private boolean tau = true;
 	
-	private Problem problem;
+	private MinimizationProblem problem;
 	
 	
 
 	public RecognitionTest(Object subject, String tgtClass, boolean tau) {
 		super();
-		this.problem = new Problem();
+		this.problem = new MinimizationProblem();
 		this.setSubject(subject);
 		this.targetClass = tgtClass;		
 		this.tau = tau;
@@ -39,7 +39,7 @@ public class RecognitionTest implements DLTest {
 	
 	public RecognitionTest(Object subject, RecognitionGoal goal) {
 		super();
-		this.problem = new Problem();
+		this.problem = new MinimizationProblem();
 		this.setSubject(subject);
 		this.setTargetClass(goal.getTargetClass());		
 		this.tau = goal.isTau();
@@ -90,11 +90,11 @@ public class RecognitionTest implements DLTest {
 				+ targetClass + ", tau=" + tau + "]";
 	}
 
-	public Problem getProblem() {
+	public MinimizationProblem getProblem() {
 		return problem;
 	}
 
-	public void setProblem(Problem problem) {
+	public void setProblem(MinimizationProblem problem) {
 		this.problem = problem;
 	}
 

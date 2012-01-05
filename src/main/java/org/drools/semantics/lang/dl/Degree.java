@@ -1,16 +1,18 @@
 package org.drools.semantics.lang.dl;
 
+import choco.kernel.model.variables.real.RealVariable;
+
 @Deprecated
 public class Degree implements Cloneable {
 
 	private Object subject = null;
 	private Double tau = null;
 	private Double phi = null;
-	private Object value = null;
+	private RealVariable value = null;
 	
 	
 	
-	public Degree(Object subject, Double tau, Double phi, Object value) {
+	public Degree(Object subject, Double tau, Double phi, RealVariable value) {
 		super();
 		this.subject = subject;
 		this.tau = tau;
@@ -26,7 +28,7 @@ public class Degree implements Cloneable {
 		this(subject,tau,1.0,null);
 	}
 	
-	public Degree(Object subject, Object value) {
+	public Degree(Object subject, RealVariable value) {
 		this(subject,null,null,value);
 	}
 	
@@ -49,10 +51,10 @@ public class Degree implements Cloneable {
 	public void setPhi(Double phi) {
 		this.phi = phi;
 	}
-	public Object getValue() {
+	public RealVariable getValue() {
 		return value;
 	}
-	public void setValue(Object value) {
+	public void setValue(RealVariable value) {
 		this.value = value;
 	}
 
@@ -64,7 +66,7 @@ public class Degree implements Cloneable {
 		result = prime * result + ((phi == null) ? 0 : phi.hashCode());
 		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
 		result = prime * result + ((tau == null) ? 0 : tau.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.getName().hashCode());
 		return result;
 	}
 
@@ -96,7 +98,7 @@ public class Degree implements Cloneable {
 		if (value == null) {
 			if (other.value != null)
 				return false;
-		} else if (!value.equals(other.value))
+		} else if (!value.getName().equals(other.value.getName()))
 			return false;
 		return true;
 	}

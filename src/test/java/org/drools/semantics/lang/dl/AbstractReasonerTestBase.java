@@ -16,9 +16,7 @@
 
 package org.drools.semantics.lang.dl;
 
-import net.sf.javailp.Solver;
-import net.sf.javailp.SolverFactoryGLPK;
-import net.sf.javailp.SolverLpSolve;
+
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
 import org.drools.RuleBaseConfiguration;
@@ -61,7 +59,6 @@ public class AbstractReasonerTestBase {
             
 
     protected KnowledgeBase tableauKB;
-    protected static Solver solver;
     protected StatefulKnowledgeSession ksession;
     protected Object mock;
 
@@ -82,10 +79,6 @@ public class AbstractReasonerTestBase {
         OWLOntology ontologyDescr = factory.parseOntology( new ClassPathResource( DLfile ) );
         currentOntology = ontologyDescr;
         currentSource = DLfile;
-
-        // get solver...
-        solver = new SolverFactoryGLPK().get();
-        solver.setParameter(SolverLpSolve.VERBOSE,0);
 
 
         // compile tableau from DL...
@@ -129,7 +122,6 @@ public class AbstractReasonerTestBase {
     public void reinit() {
         // get session and provide solver
         ksession = tableauKB.newStatefulKnowledgeSession();
-        ksession.setGlobal("solver", solver);
         // just in case...
         ksession.fireAllRules();
 
@@ -180,8 +172,8 @@ public class AbstractReasonerTestBase {
             System.err.println(mock + " isA " + klass+ " >> [" + tau + " : " + phi + "]");
         }
 
-        assertEquals("delta_tau",tgtTau,tau.doubleValue(),1e-6);
-        assertEquals("delta_phi",tgtPhi,phi.doubleValue(),1e-6);
+        assertEquals("delta_tau",tgtTau,tau.doubleValue(),MinimizationProblem.precision);
+        assertEquals("delta_phi",tgtPhi,phi.doubleValue(),MinimizationProblem.precision);
     }
 
 
@@ -205,8 +197,8 @@ public class AbstractReasonerTestBase {
 //        for (Object o : ksession.getObjects())
 //            System.out.println(o);
 
-        assertEquals("delta_tau",tgtTau,tau.doubleValue(),1e-6);
-        assertEquals("delta_phi",tgtPhi,phi.doubleValue(),1e-6);
+        assertEquals("delta_tau",tgtTau,tau.doubleValue(),MinimizationProblem.precision);
+        assertEquals("delta_phi",tgtPhi,phi.doubleValue(),MinimizationProblem.precision);
 
     }
 

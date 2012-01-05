@@ -1,6 +1,7 @@
 package org.drools.semantics.lang.dl;
 
-import net.sf.javailp.Problem;
+
+import choco.cp.model.CPModel;
 
 @Deprecated
 public class SubsumptionTest implements DLTest {
@@ -9,11 +10,11 @@ public class SubsumptionTest implements DLTest {
 	private String subClass;
 	private boolean tau = true;
 	
-	private Problem problem;
+	private MinimizationProblem problem;
 
 	public SubsumptionTest(String subClass, String superClass, boolean tau) {
 		super();
-		this.problem = new Problem();
+		this.problem = new MinimizationProblem();
 		this.superClass = superClass;
 		this.subClass = subClass;
 		this.tau = tau;		
@@ -21,7 +22,7 @@ public class SubsumptionTest implements DLTest {
 	
 	public SubsumptionTest(SubsumptionGoal goal) {
 		super();
-		this.problem = new Problem();
+		this.problem = new MinimizationProblem();
 		this.superClass = goal.getSuperClass();
 		this.subClass = goal.getSubClass();
 		this.tau = goal.isTau();
@@ -55,12 +56,12 @@ public class SubsumptionTest implements DLTest {
 	}
 
 
-	public void setProblem(Problem problem) {
+	public void setProblem(MinimizationProblem problem) {
 		this.problem = problem;
 	}
 
 
-	public Problem getProblem() {
+	public MinimizationProblem getProblem() {
 		return problem;
 	}
 

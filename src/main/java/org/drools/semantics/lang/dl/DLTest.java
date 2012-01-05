@@ -1,10 +1,10 @@
 package org.drools.semantics.lang.dl;
 
-import net.sf.javailp.Problem;
+import choco.cp.model.CPModel;
 
 @Deprecated
 public interface DLTest {
 
-	public Problem getProblem();
-	
+	public MinimizationProblem getProblem();
+
 }

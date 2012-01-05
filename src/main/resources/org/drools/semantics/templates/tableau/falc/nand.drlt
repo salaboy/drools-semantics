@@ -15,7 +15,7 @@ then
 //	System.out.println(" Rule NAND ** @{id} -> @{children} ************ " );
 
 	String[] klazz = new String[] { @foreach{ child : children } "@{negate( child )}" @end{','} };
-	Object[] vars = new Object[klazz.length];
+	RealVariable[] vars = new RealVariable[klazz.length];
 		
 	for (int j = 0; j < klazz.length; j++) {
  		HypoType t = new HypoType( $x, klazz[j], false, $test );
@@ -28,7 +28,7 @@ then
 		insertLogical( d );
 	}
 		
-	Object y = ConstraintFactory.newBooleanVariable( "y_@{id}", $prob);
+	IntegerVariable y = ConstraintFactory.newBooleanVariable( "y_@{id}", $prob);
 	ConstraintFactory.addOrConstraint( vars, y, $l, $prob );
 end
 

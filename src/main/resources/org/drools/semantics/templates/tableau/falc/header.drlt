@@ -3,44 +3,23 @@
 package org.drools.semantics.lang.dl;
 
 
-import net.sf.javailp.*; 
+
 import java.util.Arrays;
-import net.sf.javailp.Problem;
 import java.util.*;
-import net.sf.javailp.Solver;
-import net.sf.javailp.Problem;
-import net.sf.javailp.SolverFactoryGLPK;
 import org.drools.KnowledgeBase;
 import java.util.List;
 import org.drools.runtime.StatefulKnowledgeSession;
-import net.sf.javailp.Result;
-import net.sf.javailp.Solver;
+import choco.cp.solver.CPSolver;
+import choco.cp.model.CPModel;
+import choco.kernel.model.variables.*;
+import choco.kernel.model.variables.real.RealVariable;
+import choco.kernel.model.variables.integer.IntegerVariable;
 
 
 
 // All tableau rules have negative salience!
 
-global Solver solver;
 
-
-function Object initProblem(Problem prob) {
-	// Target : minimize X
-	// 1-X is the NECessity of neg C	(C is the target class)
-	// min X <=> maximize NEC --C
-	// NEC --C <==> 1 - POSsibility of C
-	// so, minimizing POS C
-	// which is the best value for NEC C 	
-	Object X = ConstraintFactory.newUnitIntervalVariable("X",prob);
-	Linear objective = ConstraintFactory.buildLinear( " 1.0*" + X );
-	prob.setOptimizationType(OptType.MIN);
-	prob.setObjective(objective);
-	
-	// can't have a degree with 1-X ?
-	// just switch : nX == 1 - X
-	Object Xneg = ConstraintFactory.newUnitIntervalVariable("nX",prob);
-	ConstraintFactory.addComplementConstraint(X,Xneg,prob);	
-	return Xneg;
-}
 
 query "q_mock" ( String mid )
 	$m : Mock ( id == mid)
@@ -74,7 +53,7 @@ when
 then
 	System.out.println("About to solve rec goal : " + $test);
 	
-	Object Xneg = initProblem($prob);
+	RealVariable Xneg = $prob.getXNeg();
 	
 	HypoType type = new HypoType($subj, $klass, $tau, $test);	//negated!
 	Degree deg = new Degree(type, Xneg );
@@ -97,25 +76,32 @@ when
 	$test : SubsumptionTest( $sub : subClass, $sup : superClass != $sub, 
 							 $prob : problem , $tau : tau )
 then
-	System.out.println("About to solve sub goal : " + $test);
+//	System.out.println("About to solve sub goal : " + $test);
 	
-	Object Xneg = initProblem($prob);
+	RealVariable Xneg = $prob.getXNeg();
 	Mock mock = new Mock("M");
 	
 	
 	HypoType typeA = new HypoType(mock, $sub, false, $test);	//positive!?
 	HypoType typeB = new HypoType(mock, $sup, false, $test);	//positive!?	
 	
-	Object xB = ConstraintFactory.newBooleanVariable("x_"+typeB.getLabel(),$prob);
-	Object xA = ConstraintFactory.newBooleanVariable("x_"+typeA.getLabel(),$prob);
-		
-	System.out.println(xA + " vs " + xB + " // " + $tau);
-	
-	Constraint c;
+//	IntegerVariable xB = ConstraintFactory.newBooleanVariable("x_"+typeB.getLabel(),$prob);
+//	IntegerVariable xA = ConstraintFactory.newBooleanVariable("x_"+typeA.getLabel(),$prob);
+
+//	RealVariable xB = ConstraintFactory.newBooleanRealVariable("x_"+typeB.getLabel(),$prob);
+//    RealVariable xA = ConstraintFactory.newBooleanRealVariable("x_"+typeA.getLabel(),$prob);
+
+    RealVariable xB = ConstraintFactory.newUnitIntervalVariable("x_"+typeB.getLabel(),$prob);
+    RealVariable xA = ConstraintFactory.newUnitIntervalVariable("x_"+typeA.getLabel(),$prob);
+
+
+//	System.out.println(xA + " vs " + xB + " // " + $tau);
+
 		if ($tau) {
 			ConstraintFactory.addImplicationConstraint(xA,xB,Xneg,$prob);
 		} else {
-		    Object xNA = ConstraintFactory.newBooleanVariable("xN_"+typeA.getLabel(),$prob);
+//		    RealVariable xNA = ConstraintFactory.newBooleanRealVariable("xN_"+typeA.getLabel(),$prob);
+            RealVariable xNA = ConstraintFactory.newUnitIntervalVariable("xN_"+typeA.getLabel(),$prob);
 		    ConstraintFactory.addComplementConstraint(xA,xNA,$prob);
 		 	ConstraintFactory.addImplicationConstraint(xB,xNA,Xneg,$prob);
 		}
@@ -158,9 +144,9 @@ when
 	$type : HypoType( goal == $test , $xlab : label , $s : subject , $o : object, negated==false)	
 	$degr : Degree( subject == $type , $l : value != null ) 
 then
-//	System.out.println(" Rule Type 1 " + $l);
+	System.out.println(" Rule Type 1 " + $l);
 		
-	Object x = ConstraintFactory.newUnitIntervalVariable("x_"+$xlab,$prob);
+	RealVariable x = ConstraintFactory.newUnitIntervalVariable("x_"+$xlab,$prob);
 	if (! x.equals($l)) {
 		ConstraintFactory.addLBConstraint(x,$l,$prob);
 	}
@@ -175,9 +161,9 @@ when
 	$type : HypoType( goal == $test , $xlab : label , negated == true )
 	$degr : Degree( subject == $type , $l : value != null )
 then
-//	System.out.println(" Rule Type 2 : --A" + $type + " // " + $l);
+	System.out.println(" Rule Type 2 : --A" + $type + " // " + $l);
 		
-	Object x = ConstraintFactory.newUnitIntervalVariable("x_"+$xlab,$prob);
+	RealVariable x = ConstraintFactory.newUnitIntervalVariable("x_"+$xlab,$prob);
 	if (! x.equals($l)) {
 		ConstraintFactory.addUBConstraint(x,$l,$prob);		
 	}
@@ -202,8 +188,8 @@ then
 		$tau = $tau - 1e-6;
 	}	
 		
-	Object v1 = ConstraintFactory.newUnitIntervalVariable("nX_"+$xlab,1.0-$phi,1.0-$tau,$prob);
-	Object v2 =	ConstraintFactory.newUnitIntervalVariable("x_"+$xlab,$tau,$phi,$prob);
+	RealVariable v1 = ConstraintFactory.newUnitIntervalVariable("nX_"+$xlab,1.0-$phi,1.0-$tau,$prob);
+	RealVariable v2 =	ConstraintFactory.newUnitIntervalVariable("x_"+$xlab,$tau,$phi,$prob);
 	ConstraintFactory.addComplementConstraint(v2,v1,$prob);
 
 end
@@ -249,12 +235,7 @@ then
 //	System.out.println($p);
 //	System.out.println("-----------------------------------------------------------");
 
-	Result res = solver.solve($p);
-    if (res == null) {
-        System.out.println("ERROR" + $p);
-    	System.exit(-44);
-    	}
-	Number x = res.getObjective();
+    double x = $p.solve( );
 
 //	System.out.println(res);
 //	System.out.println("-----------------------------------------------------------" +$sub + " vs " + $sup );
@@ -262,9 +243,9 @@ then
 	SubClassOf sc = new SubClassOf($sub,$sup);
 	Degree deg;
 	if ($tau == true) {
-		deg = new Degree(sc,x.doubleValue(),1.0);
+		deg = new Degree( sc, x, 1.0 );
 	} else {
-	    deg = new Degree(sc,0.0,1.0-x.doubleValue());
+	    deg = new Degree( sc, 0.0, 1.0 - x );
 //		deg = new Degree(sc,0.0,x.doubleValue());
     }
 
@@ -290,19 +271,21 @@ then
 //	System.out.println($p);
 //	System.out.println("-----------------------------------------------------------");
 
-	Result res = solver.solve($p);
+
+    double x = $p.solve( );
 	
 	
 //	System.out.println(res);
 //	System.out.println("-----------------------------------------------------------");
 	
-	Number x = res.getObjective();
+
+
 	Type type = new Type($sub,$tgt);
 	Degree deg;
 	if ($tau == true)
-		deg = new Degree(type,x.doubleValue(),1.0);
+		deg = new Degree( type, x ,1.0 );
 	else	
-		deg = new Degree(type,0.0,1.0-x.doubleValue());
+		deg = new Degree( type, 0.0, 1.0 - x );
 
 
 

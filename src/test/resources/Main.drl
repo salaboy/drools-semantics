@@ -109,7 +109,7 @@ when
 then
 	System.err.println("Is " + $mock + " a PHI member of klass <<" + $tgtClass + ">> ?? ");
 	retract($goal);
-		
+
 	RecognitionTest testNeg = new RecognitionTest($mock, $goal.negate());
 	insert(testNeg);
 end

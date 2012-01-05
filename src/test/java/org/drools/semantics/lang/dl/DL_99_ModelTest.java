@@ -27,33 +27,42 @@ import org.drools.semantics.builder.model.*;
 import org.drools.semantics.builder.model.compilers.ModelCompiler;
 import org.drools.semantics.builder.model.compilers.ModelCompilerFactory;
 import org.drools.semantics.util.SemanticWorkingSetConfigData;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.TemporaryFolder;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
 
 
-/**
- * This is a sample class to launch a rule.
- */
+
 @SuppressWarnings("restriction")
-public class DL_99_KMRModelTest {
+public class DL_99_ModelTest {
 
 
 
     protected DLFactory factory = DLFactoryBuilder.newDLFactoryInstance();
 
     @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    public static TemporaryFolder folder;
+
+    @BeforeClass
+    public static void construct() {
+        folder = new TemporaryFolder();
+    }
+
+    @AfterClass
+    public static void destruct() {
+        folder.delete();
+    }
 
 
     @Test
-    public void testDRLModelGeneration() {
-        String source = "kmr2/kmr2_miniExample.manchester";
+    @Ignore // upgrade after refactor
+    public void testDRLModelGenerationInternal() {
+        String source = "kmr2" + File.separator + "kmr2_miniExample.manchester";
         Resource res = ResourceFactory.newClassPathResource( source );
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
@@ -72,7 +81,7 @@ public class DL_99_KMRModelTest {
         System.err.println( jarModel.save( "gen-sources" ) );
 
         try {
-            FileOutputStream fos = new FileOutputStream("gen-sources/test.jar");
+            FileOutputStream fos = new FileOutputStream( folder.newFile( "test.jar" ) );
             byte[] content = jarModel.buildJar().toByteArray();
 
             fos.write( content, 0, content.length );
@@ -91,9 +100,50 @@ public class DL_99_KMRModelTest {
 
 
     @Test
+    public void testDRLModelGenerationExternal() {
+        String source = "kmr2" + File.separator + "kmr2_miniExample.manchester";
+        Resource res = ResourceFactory.newClassPathResource( source );
+        KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
+        StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
+
+        factory.setInferenceStrategy( DLFactory.INFERENCE_STRATEGY.EXTERNAL );
+        OntoModel results = factory.buildModel( "kmr2mini", res, kSession );
+
+        ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.DRL );
+        DRLModel drlModel = (DRLModel) compiler.compile( results );
+
+        System.err.println( drlModel.getDRL() );
+
+
+        ModelCompiler jcompiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.JAR );
+        JarModel jarModel = (JarModel) jcompiler.compile( results );
+
+        System.err.println( jarModel.save( "gen-sources" ) );
+
+        try {
+            FileOutputStream fos = new FileOutputStream( folder.newFile( "test.jar" ) );
+            byte[] content = jarModel.buildJar().toByteArray();
+
+            fos.write( content, 0, content.length );
+            fos.flush();
+            fos.close();
+        } catch ( IOException e ) {
+            fail( e.getMessage() );
+        }
+
+
+
+        System.err.println( results );
+
+    }
+
+
+
+    @Test
+    @Ignore //visualization test
     public void testGraphModelGeneration() {
 //        String source = "org/drools/semantics/lang/dl/kmr2_miniExample.manchester";
-        String source = "kmr2/Kmr2.ttl";
+        String source = "kmr2" + File.separator + "KMR_OntologyLatest.manchester.owl";
         Resource res = ResourceFactory.newClassPathResource( source );
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
@@ -125,7 +175,7 @@ public class DL_99_KMRModelTest {
 
     @Test
     public void testXSDModelGeneration() {
-        String source = "kmr2/kmr2_miniExample.manchester";
+        String source = "kmr2" + File.separator + "kmr2_miniExample.manchester";
         Resource res = ResourceFactory.newClassPathResource( source );
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
@@ -146,7 +196,7 @@ public class DL_99_KMRModelTest {
 
     @Test
     public void testXSDExternalModelGeneration() {
-        String source = "kmr2/kmr2_miniExample.manchester";
+        String source = "kmr2" + File.separator + "kmr2_miniExample.manchester";
         Resource res = ResourceFactory.newClassPathResource(source);
 
         OntoModel results = factory.buildModel( "kmr2mini", res );
@@ -165,7 +215,7 @@ public class DL_99_KMRModelTest {
 
     @Test
     public void testWorkingSetModelGeneration() {
-        String source = "kmr2/kmr2_miniExample.manchester";
+        String source = "kmr2" + File.separator + "kmr2_miniExample.manchester";
         Resource res = ResourceFactory.newClassPathResource( source );
 
         OntoModel results = factory.buildModel( "kmr2mini", res );
@@ -182,8 +232,8 @@ public class DL_99_KMRModelTest {
 
 
     @Test
-    public void testFullXSDModelGeneration() {
-        String source = "kmr2/KMR_OntologyLatest.manchester.owl";
+    public void testFullKMR2XSDModelGeneration() {
+        String source = "kmr2" + File.separator + "KMR_OntologyLatest.manchester.owl";
         Resource res = ResourceFactory.newClassPathResource( source );
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
@@ -196,16 +246,16 @@ public class DL_99_KMRModelTest {
         ModelCompiler jcompiler =  ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.JAR );
         JarModel jarModel = (JarModel) jcompiler.compile( results );
 
-//        try {
-//            FileOutputStream fos = new FileOutputStream("/home/davide/Projects/KMR2/workspace/Factz/lib/kmr2.jar");
-//            byte[] content = jarModel.buildJar().toByteArray();
-//
-//            fos.write( content, 0, content.length );
-//            fos.flush();
-//            fos.close();
-//        } catch ( IOException e ) {
-//            fail( e.getMessage() );
-//        }
+        try {
+            FileOutputStream fos = new FileOutputStream( folder.newFile( "kmr2.jar" ) );
+            byte[] content = jarModel.buildJar().toByteArray();
+
+            fos.write( content, 0, content.length );
+            fos.flush();
+            fos.close();
+        } catch ( IOException e ) {
+            fail( e.getMessage() );
+        }
 
 
         /**************************************************************************************************************/
@@ -220,24 +270,24 @@ public class DL_99_KMRModelTest {
 
 
 
-//        try {
-//            FileOutputStream fos = new FileOutputStream("/home/davide/Projects/KMR2/workspace/Factz/src/main/resources/kmr2.xsd");
-//            xsdModel.stream( fos );
-//            fos.flush();
-//            fos.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        try {
-//            FileOutputStream fos = new FileOutputStream("/home/davide/Projects/KMR2/workspace/Factz/src/main/resources/bindings.xjb");
-//            xsdModel.streamBindings( fos );
-//            fos.flush();
-//            fos.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            FileOutputStream fos = new FileOutputStream( folder.newFile( "kmr2.xsd" ) );
+            xsdModel.stream( fos );
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            FileOutputStream fos = new FileOutputStream( folder.newFile("bindings.xjb") );
+            xsdModel.streamBindings( fos );
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -263,8 +313,8 @@ public class DL_99_KMRModelTest {
         results.flatten();
 
         ModelCompiler compiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.XSDX );
-                compiler.setMode(ModelCompiler.Mode.FLAT);
-                SemanticXSDModel xsdModel = (SemanticXSDModel) compiler.compile( results );
+        compiler.setMode(ModelCompiler.Mode.FLAT);
+        SemanticXSDModel xsdModel = (SemanticXSDModel) compiler.compile( results );
 
 
 
