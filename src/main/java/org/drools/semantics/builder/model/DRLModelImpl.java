@@ -16,12 +16,6 @@
 
 package org.drools.semantics.builder.model;
 
-import org.drools.semantics.builder.DLTemplateManager;
-import org.drools.semantics.builder.model.compilers.ModelCompilerFactory;
-import org.mvel2.templates.CompiledTemplate;
-import org.mvel2.templates.TemplateRegistry;
-import org.mvel2.templates.TemplateRuntime;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;

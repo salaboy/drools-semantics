@@ -26,10 +26,12 @@ import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.semantics.model.domain.*;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static junit.framework.Assert.*;
-import static junit.framework.Assert.assertEquals;
 
 public class TestTraits {
 

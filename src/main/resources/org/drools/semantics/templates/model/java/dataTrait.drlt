@@ -22,9 +22,11 @@ package @{package};
 
 import com.clarkparsia.empire.annotation.Namespaces;
 import com.clarkparsia.empire.annotation.RdfProperty;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.Transient;
 
 // @{iri}
-@Namespaces({ "tns", "http://@{package}#" })
+//@Namespaces({ "tns", "http://@{package}#" })
 public interface @{name}__Datatype extends com.clarkparsia.empire.SupportsRdfId
 {
   @if{ properties.size > 0 }    @foreach{ propKey : properties.keySet }
@@ -34,6 +36,8 @@ public interface @{name}__Datatype extends com.clarkparsia.empire.SupportsRdfId
     @if{ prop.restricted == true }
     // @{prop.property}   --    @{prop.maxCard}   --- @{prop.name}
     @RdfProperty("tns:@{prop.name}")
+    //@Transient
+    //@XmlTransient
     public
         @if{ prop.maxCard == 1 }
             @{ map( prop.target.name, false ) }@if{ !prop.target.primitive }__Type@end{}

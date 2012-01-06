@@ -20,21 +20,15 @@ import org.drools.io.ResourceFactory;
 import org.drools.semantics.builder.DLTemplateManager;
 import org.drools.semantics.builder.DLUtils;
 import org.drools.semantics.builder.model.*;
-import org.jdom.Element;
+import org.mvel2.templates.CompiledTemplate;
 import org.mvel2.templates.TemplateRegistry;
 import org.mvel2.templates.TemplateRuntime;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.charset.Charset;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class SemanticXSDModelCompilerImpl extends XSDModelCompilerImpl implements SemanticXSDModelCompiler {
 
@@ -61,8 +55,11 @@ public class SemanticXSDModelCompilerImpl extends XSDModelCompilerImpl implement
 
     private TemplateRegistry registry = DLTemplateManager.getDataModelRegistry( ModelFactory.CompileTarget.XSDX );
 
-    private String semGetterTemplateName = "semGetter.drlt";
-    private String semSetterTemplateName = "semSetter.drlt";
+    protected static final String semGetterTemplateName = "semGetter.drlt";
+    protected static final String semSetterTemplateName = "semSetter.drlt";
+
+    private static CompiledTemplate gettt;
+    private static CompiledTemplate settt;
 
     @Override
     public CompiledOntoModel compile(OntoModel model) {
@@ -86,16 +83,16 @@ public class SemanticXSDModelCompilerImpl extends XSDModelCompilerImpl implement
 
             String template = readFile( "bindings.xjb.template" );
             Map<String,Object> vars = new HashMap<String,Object>();
-                vars.put( "package", getModel().getPackage() );
-                vars.put( "concepts", getModel().getConcepts() );
-                vars.put( "flat", this.getCurrentMode().equals( Mode.FLAT ) );
-                vars.put( "properties", propCache );
-                vars.put( "modelName", getModel().getName() );
-                vars.put( "extraCode", prepareCodeExtensions( sxsdModel ) );
+            vars.put( "package", getModel().getPackage() );
+            vars.put( "concepts", getModel().getConcepts() );
+            vars.put( "flat", this.getCurrentMode().equals( Mode.FLAT ) );
+            vars.put( "properties", propCache );
+            vars.put( "modelName", getModel().getName() );
+            vars.put( "extra_code", prepareCodeExtensions( sxsdModel ) );
             String bindings = TemplateRuntime.eval( template, vars ).toString();
 
 
-//            System.out.println( bindings );
+            System.out.println( vars.get("extra_code") );
             return bindings;
         } catch ( IOException ioe ) {
             ioe.printStackTrace();
@@ -107,30 +104,80 @@ public class SemanticXSDModelCompilerImpl extends XSDModelCompilerImpl implement
         Map<String,String> code = new HashMap<String, String>( sxsdModel.getConcepts().size() );
         for ( Concept con : sxsdModel.getConcepts() ) {
             StringBuilder sb = new StringBuilder("");
-            
+
             for ( String propKey : con.getProperties().keySet() ) {
                 PropertyRelation prop = con.getProperties().get( propKey );
                 if ( prop.isRestricted() ) {
 
-                    sb.append("\n").append("\t public void ");
+                    boolean isCollection = prop.getMaxCard() == null || prop.getMaxCard() > 1;
+                    boolean isBaseCollection = prop.getBaseProperty().getMaxCard() == null || prop.getBaseProperty().getMaxCard() > 1;
+                    String typeName = DLUtils.map( prop.getTarget().getName(), false) + ( ! prop.getTarget().isPrimitive() ? "__Type" : "" );
+                    boolean isSimpleBoolean = prop.getTarget().getName().equals("xsd:boolean") && ! isCollection;
+                    boolean isBaseSimpleBoolean = prop.getBaseProperty().getTarget().getName().equals("xsd:boolean") && ! isBaseCollection;
+
+                    String getter = ((isSimpleBoolean && ! isCollection) ? "is" : "get") + DLUtils.compactUpperCase(prop.getName());
+                    String setter = "set" + DLUtils.compactUpperCase(prop.getName());
+                    String baseGetter = ((isBaseSimpleBoolean && ! isBaseCollection) ? "is" : "get") + DLUtils.compactUpperCase( prop.getBaseProperty().getName() );
+                    String baseSetter = "set" + DLUtils.compactUpperCase( prop.getBaseProperty().getName() );
+
+                    Map<String,Object> vars = new HashMap<String, Object>();
+                    vars.put( "isCollection", isCollection );
+                    vars.put( "typeName", typeName );
+                    vars.put( "isSimpleBoolean", isSimpleBoolean );
+                    vars.put( "getter", getter );
+                    vars.put( "setter", setter );
+                    vars.put( "base", prop.getBaseProperty() );
+                    vars.put( "isBaseCollection", isBaseCollection );
+                    vars.put( "isBaseSimpleBoolean", prop.getTarget().getName().equals("xsd:boolean") && ! isCollection );
+                    vars.put( "baseGetter", baseGetter );
+                    vars.put( "baseSetter", baseSetter );
+                    vars.put( "min", prop.getMinCard() );
+                    vars.put( "max", prop.getMaxCard() );
+
+
+                    String getProperty = TemplateRuntime.execute( getGetterTemplate(), DLUtils.getInstance(), vars ).toString();
+
+                    sb.append( getProperty );
+
+                    String setProperty = TemplateRuntime.execute( getSetterTemplate(), DLUtils.getInstance(), vars ).toString();
+
+                    sb.append( setProperty );
+
                 }
             }
-            
+            // TODO The approach I was hoping to adopt does not work with some persistency frameworks. Need to adopt the dual one
+            // code.put( con.getName(), sb.toString() );
+            code.put( con.getName(), "" );
         }
         return code;
     }
 
 
+
+    protected CompiledTemplate getGetterTemplate() {
+        if ( gettt == null ) {
+            gettt = DLTemplateManager.getDataModelRegistry( ModelFactory.CompileTarget.XSDX ).getNamedTemplate( semGetterTemplateName );
+        }
+        return gettt;
+    }
+
+    protected CompiledTemplate getSetterTemplate() {
+        if ( settt == null ) {
+            settt = DLTemplateManager.getDataModelRegistry( ModelFactory.CompileTarget.XSDX ).getNamedTemplate( semSetterTemplateName );
+        }
+        return settt;
+    }
+
     private static String readFile(String name) throws IOException {
         String fullPath = SemanticXSDModelCompiler.class.getPackage().getName().replace(".",File.separator)
-                        + File.separatorChar
-                        + name;
-        
+                + File.separatorChar
+                + name;
+
         InputStream stream = ResourceFactory.newClassPathResource( fullPath ).getInputStream();
         try {
-              byte[] data = new byte[ stream.available() ];
-              stream.read(data);
-              return new String( data );
+            byte[] data = new byte[ stream.available() ];
+            stream.read(data);
+            return new String( data );
         }
         finally {
             stream.close();

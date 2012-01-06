@@ -19,29 +19,73 @@
 
 
 @declare{'semGetter'}
-    @code{ typeName = map( target.name, false ); if( ! target.primitive ) typeName += "__Type"; }
 
+    // signature
+    //@Transient
+    //@javax.xml.bind.annotation.XmlTransient
     public
-        @if{ maxCard == 1 }
-            @{ typeName }
-        @else{}
-            java.util.List<@{ typeName }>
+        @if{ ! isCollection }  @{ typeName }
+        @else{}                java.util.List<@{ typeName }>
         @end{}
+            @{ getter }() {
 
-        @if{ target.name.equals("xsd:boolean") && maxCard == 1 }
-            is@{ compactUpperCase( name ) }() {
-        @else{}
-            get@{ compactUpperCase( name ) }() {
-        @end{}
-
-        @if{ maxCard == 1 }
+        //return value
+        @if{ ! isCollection }
             @{ typeName } ans = null;
         @else{}
-            java.util.List<@{ typeName }> = new java.util.ArrayList<@{ typeName }>
+            java.util.List<@{ typeName }> ans = new java.util.ArrayList<@{ typeName }>();
+        @end{}
+
+        @if{ max == null || max > 0 }
+        // get what we can
+        @if{ ! isCollection }
+           // we need to fill in one item at most
+           @if{ isBaseCollection }
+               for ( Object o : @{baseGetter}() ) {
+                   if ( o instanceof @{typeName} ) { ans = (@{typeName}) o; }
+                   break;
+               }
+           @else{}
+             if ( @{baseGetter}() instanceof @{typeName} ) { ans = (@{typeName}) @baseGetter(); }
+           @end{}
+        @else{}
+            // we need to find as many items
+           @if{ isBaseCollection }
+               for ( Object o : @{baseGetter}() ) {
+                   if ( o instanceof @{typeName} ) { ans.add( (@{typeName}) o ); }
+               }
+           @else{}
+               if ( @{baseGetter}() instanceof @{typeName} ) { ans.add( (@{typeName}) @baseGetter() ); }
+           @end{}
+        @end{}
+
+
+        @if{ max == 1 && ! isCollection }
+            if ( ans == null ) {
+                ans = @{ skolem( typeName ) };
+            }
+        @else{}
+            @if{ isCollection }
+               if ( ans.size() < @{ min } ) {
+                  int base = ans.size();
+                  for ( int j = base; j <= @{ min }; j++ ) {
+                        ans.add( @{ skolem( typeName ) } );
+                  }
+               }
+            @end{}
+            @if{ isCollection and max != null }
+               if ( ans.size() > @{ max } ) {
+                   throw new RuntimeException(" TODO : Semantic Inconsistency, found " + ans.size() + " @{typeName} when up to @{max} were expected" );
+               }
+            @end{}
         @end{}
 
 
 
+
+        @end{}
+        return ans;
+    //method ends here
     }
 @end{}
 

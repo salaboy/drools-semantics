@@ -86,10 +86,6 @@ private static Logger log;
         test_ontology("DLex03.manchester");
 	}
 
-    @Test
-	public void test_ontology3() {
-		test_ontology("DLex3.manchester");
-	}
 
     @Test
 	public void test_ontolog5() {

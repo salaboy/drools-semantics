@@ -18,8 +18,6 @@ package org.drools.semantics.util;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class SemanticWorkingSetConfigData implements Serializable {

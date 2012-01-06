@@ -16,8 +16,6 @@
 
 package org.drools.semantics.builder.model;
 
-import org.drools.lang.descr.VariableDescr;
-
 import java.util.Set;
 
 public interface CompiledOntoModel extends OntoModel {

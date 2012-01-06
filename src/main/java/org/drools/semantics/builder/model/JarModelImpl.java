@@ -17,7 +17,9 @@
 package org.drools.semantics.builder.model;
 
 import java.io.ByteArrayOutputStream;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;

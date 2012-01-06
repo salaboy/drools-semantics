@@ -16,16 +16,8 @@
 
 package org.drools.semantics.builder.model.inference;
 
-import net.sf.javailp.Solver;
-import net.sf.javailp.SolverFactoryGLPK;
-import net.sf.javailp.SolverLpSolve;
-import org.drools.KnowledgeBase;
-import org.drools.builder.KnowledgeBuilder;
-import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.io.Resource;
-import org.drools.io.impl.BaseResource;
 import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.semantics.builder.model.ModelFactory;
 import org.drools.semantics.builder.model.OntoModel;
 import org.semanticweb.owlapi.model.OWLOntology;
 

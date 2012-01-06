@@ -20,7 +20,6 @@ import org.drools.semantics.builder.DLUtils;
 import org.drools.semantics.builder.model.CompiledOntoModel;
 import org.drools.semantics.builder.model.Concept;
 import org.drools.semantics.builder.model.OntoModel;
-import org.drools.semantics.builder.model.PropertyRelation;
 
 import java.util.HashMap;
 import java.util.Map;

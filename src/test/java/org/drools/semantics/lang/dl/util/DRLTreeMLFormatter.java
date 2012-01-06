@@ -31,17 +31,16 @@ package org.drools.semantics.lang.dl.util;/*
  */
 
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
-
 import prefuse.data.Graph;
 import prefuse.data.Node;
 import prefuse.data.io.DataIOException;
 import prefuse.data.io.TreeMLWriter;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 public class DRLTreeMLFormatter {
 		

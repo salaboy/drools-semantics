@@ -16,8 +16,6 @@
 
 package org.drools.semantics.builder.model.compilers;
 
-import java.io.ByteArrayOutputStream;
-
 public interface JarInterfaceModelCompiler extends ModelCompiler {
 
 

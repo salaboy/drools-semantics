@@ -16,28 +16,6 @@
 
 package org.drools.semantics.lang.dl.util;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
-import java.io.InputStream;
-
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
-
 import prefuse.Constants;
 import prefuse.Display;
 import prefuse.Visualization;
@@ -55,11 +33,7 @@ import prefuse.action.filter.FisheyeTreeFilter;
 import prefuse.action.layout.CollapsedSubtreeLayout;
 import prefuse.action.layout.graph.NodeLinkTreeLayout;
 import prefuse.activity.SlowInSlowOutPacer;
-import prefuse.controls.ControlAdapter;
-import prefuse.controls.FocusControl;
-import prefuse.controls.PanControl;
-import prefuse.controls.ZoomControl;
-import prefuse.controls.ZoomToFitControl;
+import prefuse.controls.*;
 import prefuse.data.Tree;
 import prefuse.data.Tuple;
 import prefuse.data.event.TupleSetListener;
@@ -74,10 +48,16 @@ import prefuse.render.ShapeRenderer;
 import prefuse.util.ColorLib;
 import prefuse.util.FontLib;
 import prefuse.util.ui.JFastLabel;
-import prefuse.util.ui.JSearchPanel;
 import prefuse.visual.VisualItem;
 import prefuse.visual.expression.InGroupPredicate;
 import prefuse.visual.sort.TreeDepthItemSorter;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+import java.io.InputStream;
 
 
 /**

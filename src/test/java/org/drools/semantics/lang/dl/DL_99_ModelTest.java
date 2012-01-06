@@ -78,7 +78,7 @@ public class DL_99_ModelTest {
         ModelCompiler jcompiler = ModelCompilerFactory.newModelCompiler( ModelFactory.CompileTarget.JAR );
         JarModel jarModel = (JarModel) jcompiler.compile( results );
 
-        System.err.println( jarModel.save( "gen-sources" ) );
+        assertTrue( jarModel.save( folder.getRoot().getAbsolutePath() ) );
 
         try {
             FileOutputStream fos = new FileOutputStream( folder.newFile( "test.jar" ) );
@@ -233,7 +233,7 @@ public class DL_99_ModelTest {
 
     @Test
     public void testFullKMR2XSDModelGeneration() {
-        String source = "kmr2" + File.separator + "KMR_OntologyLatest.manchester.owl";
+        String source = "kmr2" + File.separator + "kmr2_miniExample.manchester";
         Resource res = ResourceFactory.newClassPathResource( source );
         KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
         StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
@@ -385,8 +385,8 @@ public class DL_99_ModelTest {
         assertTrue( checkProperty( ironInst, pack, "involvesLabourer", "Labourer", 2, null ) );
         assertTrue( checkProperty( ironInst, pack, "requires", "Equipment", 0, null ) );
 
-        assertTrue( checkProperty( wallRais, pack, "involves", "Mason", 3, null ) );
-        assertTrue( checkProperty( wallRais, pack, "requires", "Bricks", 0, null ) );
+        assertTrue( checkProperty( wallRais, pack, "involvesMason", "Mason", 3, null ) );
+        assertTrue( checkProperty( wallRais, pack, "requiresBricks", "Bricks", 0, null ) );
 
 //
     }

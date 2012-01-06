@@ -17,12 +17,13 @@
 package org.drools.semantics.builder.model.compilers;
 
 import org.drools.semantics.builder.DLTemplateManager;
-import org.drools.semantics.builder.model.*;
+import org.drools.semantics.builder.model.CompiledOntoModel;
+import org.drools.semantics.builder.model.ModelFactory;
+import org.drools.semantics.builder.model.OntoModel;
 import org.mvel2.templates.CompiledTemplate;
 import org.mvel2.templates.TemplateRegistry;
 import org.mvel2.templates.TemplateRuntime;
 
-import java.util.HashSet;
 import java.util.Map;
 
 public class JavaInterfaceModelCompilerImpl extends ModelCompilerImpl implements JavaInterfaceModelCompiler {

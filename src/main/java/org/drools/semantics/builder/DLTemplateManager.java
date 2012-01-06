@@ -18,7 +18,6 @@ package org.drools.semantics.builder;
 
 import org.drools.io.ResourceFactory;
 import org.drools.semantics.builder.model.ModelFactory;
-import org.drools.semantics.builder.model.compilers.ModelCompilerFactory;
 import org.mvel2.templates.SimpleTemplateRegistry;
 import org.mvel2.templates.TemplateCompiler;
 import org.mvel2.templates.TemplateRegistry;

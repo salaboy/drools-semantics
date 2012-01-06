@@ -28,12 +28,14 @@ public class PropertyRelation extends Relation {
     private Concept target = null;
 
     private boolean restricted = false;
+    private PropertyRelation baseProperty;
 
     public PropertyRelation( String subject, String property, String object, String name ) {
         this.subject = subject;
         this.property = property;
         this.object = object;
         this.name = name;
+        baseProperty = this;
     }
 
 
@@ -82,6 +84,19 @@ public class PropertyRelation extends Relation {
 
     public void setRestricted(boolean restricted) {
         this.restricted = restricted;
+    }
+
+
+    public PropertyRelation getBaseProperty() {
+        if ( ! isRestricted() ) {
+            return this;
+        } else {
+            return baseProperty.getBaseProperty();
+        }
+    }
+
+    public void setBaseProperty(PropertyRelation baseProperty) {
+        this.baseProperty = baseProperty;
     }
 
     public String toFullString() {

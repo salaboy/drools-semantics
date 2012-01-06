@@ -19,9 +19,6 @@ package org.drools.semantics.builder.model.compilers;
 import org.drools.semantics.builder.model.CompiledOntoModel;
 import org.drools.semantics.builder.model.OntoModel;
 
-import java.util.Map;
-import java.util.Set;
-
 public interface ModelCompiler {
 
     public static enum Mode  { FLAT, HIERARCHY }

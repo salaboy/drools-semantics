@@ -17,9 +17,6 @@
 package org.drools.semantics.builder.model;
 
 
-import org.jdom.Document;
-import org.jdom.Namespace;
-
 import java.io.OutputStream;
 
 

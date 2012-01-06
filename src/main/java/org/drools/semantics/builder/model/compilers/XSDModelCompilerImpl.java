@@ -16,11 +16,9 @@
 
 package org.drools.semantics.builder.model.compilers;
 
-import cern.colt.matrix.linalg.Property;
 import org.drools.semantics.builder.DLUtils;
 import org.drools.semantics.builder.model.*;
 import org.jdom.Element;
-import org.jdom.Namespace;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -109,9 +107,9 @@ public class XSDModelCompilerImpl extends ModelCompilerImpl implements XSDModelC
             PropertyRelation rel = props.get( propKey );
             Concept tgt = rel.getTarget();
 
-            if ( rel.isRestricted() ) {
-                continue;
-            }
+//            if ( rel.isRestricted() ) {
+//                continue;
+//            }
 
 
             if ( tgt.isPrimitive() ) {

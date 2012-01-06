@@ -17,9 +17,6 @@
 package org.drools.semantics.model.domain;
 
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.SingletonIterator;
-
-
 public class IBreath_Impl implements IBreath_Trait {
 
 

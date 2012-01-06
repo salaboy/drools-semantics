@@ -193,6 +193,53 @@ public class DLUtils {
 
 
 
+    public static String skolem( String dataType ) {
+
+            if ( "xsd:integer".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:int".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:string".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:dateTime".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:date".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:time".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:long".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:float".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:double".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:short".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:anySimpleType".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:boolean".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:byte".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:decimal".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:unsignedByte".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:unsignedShort".equals( dataType ) ) {
+                return "null";
+            } else if ( "xsd:unsignedInt".equals( dataType ) ) {
+                return "null";
+            } else {
+                return "new " + dataType.replace("__Type","Impl") + "()";
+            }
+    
+        }
+    
+    
+    
+    
+    
+    
 
 
 

@@ -31,8 +31,6 @@ import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.*;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.*;
 
 public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
@@ -199,11 +197,11 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                 OWLDataAllValuesFrom forall = (OWLDataAllValuesFrom) sup;
                 propIri = forall.getProperty().asOWLDataProperty().getIRI().toQuotedString();
                 tgt = primitives.get( forall.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
-                rel = extractProperty( con, propIri, tgt );
+                rel = extractProperty( con, propIri, tgt, null, null );
                 if ( rel != null ) {
-                    rel.setObject( forall.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
-                    rel.setTarget( primitives.get( forall.getFiller().asOWLDatatype().getIRI().toQuotedString() ) );
-                    con.addProperty( propIri, props.get( propIri ), rel );
+//                    rel.setObject( forall.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
+//                    rel.setTarget( primitives.get( forall.getFiller().asOWLDatatype().getIRI().toQuotedString() ) );
+//                    con.addProperty( propIri, props.get( propIri ), rel );
                     hierarchicalModel.addProperty( rel );
                 } else {
                     System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
@@ -213,9 +211,10 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                 OWLDataMinCardinality min = (OWLDataMinCardinality) sup;
                 propIri = min.getProperty().asOWLDataProperty().getIRI().toQuotedString();
                 tgt = primitives.get( min.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
-                rel = extractProperty( con, propIri, tgt );
+                rel = extractProperty( con, propIri, tgt, min.getCardinality(), null );
                 if ( rel != null ) {
-                    rel.setMinCard( min.getCardinality() );
+//                    rel.setMinCard( min.getCardinality() );
+                    hierarchicalModel.addProperty( rel );
                 } else {
                     System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
                 }
@@ -224,9 +223,10 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                 OWLDataMaxCardinality max = (OWLDataMaxCardinality) sup;
                 propIri = max.getProperty().asOWLDataProperty().getIRI().toQuotedString();
                 tgt = primitives.get( max.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
-                rel = extractProperty( con, propIri, tgt );
+                rel = extractProperty( con, propIri, tgt, null, max.getCardinality() );
                 if ( rel != null ) {
-                    rel.setMaxCard( max.getCardinality() );
+//                    rel.setMaxCard( max.getCardinality() );
+                    hierarchicalModel.addProperty( rel );
                 } else {
                     System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
                 }
@@ -235,10 +235,11 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                 OWLDataExactCardinality ex = (OWLDataExactCardinality) sup;
                 propIri = ex.getProperty().asOWLDataProperty().getIRI().toQuotedString();
                 tgt = primitives.get( ex.getFiller().asOWLDatatype().getIRI().toQuotedString()  );
-                rel = extractProperty( con, propIri, tgt );
+                rel = extractProperty( con, propIri, tgt, ex.getCardinality(), ex.getCardinality() );
                 if ( rel != null ) {
-                    rel.setMinCard( ex.getCardinality() );
-                    rel.setMaxCard( ex.getCardinality() );
+//                    rel.setMinCard( ex.getCardinality() );
+//                    rel.setMaxCard( ex.getCardinality() );
+                    hierarchicalModel.addProperty( rel );
                 } else {
                     System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
                 }
@@ -251,9 +252,9 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                     break;
                 }
                 tgt = conceptCache.get( filterAliases( someO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
-                rel = extractProperty( con, propIri, tgt );
+                rel = extractProperty( con, propIri, tgt, 1, null );
                 if ( rel != null ) {
-                    rel.setMinCard( Math.max( rel.getMinCard(), 1 ) );
+//                    rel.setMinCard( Math.max( rel.getMinCard(), 1 ) );
 //                    rel.setObject( tgt.getName() );
 //                    rel.setTarget( tgt );
 //                    con.addProperty( propIri, props.get( propIri ), rel );
@@ -270,7 +271,7 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                     break;
                 }
                 tgt = conceptCache.get( filterAliases( forallO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
-                rel = extractProperty( con, propIri, tgt, true );
+                rel = extractProperty( con, propIri, tgt, null, null );
                 if ( rel != null ) {
 //                    rel.setObject( tgt.getName() );
 //                    rel.setTarget( tgt );
@@ -284,9 +285,10 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                 OWLObjectMinCardinality minO = (OWLObjectMinCardinality) sup;
                 propIri = minO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
                 tgt = conceptCache.get( filterAliases( minO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
-                rel = extractProperty( con, propIri, tgt );
+                rel = extractProperty( con, propIri, tgt, minO.getCardinality(), null );
                 if ( rel != null ) {
-                    rel.setMinCard( minO.getCardinality() );
+//                    rel.setMinCard( minO.getCardinality() );
+                    hierarchicalModel.addProperty( rel );
                 } else {
                     System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
                 }
@@ -295,9 +297,10 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                 OWLObjectMaxCardinality maxO = (OWLObjectMaxCardinality) sup;
                 propIri = maxO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
                 tgt = conceptCache.get( filterAliases( maxO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
-                rel = extractProperty( con, propIri, tgt );
+                rel = extractProperty( con, propIri, tgt, null, maxO.getCardinality() );
                 if ( rel != null ) {
-                    rel.setMaxCard( maxO.getCardinality() );
+//                    rel.setMaxCard( maxO.getCardinality() );
+                    hierarchicalModel.addProperty( rel );
                 } else {
                     System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
                 }
@@ -306,10 +309,11 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
                 OWLObjectExactCardinality exO = (OWLObjectExactCardinality) sup;
                 propIri = exO.getProperty().asOWLObjectProperty().getIRI().toQuotedString();
                 tgt = conceptCache.get( filterAliases( exO.getFiller() ).asOWLClass().getIRI().toQuotedString() );
-                rel = extractProperty( con, propIri, tgt );
+                rel = extractProperty( con, propIri, tgt, exO.getCardinality(), exO.getCardinality() );
                 if ( rel != null ) {
-                    rel.setMinCard( exO.getCardinality() );
-                    rel.setMaxCard( exO.getCardinality() );
+//                    rel.setMinCard( exO.getCardinality() );
+//                    rel.setMaxCard( exO.getCardinality() );
+                    hierarchicalModel.addProperty( rel );
                 } else {
                     System.err.println("WARNING : Could not find property " + propIri + " restricted in class " + con.getIri() );
                 }
@@ -325,16 +329,13 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
 
     }
 
-    private PropertyRelation extractProperty( Concept con, String propIri, Concept target ) {
-        return extractProperty( con, propIri, target, false );
-    }
 
-    private PropertyRelation extractProperty( Concept con, String propIri, Concept target, boolean override ) {
-        override = false;
+    private PropertyRelation extractProperty( Concept con, String propIri, Concept target, Integer min, Integer max ) {
         if ( target == null ) {
             System.err.println( "WARNING : Null target for property " + propIri );
         }
 
+        boolean inherited = false;
         String restrictedPropIri = propIri.replace(">", target.getName()+">");
         PropertyRelation rel = con.getProperties().get( propIri );
         if ( rel == null ) {
@@ -342,34 +343,39 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
         }
 
         if ( rel == null ) {
-
             rel = inheritPropertyCopy( con, con, propIri );
+            inherited = true;
+        }
 
-            if ( rel != null ) {
+        if ( rel != null ) {
+            boolean dirty = false;
+            if ( ! rel.getTarget().equals( target ) ) {
+                rel.setTarget( target );
+                rel.setObject( target.getIri() );
+                dirty = true;
+            }
+            if ( min != null && min > rel.getMinCard() ) {
+                rel.setMinCard( min );
+                dirty = true;
+            }
+            if ( max != null && ( rel.getMaxCard() == null || max < rel.getMaxCard() ) ) {
+                rel.setMaxCard( max );
+                dirty = true;
+            }
+            if ( dirty && inherited ) {
                 rel.setRestricted( true );
-                if ( ! rel.getTarget().equals( target ) ) {
-                    rel.setSubject( con.getName() );
-
-                    if ( override ) {
-                        rel.setSubject( con.getName() );
-                        con.addProperty( propIri, props.get( propIri ), rel );
-
-                    } else {
-                        rel.setName( rel.getName() + target.getName() );
-                        rel.setProperty( restrictedPropIri );
-                        con.addProperty( restrictedPropIri, props.get( propIri ) + target.getName(), rel );
-
-                    }
-                    rel.setTarget( target );
-                    rel.setObject( target.getIri() );
-
-                    System.err.println( "INFO : RESTRICTED property " + propIri + " to " + target );
-                } else {
-                    rel.setSubject( con.getName() );
-                    con.addProperty( propIri, props.get( propIri ), rel );
-                }
+                rel.setSubject( con.getName() );
+                rel.setName( rel.getName() + target.getName() );
+                rel.setProperty( restrictedPropIri );
+                con.addProperty( restrictedPropIri, props.get( propIri ) + target.getName(), rel );
+                return rel;
+            } else {
+                // not really a restriction, so keep the parent's
+                return null;
             }
         }
+
+
         return rel;
     }
 
@@ -382,12 +388,13 @@ public class DelegateInferenceStrategy extends AbstractModelInferenceStrategy {
             System.err.println( "Looking for " +propIri + " among the ancestors of " + current.getName() + ", now try " + sup.getName() );
             rel = sup.getProperties().get( propIri );
             if ( rel != null ) {
-                PropertyRelation restrictedRel = new PropertyRelation( rel.getSubject(), rel.getProperty(), rel.getObject(), rel.getName() );
-                restrictedRel.setMinCard( rel.getMinCard() );
-                restrictedRel.setMaxCard( rel.getMaxCard() );
-                restrictedRel.setTarget( rel.getTarget() );
+                PropertyRelation clonedRel = new PropertyRelation( rel.getSubject(), rel.getProperty(), rel.getObject(), rel.getName() );
+                clonedRel.setMinCard( rel.getMinCard() );
+                clonedRel.setMaxCard(rel.getMaxCard());
+                clonedRel.setTarget(rel.getTarget());
+                clonedRel.setBaseProperty( rel );
                 System.err.println( "Found " +propIri + " in " + sup.getName() );
-                return restrictedRel;
+                return clonedRel;
             } else {
                 rel = inheritPropertyCopy( original, sup, propIri );
                 if ( rel != null ) {

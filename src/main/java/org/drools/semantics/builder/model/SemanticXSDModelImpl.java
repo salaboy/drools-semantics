@@ -16,19 +16,8 @@
 
 package org.drools.semantics.builder.model;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.Namespace;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
-
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class SemanticXSDModelImpl extends XSDModelImpl implements SemanticXSDModel {
 

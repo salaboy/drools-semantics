@@ -55,9 +55,9 @@
           <annox:annotate annox:class="com.clarkparsia.empire.annotation.Namespaces" value="tns http://@{package}#" />
           <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="@{concept.name}Impl"/>
         </annox:annotate>
-        <ci:code>
-          @{extra_code[ concept.name ] }
-        </ci:code>
+        <ci:code><![CDATA[
+          @{ extra_code[ concept.name ] }
+        ]]></ci:code>
 
         @foreach{ propKey : properties[ concept.name ].keySet }
 
@@ -68,7 +68,7 @@
                                        nodeType='attribute';
                                        else
                                        nodeType='element'; }
-            @if{ ! prop.restricted }
+
             <bindings node=".//xsd:@{nodeType}[@name='@{prop.name}']">
                 <jxb:property generateIsSetMethod="true" name="@{prop.name}" >
                     @if{ "element".equals(nodeType) && ! prop.target.primitive }
@@ -80,7 +80,7 @@
                     <annox:annotate annox:class="com.clarkparsia.empire.annotation.RdfProperty" value="tns:@{prop.name}" />
                 </annox:annotate>
             </bindings>
-            @end{}
+
 
         @end{}
     </bindings>
